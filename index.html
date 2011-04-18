@@ -1,24 +1,23 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-	<meta charset="utf-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<title>jQuery UI Autocomplete - Combobox</title>
-	<link rel="stylesheet" href="css/themes/jquery.ui.all.css">
-	<script src="scr/jquery-1.5.1.js"></script>
-	<script src="scr/ui/jquery.ui.core.js"></script>
-	<script src="scr/ui/jquery.ui.widget.js"></script>
-	<script src="scr/ui/jquery.ui.button.js"></script>
-	<script src="scr/ui/jquery.ui.position.js"></script>
-	<script src="scr/ui/jquery.ui.autocomplete.js"></script>
-	<link rel="stylesheet" href="css/demos.css">
-	<style>
+	<link rel="stylesheet" type="text/css" href="css/themes/jquery.ui.all.css">
+	<script type="text/javascript" src="scr/jquery-1.5.1.js"></script>
+	<script type="text/javascript" src="scr/ui/jquery.ui.core.js"></script>
+	<script type="text/javascript" src="scr/ui/jquery.ui.widget.js"></script>
+	<script type="text/javascript" src="scr/ui/jquery.ui.button.js"></script>
+	<script type="text/javascript" src="scr/ui/jquery.ui.position.js"></script>
+	<script type="text/javascript" src="scr/ui/jquery.ui.autocomplete.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/demos.css">
+	<style type="text/css">
 	.ui-button { margin-left: -1px; }
 	.ui-button-icon-only .ui-button-text { padding: 0.35em; } 
 	.ui-autocomplete-input { margin: 0; padding: 0.48em 0 0.47em 0.45em; }
 	</style>
-	<script>
+	<script type="text/javascript">
 	(function( $ ) {
-		currentSelection="";
 		$.widget( "ui.combobox", {
 			_create: function() {
 				var self = this,
@@ -31,29 +30,10 @@
 					.autocomplete({
 						delay: 0,
 						minLength: 0,
-						source: function( request, response ) {
-							var matcher = new RegExp( $.ui.autocomplete.escapeRegex(request.term), "i" );
-							response( select.children( "option" ).map(function() {
-								var text = $( this ).text();
-								if ( this.value && ( !request.term || matcher.test(text) ) )
-									return {
-										label: text.replace(
-											new RegExp(
-												"(?![^&;]+;)(?!<[^<>]*)(" +
-												$.ui.autocomplete.escapeRegex(request.term) +
-												")(?![^<>]*>)(?![^&;]+;)", "gi"
-											), "<strong>$1</strong>" ),
-										value: text,
-										option: this
-									};
-							}) );
-						},
+						source: ["c++", "java", "php", "coldfusion", "javascript", "asp", "ruby"],
+
 						select: function( event, ui ) {
-							ui.item.option.selected = true;
-							// alert(ui.item.option.innerHTML);
-							self._trigger( "selected", event, {
-								item: ui.item.option
-							});
+							// loadSomething(ui.item.option.innerHTML);
 						},
 						change: function( event, ui ) {
 							if ( !ui.item ) {
@@ -65,27 +45,21 @@
 										return false;
 									}
 								});
-								if ( !valid ) {
-									// remove invalid value, as it didn't match anything
-									$( this ).val( "" );
-									select.val( "" );
-									input.data( "autocomplete" ).term = "";
-									return false;
-								}
 							}
 						}
 					}).keypress(function(e){
 						if(e.keyCode === 13)
 						{
 							loadSomething(input.val());
+							input.blur();
 						}
 					})
 					.addClass( "ui-widget ui-widget-content ui-corner-left" );
 
 				input.data( "autocomplete" )._renderItem = function( ul, item ) {
-					return $( "<li></li>" )
+					return $( "<li><\/li>" )
 						.data( "item.autocomplete", item )
-						.append( "<a>" + item.label + "</a>" )
+						.append( "<a>" + item.label + "<\/a>" )
 						.appendTo( ul );
 				};
 				input.id = "asdf";
@@ -97,7 +71,7 @@
 				// 	}
 				// })
 
-				this.button = $( "<button type='button'>&nbsp;</button>" )
+				this.button = $( "<button type='button'>&nbsp;<\/button>" )
 					.attr( "tabIndex", -1 )
 					.attr( "title", "Show All Items" )
 					.insertAfter( input )
@@ -121,8 +95,7 @@
 						input.focus();
 					});
 
-				submitButton = $( "<button type='button'>Najdi!</button>" )
-					// .attr( "tabIndex", -1 )
+				submitButton = $( "<button type='button'>Najdi!<\/button>" )
 					.attr( "title", "Show All Items" )
 					.insertAfter( this.button )
 					.css("margin-left", "5px")
@@ -132,7 +105,6 @@
 						},
 						text: true
 					})
-					// .removeClass( "ui-corner-all" )
 					.addClass( "ui-corner-right ui-button-icon" )
 					.click(function() {
 						loadSomething(input.val())
@@ -152,7 +124,14 @@
 	})( jQuery );
 
 	$(function() {
+		var selectBox = $("#ui-dropbox")
+			.append($("<select><\/select>")
+				.attr({id: "combobox",
+					   name: "combobox"})
+			)
 		$( "#combobox" ).combobox();
+		$("#searchForm").hide();
+		$("#ui-dropbox").show();
 		$( "#toggle" ).click(function() {
 			$( "#combobox" ).toggle();
 		});
@@ -160,51 +139,27 @@
 	});
 	function loadSomething(a)
 	{
-		alert(a);
+		bodyContent = $.ajax({
+			  url: "search.php",
+			  global: false,
+			  type: "POST",
+			  data: ({id:a}),
+			  dataType: "html",
+			  async:false,
+			  success: function(msg){
+				  $("#results").html(msg);
+			  }
+		   }
+		).responseText;
 	}
 	</script>
 </head>
-<body>
-	
-<div class="demo">
-
-<div class="ui-widget" id="ui-dropbox">
-	<label>Your preferred programming language: </label>
-	<select id="combobox">
-		<option value="ActionScript">ActionScript</option>
-		<option value="AppleScript" selected="selected">AppleScript</option>
-		<option value="Asp">Asp</option>
-		<option value="BASIC">BASIC</option>
-		<option value="C">C</option>
-		<option value="C++">C++</option>
-		<option value="Clojure">Clojure</option>
-		<option value="COBOL">COBOL</option>
-		<option value="ColdFusion">ColdFusion</option>
-		<option value="Erlang">Erlang</option>
-		<option value="Fortran">Fortran</option>
-		<option value="Groovy">Groovy</option>
-		<option value="Haskell">Haskell</option>
-		<option value="Java">Java</option>
-		<option value="JavaScript">JavaScript</option>
-		<option value="Lisp">Lisp</option>
-		<option value="Perl">Perl</option>
-		<option value="PHP">PHP</option>
-		<option value="Python">Python</option>
-		<option value="Ruby">Ruby</option>
-		<option value="Scala">Scala</option>
-		<option value="Scheme">Scheme</option>
-	</select>
-</div>
-<button id="toggle">Show underlying select</button>
-
-</div><!-- End demo -->
-
-
-
-<div class="demo-description">
-<p>A custom widget built by composition of Autocomplete and Button. You can either type something into the field to get filtered suggestions based on your input, or use the button to get the full list of selections.</p>
-<p>The input is read from an existing select-element for progressive enhancement, passed to Autocomplete with a customized source-option.</p>
-</div><!-- End demo-description -->
-
+<body bgcolor="#333333">
+	<div class="ui-widget" id="ui-dropbox" style="display: none"></div>
+	<form id="searchForm" action="search.php" method="POST">
+		<input type="text" name="id" />
+		<input type="submit" value="Najdi!" />
+	</form> 
+	<div id="results"></div>
 </body>
 </html>
