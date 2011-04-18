@@ -18,6 +18,7 @@
 	</style>
 	<script>
 	(function( $ ) {
+		currentSelection="";
 		$.widget( "ui.combobox", {
 			_create: function() {
 				var self = this,
@@ -49,6 +50,7 @@
 						},
 						select: function( event, ui ) {
 							ui.item.option.selected = true;
+							// alert(ui.item.option.innerHTML);
 							self._trigger( "selected", event, {
 								item: ui.item.option
 							});
@@ -72,6 +74,11 @@
 								}
 							}
 						}
+					}).keypress(function(e){
+						if(e.keyCode === 13)
+						{
+							loadSomething(input.val());
+						}
 					})
 					.addClass( "ui-widget ui-widget-content ui-corner-left" );
 
@@ -81,6 +88,14 @@
 						.append( "<a>" + item.label + "</a>" )
 						.appendTo( ul );
 				};
+				input.id = "asdf";
+				// input.keydown(function(e){
+				// 	
+				// 	if(e.keyCode === 13)
+				// 	{
+				// 		alert(ui.item.option.innerHTML)
+				// 	}
+				// })
 
 				this.button = $( "<button type='button'>&nbsp;</button>" )
 					.attr( "tabIndex", -1 )
@@ -105,6 +120,24 @@
 						input.autocomplete( "search", "" );
 						input.focus();
 					});
+
+				submitButton = $( "<button type='button'>Najdi!</button>" )
+					// .attr( "tabIndex", -1 )
+					.attr( "title", "Show All Items" )
+					.insertAfter( this.button )
+					.css("margin-left", "5px")
+					.button({
+						icons: {
+							primary: "ui-icon-circle-zoomin"
+						},
+						text: true
+					})
+					// .removeClass( "ui-corner-all" )
+					.addClass( "ui-corner-right ui-button-icon" )
+					.click(function() {
+						loadSomething(input.val())
+					});
+
 			},
 
 			destroy: function() {
@@ -114,6 +147,8 @@
 				$.Widget.prototype.destroy.call( this );
 			}
 		});
+		// input.val($(select).find("option:selected").text())
+
 	})( jQuery );
 
 	$(function() {
@@ -121,19 +156,23 @@
 		$( "#toggle" ).click(function() {
 			$( "#combobox" ).toggle();
 		});
+		$('.ui-autocomplete-input').css('width', '500px')
 	});
+	function loadSomething(a)
+	{
+		alert(a);
+	}
 	</script>
 </head>
 <body>
 	
 <div class="demo">
 
-<div class="ui-widget">
+<div class="ui-widget" id="ui-dropbox">
 	<label>Your preferred programming language: </label>
 	<select id="combobox">
-		<option value="">Select one...</option>
 		<option value="ActionScript">ActionScript</option>
-		<option value="AppleScript">AppleScript</option>
+		<option value="AppleScript" selected="selected">AppleScript</option>
 		<option value="Asp">Asp</option>
 		<option value="BASIC">BASIC</option>
 		<option value="C">C</option>
