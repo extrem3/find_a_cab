@@ -1,0 +1,7 @@
+<?php
+$location="localhost";		//location of your database
+$username="root";			//username for your database
+$password="toor";			//passowrd
+$database="najditaxi";		//table name
+?>
+
