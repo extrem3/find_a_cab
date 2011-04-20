@@ -30,8 +30,23 @@
 					.autocomplete({
 						delay: 0,
 						minLength: 0,
-						source: ["c++", "java", "php", "coldfusion", "javascript", "asp", "ruby"],
+						<?php
+							require('config.php');
+							mysql_connect($location,$username,$password);
+							@mysql_select_db($database) or die( "Unable to select database");
 
+							$query="SELECT * FROM mesta ORDER BY mesto";
+							$result=mysql_query($query);
+
+							$echoString = "\t\t\t\t\t\tsource: [";
+							while ($row = mysql_fetch_assoc($result)) {
+								$row_text = $row['mesto'];
+								$echoString .= "'$row_text', ";
+							}
+							$echoString = substr($echoString, 0, -2);
+							$echoString .= "],";
+							echo $echoString;
+						?>
 						select: function( event, ui ) {
 							// loadSomething(ui.item.option.innerHTML);
 						},
