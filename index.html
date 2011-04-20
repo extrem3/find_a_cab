@@ -3,6 +3,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<title>jQuery UI Autocomplete - Combobox</title>
+	<link rel="stylesheet" type="text/css" href="css/style.css" />
 	<link rel="stylesheet" type="text/css" href="css/themes/jquery.ui.all.css">
 	<script type="text/javascript" src="scr/jquery-1.5.1.js"></script>
 	<script type="text/javascript" src="scr/ui/jquery.ui.core.js"></script>
@@ -154,12 +155,19 @@
 	}
 	</script>
 </head>
-<body bgcolor="#333333">
-	<div class="ui-widget" id="ui-dropbox" style="display: none"></div>
-	<form id="searchForm" action="search.php" method="POST">
-		<input type="text" name="id" />
-		<input type="submit" value="Najdi!" />
-	</form> 
-	<div id="results"></div>
+<body>
+	<div id="header" align="center"><img src="img/najditaxt_logo_m.png" alt="NajdiTaxi.si" /></div>
+	<div class="space">&nbsp;</div>
+	<div class="center">
+		<div class="ui-widget" id="ui-dropbox" style="display: none"></div>
+		<form id="searchForm" action="search.php" method="POST">
+			<input type="text" name="id" />
+			<input type="submit" value="Najdi!" />
+		</form> 
+		<div id="results"></div>
+	</div>
+	<div id="footer"><div id="footer-font">vsebina na portalu najdiTAXI.si je avtorsko zascitena in last podjetja LabIT d.o.o. &#169; 2011</div></div>
+
+
 </body>
 </html>
