@@ -9,6 +9,7 @@ echo "<br>";
 echo "I j-just found too much.. Baka...";
 echo "<br><br>";
 echo "RESULTS HERE";
+echo "<br><br>";
 
 mysql_connect(localhost,$username,$password);
 @mysql_select_db($database) or die( "Unable to select database");
@@ -22,5 +23,4 @@ while ($row = mysql_fetch_assoc($result)) {
     print "$row_text<br/>\n";
 }
 
-mysql_close();
 ?>
