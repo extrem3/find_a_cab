@@ -3,13 +3,6 @@ require('config.php');
 $town = $_POST["id"];
 echo "Searched for [" . $town . "]";
 echo "<br><br>";
-echo "<br><br>";
-echo "It's - it's not like I WANT to show you your search results..";
-echo "<br>";
-echo "I j-just found too much.. Baka...";
-echo "<br><br>";
-echo "RESULTS HERE";
-echo "<br><br>";
 
 mysql_connect(localhost,$username,$password);
 @mysql_select_db($database) or die( "Unable to select database");
@@ -29,7 +22,6 @@ $town_id = mysql_result($result, 0);
 
 $result = mysql_query("SELECT * FROM mesta_telefonske WHERE ID_mesta='$town_id'");
 
-// echo "phone id of town with id of $town_id: $phone_id,";
 
 while ($row = mysql_fetch_array($result)) 
 {
@@ -47,7 +39,9 @@ while ($row = mysql_fetch_array($result))
 	$userCompanyId = mysql_result($resultUserCompanyId, 0, 0);
 	$resultUserCompanyName = mysql_query("SELECT naziv FROM podjetje WHERE id_podjetje='$userCompanyId'");
 	$userCompanyName = mysql_result($resultUserCompanyName, 0, 0);
+	$resultUserCompanyRating = mysql_query("SELECT rating FROM podjetje WHERE id_podjetje='$userCompanyId'");
+	$userCompanyRating = mysql_result($resultUserCompanyRating, 0, 0);
 
-	echo "podjetje " . $userCompanyName . "'s driver " . $userName . " " . "$userLastName" . " has number " . $phoneNumber . "<br>";
+	echo "podjetje " . $userCompanyName . "'s driver " . $userName . " " . "$userLastName" . " has number " . $phoneNumber . " (rating " . $userCompanyRating . ")<br>";
 }
 ?>
