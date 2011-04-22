@@ -16,6 +16,19 @@ mysql_connect(localhost,$username,$password);
 $query="SELECT * FROM mesta";
 $result=mysql_query($query);
 
+$town = "Celje";
+
+
+// first get id of town from 'mesta', (id_mesto), where mesto = $town
+// then get id_telefonske from 'mesta_telefonske', where ID_mesta = mesto
+// then get phone number from 'telefonske_st', where ID_telefonske_st = id_telefonske
+// 		and user_id
+// then get company id from 'upor_podj', where ID_uporabnik = user_id
+// then get company name and rating from 'podjetje', where company_id = id_podjetje
+// 		and user_name and surname from 'uporabniki' where id_uporabnik = user_id
+
+
+
 while ($row = mysql_fetch_assoc($result)) {
     $row_text = $row['mesto'];
  
