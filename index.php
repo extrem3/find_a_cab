@@ -171,8 +171,7 @@
 	</script>
 </head>
 <body>
-	<div id="header" align="center"><img src="img/najditaxt_logo_m.png" alt="NajdiTaxi.si" /></div>
-	<div class="space">&nbsp;</div>
+	<!-- <div id="header" align="center"><img src="img/najditaxt_logo_m.png" alt="NajdiTaxi.si" /></div> -->
 	<div class="center">
 		<div class="ui-widget" id="ui-dropbox" style="display: none"></div>
 		<form id="searchForm" action="search.php" method="POST">

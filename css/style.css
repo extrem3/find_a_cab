@@ -1,10 +1,10 @@
 body {
 		margin: 0px;
-		background-color: #f5f5f1;
+		background-color: #333333;
 		width: 100%;
 }
 #header {
-		background-image:url('../img/najditaxt_v2_02.png');
+		/* background-image:url('../img/najditaxt_v2_02.png'); */
 		background-repeat:repeat-x;
 		height:85px;
 		padding-top:25px;
@@ -21,7 +21,7 @@ body {
 		background-color: #f5f5f1;
 }
 #footer {
-		background-image:url('../img/najditaxt_v2_09.png');
+		/* background-image:url('../img/najditaxt_v2_09.png'); */
 		position:absolute;
 		bottom:0;
 		width:100%;
