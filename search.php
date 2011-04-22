@@ -1,7 +1,7 @@
 <?php
 require('config.php');
-$id = $_POST["id"];
-echo "Searched for [" . $id . "]";
+$town = $_POST["id"];
+echo "Searched for [" . $town . "]";
 echo "<br><br>";
 echo "<br><br>";
 echo "It's - it's not like I WANT to show you your search results..";
@@ -9,14 +9,11 @@ echo "<br>";
 echo "I j-just found too much.. Baka...";
 echo "<br><br>";
 echo "RESULTS HERE";
+echo "<br><br>";
 
 mysql_connect(localhost,$username,$password);
 @mysql_select_db($database) or die( "Unable to select database");
 
-$query="SELECT * FROM mesta";
-$result=mysql_query($query);
-
-$town = "Celje";
 
 
 // first get id of town from 'mesta', (id_mesto), where mesto = $town
@@ -27,13 +24,15 @@ $town = "Celje";
 // then get company name and rating from 'podjetje', where company_id = id_podjetje
 // 		and user_name and surname from 'uporabniki' where id_uporabnik = user_id
 
+$result = mysql_query("SELECT id_mesto FROM mesta WHERE mesto='$town'");
+$town_id = mysql_result($result, 0);
 
+$result = mysql_query("SELECT * FROM mesta_telefonske WHERE ID_mesta='$town_id'");
 
-while ($row = mysql_fetch_assoc($result)) {
-    $row_text = $row['mesto'];
- 
-    print "$row_text<br/>\n";
+// echo "phone id of town with id of $town_id: $phone_id,";
+
+while ($row = mysql_fetch_array($result)) 
+{
+	$phone_id = $row['ID_telefonske'];
 }
-
-mysql_close();
 ?>
