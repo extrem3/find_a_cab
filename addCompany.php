@@ -60,9 +60,14 @@ switch ($type) {
 								   VALUES ('$id_town', '$id_phone')");
 		break;
 	case 'test':
-		$result = mysql_query("SELECT max(id_podjetje) FROM podjetje");
-		$id_company = mysql_result($result, 0, 0);
-		echo $id_company;
+		$town = "celJe";
+		if(mysql_num_rows(mysql_query("SELECT * FROM mesta WHERE mesto= '$town'"))>0) 
+		{
+			echo "already in";
+		}else
+		{
+			echo "not in yet";
+		}
 		break;
 	default:
 		echo "type not specified";
