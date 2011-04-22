@@ -1,7 +1,7 @@
 <?php
 require('config.php');
 
-$type = "phoneNumber";
+$type = "test";
 
 mysql_connect($location,$username,$password);
 @mysql_select_db($database) or die( "Unable to select database");
@@ -58,6 +58,11 @@ switch ($type) {
 
 		mysql_query("INSERT INTO mesta_telefonske (ID_mesta, ID_telefonske)
 								   VALUES ('$id_town', '$id_phone')");
+		break;
+	case 'test':
+		$result = mysql_query("SELECT max(id_podjetje) FROM podjetje");
+		$id_company = mysql_result($result, 0, 0);
+		echo $id_company;
 		break;
 	default:
 		echo "type not specified";
