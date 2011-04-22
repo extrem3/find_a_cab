@@ -34,5 +34,20 @@ $result = mysql_query("SELECT * FROM mesta_telefonske WHERE ID_mesta='$town_id'"
 while ($row = mysql_fetch_array($result)) 
 {
 	$phone_id = $row['ID_telefonske'];
+	$resultPhoneNumbers = mysql_query("SELECT telefonske_st FROM telefonske_st WHERE ID_telefonske_st='$phone_id'");
+	$phoneNumber = mysql_result($resultPhoneNumbers, 0, 0);
+
+	$resultUserId = mysql_query("SELECT ID_user FROM telefonske_st WHERE ID_telefonske_st='$phone_id'");
+	$userId = mysql_result($resultUserId, 0, 0);
+	$resultUserName = mysql_query("SELECT ime FROM uporabniki WHERE id_uporabnik='$userId'");
+	$userName = mysql_result($resultUserName, 0);
+	$resultUserLastName = mysql_query("SELECT priimek FROM uporabniki WHERE id_uporabnik='$userId'");
+	$userLastName = mysql_result($resultUserLastName, 0);
+	$resultUserCompanyId = mysql_query("SELECT id_podjetje FROM upor_podj WHERE id_uporabnik='$userId'");
+	$userCompanyId = mysql_result($resultUserCompanyId, 0, 0);
+	$resultUserCompanyName = mysql_query("SELECT naziv FROM podjetje WHERE id_podjetje='$userCompanyId'");
+	$userCompanyName = mysql_result($resultUserCompanyName, 0, 0);
+
+	echo "podjetje " . $userCompanyName . "'s driver " . $userName . " " . "$userLastName" . " has number " . $phoneNumber . "<br>";
 }
 ?>
