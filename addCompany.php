@@ -23,20 +23,24 @@ function addUser()
 	$result = mysql_query("SELECT max(id_uporabnik) FROM uporabniki");
 	return mysql_result($result, 0, 0);
 }
-function addDriver()
+function addDriver($phone_number, $town_id, $user_id)
 {
-	//telefonske_st
-	//mesta_telefonske
-	if(mysql_num_rows(mysql_query("SELECT * FROM uporabniki WHERE username= '" . $_POST['username'] . "'"))>0) 
-		return "user with this username already exists";
-	if(mysql_num_rows(mysql_query("SELECT * FROM uporabniki WHERE email= '" . $_POST['email'] . "'"))>0) 
-		return "user with this email already exists";
+	preg_match_all('/[0-9]+/', $phone_number, $cleaned);
+	foreach($cleaned[0] as $k=>$v) {
+	   $phoneNumber .= $v;
+	}
+	if(mysql_num_rows(mysql_query("SELECT * FROM telefonske_st WHERE telefonske_st= '$phoneNumber'"))>0) 
+		return "this phone number already exists";
 	
-	mysql_query("INSERT INTO uporabniki (username, geslo, nivo, ime, priimek, email)
-							   VALUES ('" . $_POST['username'] . "', '" . $_POST['password'] . "', '0', '" . $_POST['name'] . "', '" . $_POST['lastName'] . "', '" . $_POST['email'] . "')");
+	mysql_query("INSERT INTO telefonske_st (ID_user, telefonske_st)
+							   VALUES ('$user_id', '$phoneNumber')");
 
-	$result = mysql_query("SELECT max(ID_uporabnik) FROM uporabniki");
-	return mysql_result($result, 0, 0);
+	$result = mysql_query("SELECT max(ID_telefonske_st) FROM telefonske_st");
+	$telefonska_id = mysql_result($result, 0, 0);
+
+	mysql_query("INSERT INTO mesta_telefonske (ID_mesta, ID_telefonske)
+							   VALUES ('$town_id', '$telefonska_id')");
+	return $telefonska_st;
 }
 function addCompany($companyName, $town_id, $user_id)
 {
@@ -170,3 +174,4 @@ if ($_POST['company'] == "added")
 }
 mysql_query("INSERT INTO upor_podj (id_uporabnik, id_podjetje)
 						    VALUES ('$id_user', '$id_company')");
+addDriver($_POST['phone'], $id_town, $id_user)
