@@ -6,6 +6,7 @@ mysql_connect($location,$username,$password);
 
 $id_user;
 $id_town;
+$id_town2;
 $id_company;
 
 
@@ -73,105 +74,50 @@ function addTown($town)
 	$townResult = mysql_query("SELECT max(id_mesto) FROM mesta");
 	return mysql_result($townResult, 0, 0);
 }
-echo "name: " . $_POST['username'] . "<br>";
-echo "pass: " . $_POST['password'] . "<br>";
-echo "pass2: " . $_POST['passwordCheck'] . "<br>";
-echo "Name: " . $_POST['name'] . "<br>";
-echo "Last: " . $_POST['lastName'] . "<br>";
-echo "mail: " . $_POST['email'] . "<br>";
+
+$id_user = addUser();
 if ($_POST['cabOwner'] == "on")
 {
-	echo "<br>";
-	echo "is a driver" . "<br>";
-	echo "Phone: " . $_POST['phone'] . "<br>";
-	echo "town is " . $_POST['town'] . "<br>";
 	if ($_POST['town'] == "added") 
 	{
-		echo "	town: " . $_POST['townSelect'] . "<br>";
+		$id_town = addTown($_POST['townSelect']);
 	}else
 	{
-		echo "	town: " . $_POST['newTown'] . "<br>";
+		$id_town = addTown($_POST['newTown']);
 	}
-	if (!$_POST['companyOwner'] == "on")
-	{
-		if ($_POST['company'] == "added") 
-		{
-			echo "	companyName: " . $_POST['companySelect'] . "<br>";
-		}else
-		{
-			echo "	companyName: " . $_POST['companyName'] . "<br>";
-			echo "	companyStreet: " . $_POST['companyStreet'] . "<br>";
-			echo "	companyInCharge: " . $_POST['companyInCharge'] . "<br>";
-			echo "	companyPhone: " . $_POST['companyPhone'] . "<br>";
-			echo "	companyMail: " . $_POST['companyMail'] . "<br>";
-			echo "	companyWebsite: " . $_POST['companyWebsite'] . "<br>";
-			echo "	companyDescription: " . $_POST['companyDescription'] . "<br>";
-			echo "companyTown: " . $_POST['companyTown'] . "<br>";
-			if ($_POST['companyTown'] == "added") 
-			{
-				echo "	town: " . $_POST['companyTownSelect'] . "<br>";
-			}else
-			{
-				echo "	town: " . $_POST['newCompanyTown'] . "<br>";
-			}
-		}
-	}
-}else
-{
-	echo "is NOT a driver <br>";
-}
-
-if ($_POST['companyOwner'] == "on")
-{
-	echo "<br>";
-	echo "is a company owner <br>";
-	echo "company is " . $_POST['company'] . "<br>";
-
 	if ($_POST['company'] == "added") 
 	{
-		echo "	companyName: " . $_POST['companySelect'] . "<br>";
+		$id_company = addCompany($_POST['companySelect'], $id_town, $id_user);
 	}else
 	{
-		echo "	companyName: " . $_POST['companyName'] . "<br>";
-		echo "	companyStreet: " . $_POST['companyStreet'] . "<br>";
-		echo "	companyInCharge: " . $_POST['companyInCharge'] . "<br>";
-		echo "	companyPhone: " . $_POST['companyPhone'] . "<br>";
-		echo "	companyMail: " . $_POST['companyMail'] . "<br>";
-		echo "	companyWebsite: " . $_POST['companyWebsite'] . "<br>";
-		echo "	companyDescription: " . $_POST['companyDescription'] . "<br>";
-		echo "companyTown: " . $_POST['companyTown'] . "<br>";
 		if ($_POST['companyTown'] == "added") 
 		{
-			echo "	town: " . $_POST['companyTownSelect'] . "<br>";
+			$id_town2 = addTown($_POST['companyTownSelect']);
 		}else
 		{
-			echo "	town: " . $_POST['newCompanyTown'] . "<br>";
+			$id_town2 = addTown($_POST['newCompanyTown']);
 		}
+		$id_company = addCompany($_POST['companyName'], $id_town2, $id_user);
 	}
-}else
+	mysql_query("INSERT INTO upor_podj (id_uporabnik, id_podjetje)
+								VALUES ('$id_user', '$id_company')");
+	addDriver($_POST['phone'], $id_town, $id_user);
+}else if ($_POST['companyOwner'] == "on")
 {
-	echo "is NOT a company owner";
+	if ($_POST['company'] == "added") 
+	{
+		$id_company = addCompany($_POST['companySelect'], $id_town, $id_user);
+	}else
+	{
+		if ($_POST['companyTown'] == "added") 
+		{
+			$id_town2 = addTown($_POST['companyTownSelect']);
+		}else
+		{
+			$id_town2 = addTown($_POST['newCompanyTown']);
+		}
+		$id_company = addCompany($_POST['companyName'], $id_town2, $id_user);
+	}
 }
-echo "<br>";
-echo "<br>";
-echo "<br>";
-$id_user = addUser();
-echo $id_user . "<br>";
-if ($_POST['town'] == "added") 
-{
-	$id_town = addTown($_POST['townSelect']);
-}else
-{
-	$id_town = addTown($_POST['newTown']);
-}
-echo "town id is: " . $id_town . "<br>";
-if ($_POST['company'] == "added") 
-{
-	$id_company = addCompany($_POST['companySelect'], $id_town, $id_user);
-}else
-{
-	$id_company = addCompany($_POST['companyName'], $id_town, $id_user);
-}
-mysql_query("INSERT INTO upor_podj (id_uporabnik, id_podjetje)
-						    VALUES ('$id_user', '$id_company')");
-addDriver($_POST['phone'], $id_town, $id_user)
+echo "done";
+?>
