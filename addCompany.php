@@ -11,39 +11,83 @@ echo "pass: " . $_POST['password'] . "<br>";
 echo "pass2: " . $_POST['passwordCheck'] . "<br>";
 echo "Name: " . $_POST['name'] . "<br>";
 echo "Last: " . $_POST['lastName'] . "<br>";
-echo "Phon: " . $_POST['phone'] . "<br>";
 echo "mail: " . $_POST['email'] . "<br>";
-echo "town: " . $_POST['town'] . "<br>";
-if ($_POST['town'] == "added") 
+if ($_POST['cabOwner'] == "on")
 {
-	echo "	town: " . $_POST['townSelect'] . "<br>";
-}else
-{
-	echo "	town: " . $_POST['newTown'] . "<br>";
-}
-echo "company: " . $_POST['company'] . "<br>";
-
-if ($_POST['company'] == "added") 
-{
-	echo "	companyName: " . $_POST['companySelect'] . "<br>";
-}else
-{
-	echo "	companyName: " . $_POST['companyName'] . "<br>";
-	echo "	companyStreet: " . $_POST['companyStreet'] . "<br>";
-	echo "	companyInCharge: " . $_POST['companyInCharge'] . "<br>";
-	echo "	companyPhone: " . $_POST['companyPhone'] . "<br>";
-	echo "	companyMail: " . $_POST['companyMail'] . "<br>";
-	echo "	companyWebsite: " . $_POST['companyWebsite'] . "<br>";
-	echo "	companyDescription: " . $_POST['companyDescription'] . "<br>";
-	echo "companyTown: " . $_POST['companyTown'] . "<br>";
-	if ($_POST['companyTown'] == "added") 
+	echo "<br>";
+	echo "is a driver" . "<br>";
+	echo "Phone: " . $_POST['phone'] . "<br>";
+	echo "town is " . $_POST['town'] . "<br>";
+	if ($_POST['town'] == "added") 
 	{
-		echo "	town: " . $_POST['companyTownSelect'] . "<br>";
+		echo "	town: " . $_POST['townSelect'] . "<br>";
 	}else
 	{
-		echo "	town: " . $_POST['newCompanyTown'] . "<br>";
+		echo "	town: " . $_POST['newTown'] . "<br>";
 	}
+	if (!$_POST['companyOwner'] == "on")
+	{
+		if ($_POST['company'] == "added") 
+		{
+			echo "	companyName: " . $_POST['companySelect'] . "<br>";
+		}else
+		{
+			echo "	companyName: " . $_POST['companyName'] . "<br>";
+			echo "	companyStreet: " . $_POST['companyStreet'] . "<br>";
+			echo "	companyInCharge: " . $_POST['companyInCharge'] . "<br>";
+			echo "	companyPhone: " . $_POST['companyPhone'] . "<br>";
+			echo "	companyMail: " . $_POST['companyMail'] . "<br>";
+			echo "	companyWebsite: " . $_POST['companyWebsite'] . "<br>";
+			echo "	companyDescription: " . $_POST['companyDescription'] . "<br>";
+			echo "companyTown: " . $_POST['companyTown'] . "<br>";
+			if ($_POST['companyTown'] == "added") 
+			{
+				echo "	town: " . $_POST['companyTownSelect'] . "<br>";
+			}else
+			{
+				echo "	town: " . $_POST['newCompanyTown'] . "<br>";
+			}
+		}
+	}
+}else
+{
+	echo "is NOT a driver <br>";
 }
+
+if ($_POST['companyOwner'] == "on")
+{
+	echo "<br>";
+	echo "is a company owner <br>";
+	echo "company is " . $_POST['company'] . "<br>";
+
+	if ($_POST['company'] == "added") 
+	{
+		echo "	companyName: " . $_POST['companySelect'] . "<br>";
+	}else
+	{
+		echo "	companyName: " . $_POST['companyName'] . "<br>";
+		echo "	companyStreet: " . $_POST['companyStreet'] . "<br>";
+		echo "	companyInCharge: " . $_POST['companyInCharge'] . "<br>";
+		echo "	companyPhone: " . $_POST['companyPhone'] . "<br>";
+		echo "	companyMail: " . $_POST['companyMail'] . "<br>";
+		echo "	companyWebsite: " . $_POST['companyWebsite'] . "<br>";
+		echo "	companyDescription: " . $_POST['companyDescription'] . "<br>";
+		echo "companyTown: " . $_POST['companyTown'] . "<br>";
+		if ($_POST['companyTown'] == "added") 
+		{
+			echo "	town: " . $_POST['companyTownSelect'] . "<br>";
+		}else
+		{
+			echo "	town: " . $_POST['newCompanyTown'] . "<br>";
+		}
+	}
+}else
+{
+	echo "is NOT a company owner";
+}
+echo "<br>";
+echo "<br>";
+echo "<br>";
 
 switch ($type) {
 	case 'company':

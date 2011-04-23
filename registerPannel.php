@@ -12,8 +12,10 @@
 		Repeat password:<input type="password" name="passwordCheck"><br>
 		First Name:<input type="text" name="name"><br>
 		Last Name:<input type="text" name="lastName"><br>
-		Phone number:<input type="text" name="phone"><br>
 		email:<input type="text" name="email"><br>
+		<br>
+		<br>
+		<input type="checkbox" name="cabOwner">Taxi driver
 		<table>
 			<tr>
 				<td style="vertical-align: top; width: 200px">
@@ -41,7 +43,10 @@
 				</td>
 			</tr>
 		</table>
-
+		Phone number:<input type="text" name="phone"><br>
+		<br>
+		<br>
+		<input type="checkbox" name="companyOwner">Company owner
 		<table>
 			<tr>
 				<td style="vertical-align: top; width: 200px">
