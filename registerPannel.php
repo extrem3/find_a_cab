@@ -7,17 +7,18 @@
 	<div class="content">
 	<form action="addCompany.php" method="POST" accept-charset="utf-8">
 		Registriraj uporabnika:<br>
-		Username:<input type="text" name="lol" value="asdf"><br>
-		Password:<input type="password" name="lol2" value="asdf"><br>
-		First Name:<input type="text" name="lol3" value="asdf"><br>
-		Last Name:<input type="text" name="lol4" value="asdf"><br>
-		Phone number:<input type="text" name="lol5" value="asdf"><br>
-		email:<input type="text" name="lol6" value="asdf"><br>
+		Username:<input type="text" name="username"><br>
+		Password:<input type="password" name="password"><br>
+		Repeat password:<input type="password" name="passwordCheck"><br>
+		First Name:<input type="text" name="name"><br>
+		Last Name:<input type="text" name="lastName"><br>
+		Phone number:<input type="text" name="phone"><br>
+		email:<input type="text" name="email"><br>
 		<table>
 			<tr>
 				<td style="vertical-align: top; width: 200px">
 					<input type="radio" name="town" value="added" checked="true"/>town already added
-					<select name="companySelect" id="companySelect">
+					<select name="townSelect" id="townSelect">
 						<?php
 						require('config.php');
 						mysql_connect($location,$username,$password);
@@ -36,7 +37,7 @@
 				</td>
 				<td style="vertical-align: top; width: 500px">
 					<input type="radio" name="town" value="notAdded"/>add a town<br>
-					Town:<input type="text" name="lol6" value="asdf"><br>
+					Town:<input type="text" name="newTown"><br>
 				</td>
 			</tr>
 		</table>
@@ -61,13 +62,13 @@
 				</td>
 				<td style="vertical-align: top; width: 500px">
 					<input type="radio" name="company" value="notAdded"/>create new company<br>
-					Name:<input type="text" name="lol3" value="asdf"><br>
-					Street:<input type="text" name="lol4" value="asdf"><br>
+					Name:<input type="text" name="companyName"><br>
+					Street:<input type="text" name="companyStreet"><br>
 					<table>
 						<tr>
 							<td style="vertical-align: top; width: 200px">
-								<input type="radio" name="town" value="added" checked="true"/>town already added
-								<select name="companySelect" id="companySelect">
+								<input type="radio" name="companyTown" value="added" checked="true"/>town already added
+								<select name="companyTownSelect" id="companyTownSelect">
 									<?php
 									require('config.php');
 									mysql_connect($location,$username,$password);
@@ -85,16 +86,16 @@
 								OR
 							</td>
 							<td style="vertical-align: top; width: 500px">
-								<input type="radio" name="town" value="notAdded"/>add a town<br>
-								Town:<input type="text" name="lol6" value="asdf"><br>
+								<input type="radio" name="companyTown" value="notAdded"/>add a town<br>
+								Town:<input type="text" name="newCompanyTown"><br>
 							</td>
 						</tr>
 					</table>
-					Responsible person:<input type="text" name="lol5" value="asdf"><br>
-					Phone:<input type="text" name="lol6" value="asdf"><br>
-					Mail:<input type="text" name="lol6" value="asdf"><br>
-					website:<input type="text" name="lol6" value="asdf"><br>
-					desciption:<input type="text" name="lol6" value="asdf"><br>
+					Responsible person:<input type="text" name="companyInCharge"><br>
+					Phone:<input type="text" name="companyPhone"><br>
+					Mail:<input type="text" name="companyMail"><br>
+					website:<input type="text" name="companyWebsite"><br>
+					desciption:<input type="text" name="companyDescription"><br>
 				</td>
 			</tr>
 		</table>
