@@ -5,7 +5,7 @@
 </head>
 <body>
 	<div class="content">
-	<form action="addCompany.php" method="POST" accept-charset="utf-8">
+	<form action="register.php" method="POST" accept-charset="utf-8">
 		Registriraj uporabnika:<br>
 		Username:<input type="text" name="username"><br>
 		Password:<input type="password" name="password"><br>
