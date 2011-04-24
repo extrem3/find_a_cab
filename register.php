@@ -17,11 +17,11 @@ $id_town;
 $id_town2;
 $id_company;
 
-//error messages: 1-username, 2-email_regex, 3-email_exists, 4-phone_regex, 5-phone_exists, 6-passwords do not match or are too short, 7-empty fields somewhere
+//error messages: 1-username, 2-email_regex, 3-email_exists, 4-phone_regex, 5-phone_exists, 6-passwords do not match or are too short, 7-empty fields somewhere, 8-company_mail_regex, 9-company_phone_regex
 
 function checkErrors($clean)
 {
-	if(empty($clean['username']) || empty($clean['name']) || empty($clean['lastName']) || ($clean['cabOwner'] == "on" && $clean['town'] == "notAdded" && empty($clean['newTown'])) || ($clean['companyOwner'] == "on" && $clean['company'] == "notAdded" && (empty($clean['companyName']) || empty($clean['companyStreet']) || empty($clean['companyInCharge']))))
+	if(empty($clean['username']) || empty($clean['name']) || empty($clean['lastName']) || ($clean['cabOwner'] == "on" && $clean['town'] == "notAdded" && empty($clean['newTown'])) || ($clean['companyOwner'] == "on" && $clean['company'] == "notAdded" && (empty($clean['companyName']) || empty($clean['companyStreet']) || empty($clean['companyInCharge']) || ($clean['companyTown'] == "notAdded" && empty($clean['newCompanyTown'])))))
 		return 7;
 	//users cannot have same username or email
 	if(mysql_num_rows(mysql_query("SELECT * FROM uporabniki WHERE username= '" . $clean['username'] . "'"))>0) 
@@ -30,6 +30,17 @@ function checkErrors($clean)
 		return 2;
 	if(mysql_num_rows(mysql_query("SELECT * FROM uporabniki WHERE email= '" . $clean['email'] . "'"))>0) 
 		return 3;
+	if(!eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$", $_POST['companyMail']))
+		return 8;
+	if ($clean['companyOwner'] == "on")
+	{
+		preg_match_all('/[0-9]+/', $_POST['phone'], $cleaned);
+		foreach($cleaned[0] as $k=>$v) {
+		   $phoneNumber .= $v;
+		}
+		if(strlen($phoneNumber) > 9 || strlen($phoneNumber) < 7)
+			return 9;
+	}
 	// drivers cannot have the same mobile phone number
 	if ($clean['cabOwner'] == "on")
 	{
