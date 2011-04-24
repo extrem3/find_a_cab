@@ -4,7 +4,7 @@ require('config.php');
 mysql_connect(localhost,$username,$password);
 @mysql_select_db($database) or die( "Unable to select database");
 
-$town = $_POST["id"];
+$town = mysql_real_escape_string($_POST["id"]);
 echo '<div class="townName">' . $town . '</div>';
 
 $result = mysql_query("SELECT id_mesto FROM mesta WHERE mesto='$town'");
