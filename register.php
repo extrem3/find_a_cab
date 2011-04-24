@@ -21,6 +21,8 @@ $id_company;
 
 function checkErrors($clean)
 {
+	if(empty($clean['username']) || empty($clean['name']) || empty($clean['lastName']) || ($clean['cabOwner'] == "on" && $clean['town'] == "notAdded" && empty($clean['newTown'])) || ($clean['companyOwner'] == "on" && $clean['company'] == "notAdded" && (empty($clean['companyName']) || empty($clean['companyStreet']) || empty($clean['companyInCharge']))))
+		return 7;
 	//users cannot have same username or email
 	if(mysql_num_rows(mysql_query("SELECT * FROM uporabniki WHERE username= '" . $clean['username'] . "'"))>0) 
 		return 1;
@@ -42,8 +44,6 @@ function checkErrors($clean)
 	}
 	if($clean['password'] !== $clean['passwordCheck'] || strlen($_POST['password']) < 4)
 		return 6;
-	// if(empty($clean['username'] || empty($clean['name']) || empty($clean['lastName']) || ($clean['cabOwner'] == "on" && $clean['town'] == "notAdded" && empty($clean['newTown'])) || ($clean['companyOwner'] && $clean['company'] == "notAdded" && (empty($clean['companyName']) || empty($clean['companyStreet']) || empty($clean['companyInCharge']))))))
-		// return 7;
 	return 0;
 }
 
@@ -124,7 +124,6 @@ if ($errors)
 			$id_town = addTown($clean, $clean['townSelect']);
 		}else
 		{
-			echo $clean['newTown'] . " " . $_POST['newTown'];
 			$id_town = addTown($clean, $clean['newTown']);
 		}
 		if ($clean['company'] == "added") 
