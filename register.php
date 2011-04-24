@@ -84,13 +84,16 @@ function addCompany($clean, $companyName, $town_id, $user_id, $exists)
 			$companyRow = mysql_fetch_assoc($companyQuery);
 			return $companyRow['id_podjetje'];
 		}
+	}else
+	{
+		$town_id = ucfirst(strtolower($town_id));
+		mysql_query("INSERT INTO podjetje (naziv, ulica, mesto, id_drzava, odg_oseba, tel, fax, email, www, opis, rating)
+								   VALUES ('$companyName', '" . $clean['companyStreet'] . "', '$town_id', '1', '" . $clean['companyInCharge'] . "', '" . $clean['companyPhone'] . "', '" . $clean['companyFax'] . "', '" . $clean['companyMail'] . "', '" . $clean['companyWebsite'] . "', '" . $clean['companyDescription'] . "', '0')");
+
+		$result = mysql_query("SELECT max(id_podjetje) FROM podjetje");
+		return mysql_result($result, 0, 0);
 	}
-
-	mysql_query("INSERT INTO podjetje (naziv, ulica, id_mesto, id_drzava, odg_oseba, tel, fax, email, www, opis, rating)
-							   VALUES ('$companyName', '" . $clean['companyStreet'] . "', '$town_id', '1', '" . $clean['companyInCharge'] . "', '" . $clean['companyPhone'] . "', '" . $clean['companyFax'] . "', '" . $clean['companyMail'] . "', '" . $clean['companyWebsite'] . "', '" . $clean['companyDescription'] . "', '0')");
-
-	$result = mysql_query("SELECT max(id_podjetje) FROM podjetje");
-	return mysql_result($result, 0, 0);
+	return 0;
 }
 function addTown($clean, $town)
 {
@@ -133,12 +136,13 @@ if ($errors)
 		{
 			if ($clean['companyTown'] == "added") 
 			{
-				$id_town2 = addTown($clean, $clean['companyTownSelect']);
+				// $id_town2 = addTown($clean, $clean['companyTownSelect']);
+				$id_company = addCompany($clean, $clean['companyName'], $clean['companyTownSelect'], $id_user, false);
 			}else
 			{
-				$id_town2 = addTown($clean, $clean['newCompanyTown']);
+				// $id_town2 = addTown($clean, $clean['newCompanyTown']);
+				$id_company = addCompany($clean, $clean['companyName'], $clean['newCompanyTown'], $id_user, false);
 			}
-			$id_company = addCompany($clean, $clean['companyName'], $id_town2, $id_user, false);
 		}
 		mysql_query("INSERT INTO upor_podj (id_uporabnik, id_podjetje)
 									VALUES ('$id_user', '$id_company')");
@@ -152,12 +156,13 @@ if ($errors)
 		{
 			if ($clean['companyTown'] == "added") 
 			{
-				$id_town2 = addTown($clean, $clean['companyTownSelect']);
+				// $id_town2 = addTown($clean, $clean['companyTownSelect']);
+				$id_company = addCompany($clean, $clean['companyName'], $clean['companyTownSelect'], $id_user, false);
 			}else
 			{
-				$id_town2 = addTown($clean, $clean['newCompanyTown']);
+				// $id_town2 = addTown($clean, $clean['newCompanyTown']);
+				$id_company = addCompany($clean, $clean['companyName'], $clean['newCompanyTown'], $id_user, false);
 			}
-			$id_company = addCompany($clean, $clean['companyName'], $id_town2, $id_user, false);
 		}
 	}
 	echo "done";
