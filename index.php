@@ -171,18 +171,73 @@
 	</script>
 </head>
 <body>
-	<div id="header" align="center"><img src="img/najditaxt_logo_m.png" alt="NajdiTaxi.si" /></div>
-	<div class="space">&nbsp;</div>
-	<div class="center">
+	<div id="header">
+		<div id="name">
+			NajdiTaxi.si
+		</div>
+	</div>
+	<div id="search">
 		<div class="ui-widget" id="ui-dropbox" style="display: none"></div>
 		<form id="searchForm" action="search.php" method="POST">
-			<input type="text" name="id" />
+			<input id="search-box" type="text" name="id" />
 			<input type="submit" value="Najdi!" />
 		</form> 
 		<div id="results"></div>
 	</div>
-	<div id="footer"><div id="footer-font">vsebina na portalu najdiTAXI.si je avtorsko zascitena in last podjetja LabIT d.o.o. &#169; 2011</div></div>
-
-
+	<div id="content">
+		<div id="city">
+			Celje
+		</div>
+		<div id="line">
+			&nbsp;
+		</div>
+		<div class="taxi-line">
+			<div class="name">
+			TAXI lorem
+			</div>
+			<div class="number">
+			040-123-456
+			</div>
+			<div class="stars">
+			bla
+			</div>
+		</div>
+		
+		<div class="taxi-line">
+			<div class="name">
+			TAXI lorem
+			</div>
+			<div class="number">
+			040-123-456
+			</div>
+			<div class="stars">
+			bla
+			</div>
+		</div>
+		
+		<div class="taxi-line">
+			<div class="name">
+			TAXI lorem
+			</div>
+			<div class="number">
+			040-123-456
+			</div>
+			<div class="stars">
+			bla
+			</div>
+		</div>
+		
+		<div class="taxi-line">
+			<div class="name">
+			TAXI lorem
+			</div>
+			<div class="number">
+			040-123-456
+			</div>
+			<div class="stars">
+			bla
+			</div>
+		</div>
+	</div>
 </body>
 </html>
