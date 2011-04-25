@@ -130,6 +130,16 @@ switch ($_GET['type']) {
 								   VALUES ('$town_id', '$telefonska_id')");
 		echo "phone number added";
 		break;
+	case 'company':
+		$company_id_query = mysql_query("SELECT * FROM upor_podj WHERE id_uporabnik='" . $user_id . "'");
+		if(mysql_num_rows($company_id_query)>0) 
+		{
+			$company_row = mysql_fetch_assoc($company_id_query);
+			$company_id = $company_row['id_podjetje'];
+		}
+		mysql_query("UPDATE podjetje SET naziv='" . $clean['companyName'] . "',ulica='" . $clean['companyStreet'] . "',mesto='" . $clean['companyTown'] . "',odg_oseba='" . $clean['companyInCharge'] . "',tel='" . $clean['companyPhone'] . "',fax='" . $clean['companyFax'] . "',email='" . $clean['companyMail'] . "',www='" . $clean['companyWebsite'] . "',opis='" . $clean['companyDescription'] . "' WHERE id_podjetje='" . $company_id . "'");
+		echo "company details updated";
+		break;
 	default:
 		echo "NO TYPE SPECIFIED";
 		break;

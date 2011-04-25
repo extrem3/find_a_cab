@@ -76,13 +76,13 @@
 				if(count($companyArray) > 1)
 				{
 					echo '<hr>';
-					echo '<form id="form_02" action="user.php" method="POST" accept-charset="utf-8">';
+					echo '<form id="company" action="user.php?type=company" method="POST" accept-charset="utf-8">';
 					echo 'Name:<input type="text" name="companyName" value="' . $companyArray[0] . '"><br>';
 					echo 'Street:<input type="text" name="companyStreet" value="' . $companyArray[1] . '"><br>';
-					echo 'Town:<input type="text" name="newCompanyTown" value="' . $companyArray[2] . '"><br>';
+					echo 'Town:<input type="text" name="companyTown" value="' . $companyArray[2] . '"><br>';
 					echo 'Responsible person:<input type="text" name="companyInCharge" value="' . $companyArray[3] . '"><br>';
 					echo 'Phone:<input type="text" name="companyPhone" value="' . $companyArray[4] . '"><br>';
-					echo 'Fax:<input type="text" name="companyPhone" value="' . $companyArray[5] . '"><br>';
+					echo 'Fax:<input type="text" name="companyFax" value="' . $companyArray[5] . '"><br>';
 					echo 'Mail:<input type="text" name="companyMail" value="' . $companyArray[6] . '"><br>';
 					echo 'website:<input type="text" name="companyWebsite" value="' . $companyArray[7] . '"><br>';
 					echo 'desciption:<input type="text" name="companyDescription" value="' . $companyArray[8] . '"><br>';
