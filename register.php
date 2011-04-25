@@ -21,7 +21,7 @@ $id_company;
 
 function checkErrors($clean)
 {
-	if(empty($clean['username']) || empty($clean['name']) || empty($clean['lastName']) || ($clean['cabOwner'] == "on" && $clean['town'] == "notAdded" && empty($clean['newTown'])) || ($clean['companyOwner'] == "on" && $clean['company'] == "notAdded" && (empty($clean['companyName']) || empty($clean['companyStreet']) || empty($clean['companyInCharge']) || ($clean['companyTown'] == "notAdded" && empty($clean['newCompanyTown'])))))
+	if(empty($clean['username']) || empty($clean['name']) || empty($clean['lastName']) || ($clean['cabOwner'] == "on" && $clean['town'] == "notAdded" && empty($clean['newTown'])) || ($clean['companyOwner'] == "on" && $clean['company'] == "notAdded" && (empty($clean['companyName']) || empty($clean['companyStreet']) || empty($clean['companyInCharge']) || empty($clean['newCompanyTown']))))
 		return 7;
 	//users cannot have same username or email
 	if(mysql_num_rows(mysql_query("SELECT * FROM uporabniki WHERE username= '" . $clean['username'] . "'"))>0) 
@@ -46,9 +46,10 @@ function checkErrors($clean)
 	{
 		preg_match_all('/[0-9]+/', $_POST['phone'], $cleaned);
 		foreach($cleaned[0] as $k=>$v) {
-		   $phoneNumber .= $v;
+		   $phoneNumber2 .= $v;
 		}
-		if(strlen($phoneNumber) > 9 || strlen($phoneNumber) < 7)
+		// return $phoneNumber2;
+		if(strlen($phoneNumber2) > 9 || strlen($phoneNumber2) < 7)
 			return 4;
 		if(mysql_num_rows(mysql_query("SELECT * FROM telefonske_st WHERE telefonske_st= '$phoneNumber'"))>0) 
 			return 5;
@@ -98,6 +99,7 @@ function addCompany($clean, $companyName, $town_id, $user_id, $exists)
 	}else
 	{
 		$town_id = ucfirst(strtolower($town_id));
+		mysql_query("UPDATE uporabniki SET naziv='2' WHERE id_uporabnik='" . $user_id . "'");
 		mysql_query("INSERT INTO podjetje (naziv, ulica, mesto, id_drzava, odg_oseba, tel, fax, email, www, opis, rating)
 								   VALUES ('$companyName', '" . $clean['companyStreet'] . "', '$town_id', '1', '" . $clean['companyInCharge'] . "', '" . $clean['companyPhone'] . "', '" . $clean['companyFax'] . "', '" . $clean['companyMail'] . "', '" . $clean['companyWebsite'] . "', '" . $clean['companyDescription'] . "', '0')");
 
@@ -145,15 +147,7 @@ if ($errors)
 			$id_company = addCompany($clean, $clean['companySelect'], $id_town, $id_user, true);
 		}else
 		{
-			if ($clean['companyTown'] == "added") 
-			{
-				// $id_town2 = addTown($clean, $clean['companyTownSelect']);
-				$id_company = addCompany($clean, $clean['companyName'], $clean['companyTownSelect'], $id_user, false);
-			}else
-			{
-				// $id_town2 = addTown($clean, $clean['newCompanyTown']);
-				$id_company = addCompany($clean, $clean['companyName'], $clean['newCompanyTown'], $id_user, false);
-			}
+			$id_company = addCompany($clean, $clean['companyName'], $clean['newCompanyTown'], $id_user, false);
 		}
 		mysql_query("INSERT INTO upor_podj (id_uporabnik, id_podjetje)
 									VALUES ('$id_user', '$id_company')");
@@ -165,15 +159,7 @@ if ($errors)
 			$id_company = addCompany($clean, $clean['companySelect'], $id_town, $id_user, true);
 		}else
 		{
-			if ($clean['companyTown'] == "added") 
-			{
-				// $id_town2 = addTown($clean, $clean['companyTownSelect']);
-				$id_company = addCompany($clean, $clean['companyName'], $clean['companyTownSelect'], $id_user, false);
-			}else
-			{
-				// $id_town2 = addTown($clean, $clean['newCompanyTown']);
-				$id_company = addCompany($clean, $clean['companyName'], $clean['newCompanyTown'], $id_user, false);
-			}
+			$id_company = addCompany($clean, $clean['companyName'], $clean['newCompanyTown'], $id_user, false);
 		}
 	}
 	echo "done";
