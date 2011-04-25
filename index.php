@@ -40,12 +40,20 @@
 							$result=mysql_query($query);
 
 							$echoString = "\t\t\t\t\t\tsource: [";
+							$i = 0;
 							while ($row = mysql_fetch_assoc($result)) {
+								$i ++;
 								$row_text = $row['mesto'];
 								$echoString .= "'$row_text', ";
 							}
-							$echoString = substr($echoString, 0, -2);
-							$echoString .= "],";
+							if ($i > 0)
+							{
+								$echoString = substr($echoString, 0, -2);
+								$echoString .= "],";
+							}else
+							{
+								$echoString .= "],";
+							}
 							echo $echoString;
 						?>
 						select: function( event, ui ) {
