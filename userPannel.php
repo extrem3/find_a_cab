@@ -7,20 +7,26 @@
 <body>
 	<div class="content">
 		<div class="pannel">
-			<form id="form_01" action="user.php?type=lol" method="POST" accept-charset="utf-8">
-				username:<input type="text" value="<?php echo getUsername($user_id); ?>" />
+			<form id="username" action="user.php?type=username" method="POST" accept-charset="utf-8">
+				username:<input type="text" name="username" value="<?php echo getUsername($user_id); ?>" />
 				<input type="submit" value="change" />
 			</form>
 			<hr>
-			<form id="form_05" action="user.php" method="POST" accept-charset="utf-8">
-				email:<input type="text" value="<?php echo getEmail($user_id); ?>" />
+			<form id="name" action="user.php?type=name" method="POST" accept-charset="utf-8">
+				name:<input type="text" name="name" value="<?php $nameArray = (array)getName($user_id); echo $nameArray[0]; ?>" /><br>
+				last name:<input type="text" name="lastName" value="<?php echo $nameArray[1]; ?>" />
 				<input type="submit" value="change" />
 			</form>
 			<hr>
-			<form id="form_02" action="user.php" method="POST" accept-charset="utf-8">
-				old password:<input type="password"/><br>
-				new password:<input type="password"/><br>
-				repeat new password:<input type="password"/><br>
+			<form id="email" action="user.php?type=email" method="POST" accept-charset="utf-8">
+				email:<input type="text" name="email" value="<?php echo getEmail($user_id); ?>" />
+				<input type="submit" value="change" />
+			</form>
+			<hr>
+			<form id="password" action="user.php?type=password" method="POST" accept-charset="utf-8">
+				old password:<input type="password" name="oldPassword"/><br>
+				new password:<input type="password" name="password"/><br>
+				repeat new password:<input type="password" name="passwordCheck"/><br>
 				<input type="submit" value="change" />
 			</form>
 			<hr>
@@ -29,36 +35,11 @@
 				$townNamesArray = (array)getTowns();
 				foreach($phoneNumbersArray as $values)
 				{
-					echo '<form id="form_02" action="user.php" method="POST" accept-charset="utf-8">';
-					echo '<table>';
-					echo '<tr>';
-					echo '<td style="vertical-align: top; width: 200px">';
-					echo '<input type="radio" name="town" value="added" checked="true"/>town already added';
-					echo '<select name="townSelect" id="townSelect">';
-
-					foreach($townNamesArray as $values2)
-					{
-						if ($values2 == $values[1])
-						{
-							echo '<option value="' . $values2 . '" selected="selected">' . $values2 . '</option>';
-						}else
-						{
-							echo '<option value="' . $values2 . '">' . $values2 . '</option>';
-						}
-					}
-					echo '</select>';
-					echo '</td>';
-					echo '<td style="vertical-align: top; width: 50px">';
-					echo 'OR';
-					echo '</td>';
-					echo '<td style="vertical-align: top; width: 500px">';
-					echo '<input type="radio" name="town" value="notAdded"/>add a town<br>';
-					echo 'Town:<input type="text" name="newTown"><br>';
-					echo '</td>';
-					echo '</tr>';
-					echo '</table>';
-					echo 'Phone:<input type="text" name="newTown" value="' . $values[0] . '">';
-					echo '<input type="submit" value="change">';
+					$i ++;
+					echo '<form id="phone' . $i . '" action="user.php?type=phone" method="POST" accept-charset="utf-8">';
+					echo $values[0] . ' [' . $values[1] . ']';
+					echo '<input type="hidden" name="phone" value="' . $values[0] . '">';
+					echo '<input type="submit" value="remove">';
 					echo '</form>';
 				}
 			?>
@@ -111,6 +92,7 @@
 			?>
 			<hr>
 			<form id="form_02" action="user.php" method="POST" accept-charset="utf-8">
+			I changed my company, so please move me to:
 			<table>
 				<tr>
 					<td style="vertical-align: top; width: 200px">

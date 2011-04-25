@@ -14,6 +14,20 @@ function getUsername($user_id)
 	}
 	return "";
 }
+// returns name and last name
+function getName($user_id)
+{
+	$resultsArray = array();
+	$query = mysql_query("SELECT * FROM uporabniki WHERE id_uporabnik='" . $user_id . "'");
+	if(mysql_num_rows($query)>0) 
+	{
+			$query_row= mysql_fetch_assoc($query);
+			array_push($resultsArray, $query_row['ime']);
+			array_push($resultsArray, $query_row['priimek']);
+			return (array)$resultsArray;
+	}
+	return "";
+}
 // returns email address
 function getEmail($user_id)
 {
