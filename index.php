@@ -171,12 +171,17 @@
 	</script>
 </head>
 <body>
+<<<<<<< HEAD
 	<div id="header">
 		<div id="name">
 			NajdiTaxi.si
 		</div>
 	</div>
 	<div id="search">
+=======
+	<!-- <div id="header" align="center"><img src="img/najditaxt_logo_m.png" alt="NajdiTaxi.si" /></div> -->
+	<div class="center">
+>>>>>>> 57df47952fba326ba7a74cfc3ab921f76d254308
 		<div class="ui-widget" id="ui-dropbox" style="display: none"></div>
 		<form id="searchForm" action="search.php" method="POST">
 			<input id="search-box" type="text" name="id" />
