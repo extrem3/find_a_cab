@@ -1,3 +1,11 @@
+<?php
+	require('config.php');
+	require('checkLogin.php');
+	if($_SESSION['userLevel'] <= 3)
+	{
+		header("Location: index.php");
+	}
+?>
 <html>
 <head>
 	<title>Admin pannel</title>
@@ -7,7 +15,6 @@
 	<div class="content">
 		<div class="removeUser">Remove User:<br>
 		<?php
-			require('config.php');
 			mysql_connect($location,$username,$password);
 			@mysql_select_db($database) or die( "Unable to select database");
 			

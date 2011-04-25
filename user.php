@@ -1,10 +1,11 @@
 <?php
 require('config.php');
+require('checkLogin.php');
 
 mysql_connect($location,$username,$password);
 @mysql_select_db($database) or die( "Unable to select database");
 
-$user_id = 5;
+
 
 foreach(array_keys($_POST) as $key)
 {
