@@ -16,6 +16,7 @@ if(mysql_num_rows($loginQuery)>0)
 {
 	$loginRow = mysql_fetch_assoc($loginQuery);
 	$_SESSION['user_id'] = $loginRow['id_uporabnik'];
+	$_SESSION['user_level'] = $loginRow['nivo'];
 	header("Location: userPannel.php");
 }
 
