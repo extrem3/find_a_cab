@@ -17,11 +17,11 @@ $id_town;
 $id_town2;
 $id_company;
 
-//error messages: 1-username, 2-email_regex, 3-email_exists, 4-phone_regex, 5-phone_exists, 6-passwords do not match or are too short, 7-empty fields somewhere
+//error messages: 1-username, 2-email_regex, 3-email_exists, 4-phone_regex, 5-phone_exists, 6-passwords do not match or are too short, 7-empty fields somewhere, 8-company_mail_regex, 9-company_phone_regex
 
 function checkErrors($clean)
 {
-	if(empty($clean['username']) || empty($clean['name']) || empty($clean['lastName']) || ($clean['cabOwner'] == "on" && $clean['town'] == "notAdded" && empty($clean['newTown'])) || ($clean['companyOwner'] == "on" && $clean['company'] == "notAdded" && (empty($clean['companyName']) || empty($clean['companyStreet']) || empty($clean['companyInCharge']))))
+	if(empty($clean['username']) || empty($clean['name']) || empty($clean['lastName']) || ($clean['cabOwner'] == "on" && $clean['town'] == "notAdded" && empty($clean['newTown'])) || ($clean['companyOwner'] == "on" && $clean['company'] == "notAdded" && (empty($clean['companyName']) || empty($clean['companyStreet']) || empty($clean['companyInCharge']) || empty($clean['newCompanyTown']))))
 		return 7;
 	//users cannot have same username or email
 	if(mysql_num_rows(mysql_query("SELECT * FROM uporabniki WHERE username= '" . $clean['username'] . "'"))>0) 
@@ -30,14 +30,26 @@ function checkErrors($clean)
 		return 2;
 	if(mysql_num_rows(mysql_query("SELECT * FROM uporabniki WHERE email= '" . $clean['email'] . "'"))>0) 
 		return 3;
-	// drivers cannot have the same mobile phone number
-	if ($clean['cabOwner'] == "on")
+	if(!eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$", $_POST['companyMail']))
+		return 8;
+	if ($clean['companyOwner'] == "on")
 	{
 		preg_match_all('/[0-9]+/', $_POST['phone'], $cleaned);
 		foreach($cleaned[0] as $k=>$v) {
 		   $phoneNumber .= $v;
 		}
 		if(strlen($phoneNumber) > 9 || strlen($phoneNumber) < 7)
+			return 9;
+	}
+	// drivers cannot have the same mobile phone number
+	if ($clean['cabOwner'] == "on")
+	{
+		preg_match_all('/[0-9]+/', $_POST['phone'], $cleaned);
+		foreach($cleaned[0] as $k=>$v) {
+		   $phoneNumber2 .= $v;
+		}
+		// return $phoneNumber2;
+		if(strlen($phoneNumber2) > 9 || strlen($phoneNumber2) < 7)
 			return 4;
 		if(mysql_num_rows(mysql_query("SELECT * FROM telefonske_st WHERE telefonske_st= '$phoneNumber'"))>0) 
 			return 5;
@@ -71,6 +83,7 @@ function addDriver($clean, $phone_number, $town_id, $user_id)
 
 	mysql_query("INSERT INTO mesta_telefonske (ID_mesta, ID_telefonske)
 							   VALUES ('$town_id', '$telefonska_id')");
+	mysql_query("UPDATE uporabniki SET naziv='1' WHERE id_uporabnik='" . $user_id . "'");
 	return $telefonska_st;
 }
 function addCompany($clean, $companyName, $town_id, $user_id, $exists)
@@ -84,13 +97,17 @@ function addCompany($clean, $companyName, $town_id, $user_id, $exists)
 			$companyRow = mysql_fetch_assoc($companyQuery);
 			return $companyRow['id_podjetje'];
 		}
+	}else
+	{
+		$town_id = ucfirst(strtolower($town_id));
+		mysql_query("UPDATE uporabniki SET naziv='2' WHERE id_uporabnik='" . $user_id . "'");
+		mysql_query("INSERT INTO podjetje (naziv, ulica, mesto, id_drzava, odg_oseba, tel, fax, email, www, opis, rating)
+								   VALUES ('$companyName', '" . $clean['companyStreet'] . "', '$town_id', '1', '" . $clean['companyInCharge'] . "', '" . $clean['companyPhone'] . "', '" . $clean['companyFax'] . "', '" . $clean['companyMail'] . "', '" . $clean['companyWebsite'] . "', '" . $clean['companyDescription'] . "', '0')");
+
+		$result = mysql_query("SELECT max(id_podjetje) FROM podjetje");
+		return mysql_result($result, 0, 0);
 	}
-
-	mysql_query("INSERT INTO podjetje (naziv, ulica, id_mesto, id_drzava, odg_oseba, tel, fax, email, www, opis, rating)
-							   VALUES ('$companyName', '" . $clean['companyStreet'] . "', '$town_id', '1', '" . $clean['companyInCharge'] . "', '" . $clean['companyPhone'] . "', '" . $clean['companyFax'] . "', '" . $clean['companyMail'] . "', '" . $clean['companyWebsite'] . "', '" . $clean['companyDescription'] . "', '0')");
-
-	$result = mysql_query("SELECT max(id_podjetje) FROM podjetje");
-	return mysql_result($result, 0, 0);
+	return 0;
 }
 function addTown($clean, $town)
 {
@@ -131,14 +148,7 @@ if ($errors)
 			$id_company = addCompany($clean, $clean['companySelect'], $id_town, $id_user, true);
 		}else
 		{
-			if ($clean['companyTown'] == "added") 
-			{
-				$id_town2 = addTown($clean, $clean['companyTownSelect']);
-			}else
-			{
-				$id_town2 = addTown($clean, $clean['newCompanyTown']);
-			}
-			$id_company = addCompany($clean, $clean['companyName'], $id_town2, $id_user, false);
+			$id_company = addCompany($clean, $clean['companyName'], $clean['newCompanyTown'], $id_user, false);
 		}
 		mysql_query("INSERT INTO upor_podj (id_uporabnik, id_podjetje)
 									VALUES ('$id_user', '$id_company')");
@@ -150,14 +160,7 @@ if ($errors)
 			$id_company = addCompany($clean, $clean['companySelect'], $id_town, $id_user, true);
 		}else
 		{
-			if ($clean['companyTown'] == "added") 
-			{
-				$id_town2 = addTown($clean, $clean['companyTownSelect']);
-			}else
-			{
-				$id_town2 = addTown($clean, $clean['newCompanyTown']);
-			}
-			$id_company = addCompany($clean, $clean['companyName'], $id_town2, $id_user, false);
+			$id_company = addCompany($clean, $clean['companyName'], $clean['newCompanyTown'], $id_user, false);
 		}
 	}
 	echo "done";
