@@ -3,9 +3,12 @@ Find a cab
 
 ATASTRUMF!!!
 ----------
-* APPLY STYLE TO search.php
+* APPLY STYLE TO search.php, index.php
+* APPLY STYLE TO loginPannel.php
+* APPLY STYLE TO userPannel.php
+* APPLY STYLE TO adminPannel.php
 * APPLY STYLE TO registerPannel.php
-* make registerPannel intuitive, because right now its shit
+* help make registerPannel and userPannel intuitive, because right now its shit
 
 todo
 -----------
@@ -17,5 +20,4 @@ rename the "config.php.example" file to "config.php" and edit it with your info
 
 info
 --------
-* search feature now working
-* register pannel is added
+almost finished with everything, maybe ready for alpha on my end?
