@@ -83,6 +83,7 @@ function addDriver($clean, $phone_number, $town_id, $user_id)
 
 	mysql_query("INSERT INTO mesta_telefonske (ID_mesta, ID_telefonske)
 							   VALUES ('$town_id', '$telefonska_id')");
+	mysql_query("UPDATE uporabniki SET naziv='1' WHERE id_uporabnik='" . $user_id . "'");
 	return $telefonska_st;
 }
 function addCompany($clean, $companyName, $town_id, $user_id, $exists)

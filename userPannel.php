@@ -2,7 +2,7 @@
 <head>
 	<title>User pannel</title>
 	<script type="text/javascript" src="scr/jquery-1.5.1.js"></script>
-	<?php $user_id = 4; require('data.php'); ?>
+	<?php $user_id = 5; require('data.php'); ?>
 </head>
 <body>
 	<div class="content">

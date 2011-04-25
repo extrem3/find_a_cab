@@ -4,7 +4,7 @@ require('config.php');
 mysql_connect($location,$username,$password);
 @mysql_select_db($database) or die( "Unable to select database");
 
-$user_id = 4;
+$user_id = 5;
 
 foreach(array_keys($_POST) as $key)
 {
@@ -184,6 +184,7 @@ switch ($_GET['type']) {
 		echo "company details updated";
 		break;
 	case 'addCompany':
+		echo $user_id . "<br>";
 		$company_id_query = mysql_query("SELECT * FROM upor_podj WHERE id_uporabnik='" . $user_id . "'");
 		if(mysql_num_rows($company_id_query)>0) 
 		{
@@ -217,6 +218,7 @@ switch ($_GET['type']) {
 			$id_company = addCompany($clean, $clean['companyName'], $clean['companyTown'], $user_id, false);
 			mysql_query("UPDATE uporabniki SET nivo='2' WHERE id_uporabnik='" . $user_id . "'");
 		}
+		echo $user_id . "<br>";
 		mysql_query("UPDATE upor_podj SET id_podjetje='" . $id_company . "' WHERE id_uporabnik='" . $user_id . "'");
 		echo "moved to new company";
 		break;
