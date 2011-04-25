@@ -9,6 +9,24 @@ foreach(array_keys($_POST) as $key)
   $clean[$key] = mysql_real_escape_string($_POST[$key]);
 }
 
+function addTown($town)
+{
+	// we dont care if the town already exists or not, so we can return the id of existing one or make a new entry
+	$town = ucfirst(strtolower($town));
+	$townQuery = mysql_query("SELECT id_mesto FROM mesta WHERE mesto='$town'");
+	if(mysql_num_rows($townQuery)>0) 
+	{
+		$townRow = mysql_fetch_assoc($townQuery);
+		return $townRow['id_mesto'];
+	}
+	
+	mysql_query("INSERT INTO mesta (mesto)
+						    VALUES ('$town')");
+
+	$townResult = mysql_query("SELECT max(id_mesto) FROM mesta");
+	return mysql_result($townResult, 0, 0);
+}
+
 $user_id = 3;
 
 switch ($_GET['type']) {
@@ -52,18 +70,22 @@ switch ($_GET['type']) {
 		echo "password changed";
 		break;
 	case 'phone':
-		$phoneId_query = mysql_query("SELECT * FROM telefonske_st WHERE ID_user='" . $user_id . "'");
+		$phoneId_query = mysql_query("SELECT * FROM telefonske_st WHERE ID_user='" . $user_id . "' AND telefonske_st='" . $clean['phone'] . "'");
 		if(mysql_num_rows($phoneId_query)>0) 
 		{
 			$phone_row= mysql_fetch_assoc($phoneId_query);
 			$phoneId = $phone_row['ID_telefonske_st'];
 		}
+		echo "userId= " . $user_id. "<br>";
+		echo "phoneNumber= " . $clean['phone']. "<br>";
+		echo "phoneId = " . $phoneId . "<br>";
 		$mesto_id_query = mysql_query("SELECT * FROM mesta_telefonske WHERE ID_telefonske='" . $phoneId . "'");
 		if(mysql_num_rows($mesto_id_query)>0) 
 		{
 			$mesto_row = mysql_fetch_assoc($mesto_id_query);
 			$mesto_id = $mesto_row['ID_mesta'];
 		}
+		echo "mestoId= " . $mesto_id . "<br>";
 
 		$mesto_id_query = mysql_query("SELECT * FROM mesta_telefonske WHERE ID_mesta='" . $mesto_id . "'");
 		if(mysql_num_rows($mesto_id_query)==1) 
@@ -73,6 +95,40 @@ switch ($_GET['type']) {
 		mysql_query("DELETE FROM telefonske_st WHERE ID_user='" . $user_id . "' AND telefonske_st='" . $clean['phone'] . "'");
 		mysql_query("DELETE FROM mesta_telefonske WHERE ID_telefonske='" . $phoneId . "'");
 		echo "phone deleted";
+
+		break;
+	case 'addPhone':
+		preg_match_all('/[0-9]+/', $clean['phone'], $cleaned);
+		foreach($cleaned[0] as $k=>$v) {
+		   $phoneNumber .= $v;
+		}
+		if(strlen($phoneNumber) > 9 || strlen($phoneNumber) < 7)
+		{
+			echo "phone number too short or long";
+			break;
+		}
+		if(mysql_num_rows(mysql_query("SELECT * FROM telefonske_st WHERE telefonske_st= '$phoneNumber'"))>0) 
+		{
+			echo "phone number already in register";
+			break;
+		}
+		
+		mysql_query("INSERT INTO telefonske_st (ID_user, telefonske_st)
+								   VALUES ('$user_id', '$phoneNumber')");
+
+		$result = mysql_query("SELECT max(ID_telefonske_st) FROM telefonske_st");
+		$telefonska_id = mysql_result($result, 0, 0);
+		if ($clean['town'] == "added") 
+		{
+			$town_id = addTown($clean['townSelect']);
+		}else
+		{
+			$town_id = addTown($clean['newTown']);
+		}
+
+		mysql_query("INSERT INTO mesta_telefonske (ID_mesta, ID_telefonske)
+								   VALUES ('$town_id', '$telefonska_id')");
+		echo "phone number added";
 		break;
 	default:
 		echo "NO TYPE SPECIFIED";

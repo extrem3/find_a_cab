@@ -44,7 +44,7 @@
 				}
 			?>
 			<hr>
-			<form id="form_02" action="user.php" method="POST" accept-charset="utf-8">
+			<form id="addPhone" action="user.php?type=addPhone" method="POST" accept-charset="utf-8">
 				<table>
 					<tr>
 						<td style="vertical-align: top; width: 200px">
@@ -68,7 +68,7 @@
 						</td>
 					</tr>
 				</table>
-				phone:<input type="text" value="somehting" />
+				phone:<input type="text" name="phone" value="1112223" />
 				<input type="submit" value="add" />
 			</form>
 			<?php
