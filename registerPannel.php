@@ -69,42 +69,16 @@
 					<input type="radio" name="company" value="notAdded"/>create new company<br>
 					Name:<input type="text" name="companyName"><br>
 					Street:<input type="text" name="companyStreet"><br>
-					<table>
-						<tr>
-							<td style="vertical-align: top; width: 200px">
-								<input type="radio" name="companyTown" value="added" checked="true"/>town already added
-								<select name="companyTownSelect" id="companyTownSelect">
-									<?php
-									require('config.php');
-									mysql_connect($location,$username,$password);
-									@mysql_select_db($database) or die( "Unable to select database");
-									
-									$result = mysql_query("SELECT * FROM mesta ORDER BY mesto");
-									while($row = mysql_fetch_array($result))
-									{
-										echo "<option value=\"" . $row['mesto'] . "\">" . $row['mesto'] . "</option>";
-									}
-									?>
-								</select>
-							</td>
-							<td style="vertical-align: top; width: 50px">
-								OR
-							</td>
-							<td style="vertical-align: top; width: 500px">
-								<input type="radio" name="companyTown" value="notAdded"/>add a town<br>
-								Town:<input type="text" name="newCompanyTown"><br>
-							</td>
-						</tr>
-					</table>
+					Town:<input type="text" name="newCompanyTown"><br>
 					Responsible person:<input type="text" name="companyInCharge"><br>
 					Phone:<input type="text" name="companyPhone"><br>
 					Mail:<input type="text" name="companyMail"><br>
-					website:<input type="text" name="companyWebsite"><br>
-					desciption:<input type="text" name="companyDescription"><br>
+					Website:<input type="text" name="companyWebsite"><br>
+					Desciption:<input type="text" name="companyDescription"><br>
 				</td>
 			</tr>
 		</table>
-		<div style="display:blockk">
+		<div style="display:block">
 		<br>
 		<input type="submit" value="Register">
 		</div>

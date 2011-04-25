@@ -2,7 +2,7 @@
 <head>
 	<title>User pannel</title>
 	<script type="text/javascript" src="scr/jquery-1.5.1.js"></script>
-	<?php $user_id = 3; require('data.php'); ?>
+	<?php $user_id = 4; require('data.php'); ?>
 </head>
 <body>
 	<div class="content">
@@ -91,7 +91,7 @@
 				}
 			?>
 			<hr>
-			<form id="form_02" action="user.php" method="POST" accept-charset="utf-8">
+			<form id="addCompany" action="user.php?type=addCompany" method="POST" accept-charset="utf-8">
 			I changed my company, so please move me to:
 			<table>
 				<tr>
@@ -115,39 +115,13 @@
 						<input type="radio" name="company" value="notAdded"/>create new company<br>
 						Name:<input type="text" name="companyName"><br>
 						Street:<input type="text" name="companyStreet"><br>
-						<table>
-							<tr>
-								<td style="vertical-align: top; width: 200px">
-									<input type="radio" name="companyTown" value="added" checked="true"/>town already added
-									<select name="companyTownSelect" id="companyTownSelect">
-										<?php
-										require('config.php');
-										mysql_connect($location,$username,$password);
-										@mysql_select_db($database) or die( "Unable to select database");
-										
-										$result = mysql_query("SELECT * FROM mesta ORDER BY mesto");
-										while($row = mysql_fetch_array($result))
-										{
-											echo "<option value=\"" . $row['mesto'] . "\">" . $row['mesto'] . "</option>";
-										}
-										?>
-									</select>
-								</td>
-								<td style="vertical-align: top; width: 50px">
-									OR
-								</td>
-								<td style="vertical-align: top; width: 500px">
-									<input type="radio" name="companyTown" value="notAdded"/>add a town<br>
-									Town:<input type="text" name="newCompanyTown"><br>
-								</td>
-							</tr>
-						</table>
+						Town:<input type="text" name="companyTown"><br>
 						Responsible person:<input type="text" name="companyInCharge"><br>
 						Phone:<input type="text" name="companyPhone"><br>
 						Mail:<input type="text" name="companyMail"><br>
 						website:<input type="text" name="companyWebsite"><br>
 						desciption:<input type="text" name="companyDescription"><br>
-				<input type="submit" value="change" />
+						<input type="submit" value="change" />
 					</td>
 				</tr>
 			</table>

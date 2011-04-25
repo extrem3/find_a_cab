@@ -4,6 +4,8 @@ require('config.php');
 mysql_connect($location,$username,$password);
 @mysql_select_db($database) or die( "Unable to select database");
 
+$user_id = 4;
+
 foreach(array_keys($_POST) as $key)
 {
   $clean[$key] = mysql_real_escape_string($_POST[$key]);
@@ -26,8 +28,30 @@ function addTown($town)
 	$townResult = mysql_query("SELECT max(id_mesto) FROM mesta");
 	return mysql_result($townResult, 0, 0);
 }
+function addCompany($clean, $companyName, $town_id, $user_id, $exists)
+{
+	// two companys can have the same name so if the user wants to create a new one, let him create it
+	if($exists)
+	{
+		$companyQuery = mysql_query("SELECT id_podjetje FROM podjetje WHERE naziv='$companyName'");
+		if(mysql_num_rows($companyQuery)>0) 
+		{
+			$companyRow = mysql_fetch_assoc($companyQuery);
+			return $companyRow['id_podjetje'];
+		}
+	}else
+	{
+		$town_id = ucfirst(strtolower($town_id));
+		mysql_query("UPDATE uporabniki SET naziv='2' WHERE id_uporabnik='" . $user_id . "'");
+		mysql_query("INSERT INTO podjetje (naziv, ulica, mesto, id_drzava, odg_oseba, tel, fax, email, www, opis, rating)
+								   VALUES ('$companyName', '" . $clean['companyStreet'] . "', '$town_id', '1', '" . $clean['companyInCharge'] . "', '" . $clean['companyPhone'] . "', '" . $clean['companyFax'] . "', '" . $clean['companyMail'] . "', '" . $clean['companyWebsite'] . "', '" . $clean['companyDescription'] . "', '0')");
 
-$user_id = 3;
+		$result = mysql_query("SELECT max(id_podjetje) FROM podjetje");
+		return mysql_result($result, 0, 0);
+	}
+	return 0;
+}
+
 
 switch ($_GET['type']) {
 	case 'username':
@@ -131,6 +155,25 @@ switch ($_GET['type']) {
 		echo "phone number added";
 		break;
 	case 'company':
+		if(empty($clean['companyName']) || empty($clean['companyStreet']) || empty($clean['companyInCharge']) || empty($clean['companyTown']))
+		{
+			echo "some important fields are empty";
+			break;
+		}
+		if(!eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$", $clean['companyMail']))
+		{
+			echo "company mail is not cool";
+			break;
+		}
+		preg_match_all('/[0-9]+/', $clean['companyPhone'], $cleaned);
+		foreach($cleaned[0] as $k=>$v) {
+		   $phoneNumber .= $v;
+		}
+		if(strlen($phoneNumber) > 9 || strlen($phoneNumber) < 7)
+		{
+			echo "lol phone number is invalid";
+			break;
+		}
 		$company_id_query = mysql_query("SELECT * FROM upor_podj WHERE id_uporabnik='" . $user_id . "'");
 		if(mysql_num_rows($company_id_query)>0) 
 		{
@@ -139,6 +182,43 @@ switch ($_GET['type']) {
 		}
 		mysql_query("UPDATE podjetje SET naziv='" . $clean['companyName'] . "',ulica='" . $clean['companyStreet'] . "',mesto='" . $clean['companyTown'] . "',odg_oseba='" . $clean['companyInCharge'] . "',tel='" . $clean['companyPhone'] . "',fax='" . $clean['companyFax'] . "',email='" . $clean['companyMail'] . "',www='" . $clean['companyWebsite'] . "',opis='" . $clean['companyDescription'] . "' WHERE id_podjetje='" . $company_id . "'");
 		echo "company details updated";
+		break;
+	case 'addCompany':
+		$company_id_query = mysql_query("SELECT * FROM upor_podj WHERE id_uporabnik='" . $user_id . "'");
+		if(mysql_num_rows($company_id_query)>0) 
+		{
+			$company_row = mysql_fetch_assoc($company_id_query);
+			$company_id = $company_row['id_podjetje'];
+		}
+		$company_id_query2 = mysql_query("SELECT * FROM upor_podj WHERE id_podjetje='" . $company_id . "'");
+		if(mysql_num_rows($company_id_query2)==1) 
+		{
+			// check if he is the only user of that company and
+			//     remove old company which id you get from upor_podj
+			mysql_query("DELETE FROM podjetje WHERE id_podjetje='" . $company_id . "'");
+		}else
+		{
+			//if there are other users in the same company
+			//     select first one and make him the owner
+			$users_id_query = mysql_query("SELECT * FROM upor_podj WHERE id_podjetje='" . $company_id . "' AND NOT id_uporabnik='" . $user_id . "'");
+			if(mysql_num_rows($users_id_query)>0) 
+			{
+				$users_row = mysql_fetch_assoc($users_id_query);
+				$users_id = $users_row['id_uporabnik'];
+				mysql_query("UPDATE uporabniki SET nivo='2' WHERE id_uporabnik='" . $users_id . "'");
+			}
+		}
+		if ($clean['company'] == "added")
+		{
+			$id_company = addCompany($clean, $clean['companySelect'], $clean['companyTown'], $user_id, true);
+			mysql_query("UPDATE uporabniki SET nivo='1' WHERE id_uporabnik='" . $user_id . "'");
+		}else
+		{
+			$id_company = addCompany($clean, $clean['companyName'], $clean['companyTown'], $user_id, false);
+			mysql_query("UPDATE uporabniki SET nivo='2' WHERE id_uporabnik='" . $user_id . "'");
+		}
+		mysql_query("UPDATE upor_podj SET id_podjetje='" . $id_company . "' WHERE id_uporabnik='" . $user_id . "'");
+		echo "moved to new company";
 		break;
 	default:
 		echo "NO TYPE SPECIFIED";
