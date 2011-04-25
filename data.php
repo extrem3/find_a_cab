@@ -46,6 +46,42 @@ function getPhoneNumbers($user_id)
 	}
 	return (array)$resultsArray;
 }
+function getCompany($user_id)
+{
+	$level;
+	$query = mysql_query("SELECT * FROM uporabniki WHERE id_uporabnik='" . $user_id . "'");
+	if(mysql_num_rows($query)>0) 
+	{
+		$query_row= mysql_fetch_assoc($query);
+		$level = $query_row['nivo'];
+	}
+	$resultsArray = array();
+	if ($level >= 2)
+	{
+		$query = mysql_query("SELECT * FROM upor_podj WHERE id_uporabnik='" . $user_id . "'");
+		if(mysql_num_rows($query)>0) 
+		{
+			$query_row= mysql_fetch_assoc($query);
+			$level = $query_row['id_podjetje'];
+			$query2 = mysql_query("SELECT * FROM podjetje WHERE id_podjetje='" . $query_row['id_podjetje'] . "'");
+			if(mysql_num_rows($query2)>0) 
+			{
+				$query_row2= mysql_fetch_assoc($query2);
+				array_push($resultsArray, $query_row2['naziv']);
+				array_push($resultsArray, $query_row2['ulica']);
+				array_push($resultsArray, $query_row2['mesto']);
+				array_push($resultsArray, $query_row2['odg_oseba']);
+				array_push($resultsArray, $query_row2['tel']);
+				array_push($resultsArray, $query_row2['fax']);
+				array_push($resultsArray, $query_row2['email']);
+				array_push($resultsArray, $query_row2['www']);
+				array_push($resultsArray, $query_row2['opis']);
+				return (array)$resultsArray;
+			}
+		}
+	}
+	return "";
+}
 function getTowns()
 {
 	$resultsArray = array();

@@ -60,62 +60,21 @@
 					echo 'Phone:<input type="text" name="newTown" value="' . $values[0] . '">';
 					echo '<input type="submit" value="change">';
 					echo '</form>';
-					// echo $values[0] . ": " . $values[1] . "<br>";
 				}
 			?>
 			<hr>
 			<form id="form_02" action="user.php" method="POST" accept-charset="utf-8">
-			<table>
-				<tr>
-					<td style="vertical-align: top; width: 200px">
-						<input type="radio" name="town" value="added" checked="true"/>town already added
-						<select name="townSelect" id="townSelect">
-							<?php
-							require('config.php');
-							mysql_connect($location,$username,$password);
-							@mysql_select_db($database) or die( "Unable to select database");
-							
-							$result = mysql_query("SELECT * FROM mesta ORDER BY mesto");
-							while($row = mysql_fetch_array($result))
-							{
-								echo "<option value=\"" . $row['mesto'] . "\">" . $row['mesto'] . "</option>";
-							}
-							?>
-						</select>
-					</td>
-					<td style="vertical-align: top; width: 50px">
-						OR
-					</td>
-					<td style="vertical-align: top; width: 500px">
-						<input type="radio" name="town" value="notAdded"/>add a town<br>
-						Town:<input type="text" name="newTown"><br>
-					</td>
-				</tr>
-				<tr>
-						phone:<input type="text" value="somehting" />
-						<input type="submit" value="add" />
-				</tr>
-			</table>
-			</form>
-			<hr>
-			<form id="form_02" action="user.php" method="POST" accept-charset="utf-8">
-				Name:<input type="text" name="companyName"><br>
-				Street:<input type="text" name="companyStreet"><br>
 				<table>
 					<tr>
 						<td style="vertical-align: top; width: 200px">
-							<input type="radio" name="companyTown" value="added" checked="true"/>town already added
-							<select name="companyTownSelect" id="companyTownSelect">
+							<input type="radio" name="town" value="added" checked="true"/>town already added
+							<select name="townSelect" id="townSelect">
 								<?php
-								require('config.php');
-								mysql_connect($location,$username,$password);
-								@mysql_select_db($database) or die( "Unable to select database");
-								
-								$result = mysql_query("SELECT * FROM mesta ORDER BY mesto");
-								while($row = mysql_fetch_array($result))
-								{
-									echo "<option value=\"" . $row['mesto'] . "\">" . $row['mesto'] . "</option>";
-								}
+									$townNamesArray = (array)getTowns();
+									foreach($townNamesArray as $values)
+									{
+										echo '<option value="' . $values . '">' . $values . '</option>';
+									}
 								?>
 							</select>
 						</td>
@@ -123,18 +82,33 @@
 							OR
 						</td>
 						<td style="vertical-align: top; width: 500px">
-							<input type="radio" name="companyTown" value="notAdded"/>add a town<br>
-							Town:<input type="text" name="newCompanyTown"><br>
+							<input type="radio" name="town" value="notAdded"/>add a town<br>
+							Town:<input type="text" name="newTown"><br>
 						</td>
 					</tr>
 				</table>
-				Responsible person:<input type="text" name="companyInCharge"><br>
-				Phone:<input type="text" name="companyPhone"><br>
-				Mail:<input type="text" name="companyMail"><br>
-				website:<input type="text" name="companyWebsite"><br>
-				desciption:<input type="text" name="companyDescription"><br>
-				<input type="submit" value="change" />
+				phone:<input type="text" value="somehting" />
+				<input type="submit" value="add" />
 			</form>
+			<?php
+				$companyArray = (array)getCompany($user_id);
+				if(count($companyArray) > 1)
+				{
+					echo '<hr>';
+					echo '<form id="form_02" action="user.php" method="POST" accept-charset="utf-8">';
+					echo 'Name:<input type="text" name="companyName" value="' . $companyArray[0] . '"><br>';
+					echo 'Street:<input type="text" name="companyStreet" value="' . $companyArray[1] . '"><br>';
+					echo 'Town:<input type="text" name="newCompanyTown" value="' . $companyArray[2] . '"><br>';
+					echo 'Responsible person:<input type="text" name="companyInCharge" value="' . $companyArray[3] . '"><br>';
+					echo 'Phone:<input type="text" name="companyPhone" value="' . $companyArray[4] . '"><br>';
+					echo 'Fax:<input type="text" name="companyPhone" value="' . $companyArray[5] . '"><br>';
+					echo 'Mail:<input type="text" name="companyMail" value="' . $companyArray[6] . '"><br>';
+					echo 'website:<input type="text" name="companyWebsite" value="' . $companyArray[7] . '"><br>';
+					echo 'desciption:<input type="text" name="companyDescription" value="' . $companyArray[8] . '"><br>';
+					echo '<input type="submit" value="change" />';
+					echo '</form>';
+				}
+			?>
 			<hr>
 			<form id="form_02" action="user.php" method="POST" accept-charset="utf-8">
 			<table>
