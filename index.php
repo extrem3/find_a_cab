@@ -159,7 +159,7 @@
 		$( "#toggle" ).click(function() {
 			$( "#combobox" ).toggle();
 		});
-		$('.ui-autocomplete-input').css('width', '500px')
+		$('.ui-autocomplete-input').css('width', '300px')
 	});
 	function loadSomething(a)
 	{
@@ -179,23 +179,17 @@
 	</script>
 </head>
 <body>
-<<<<<<< HEAD
 	<div id="header">
-		<div id="name">
-			NajdiTaxi.si
-		</div>
+		<div id="name">&nbsp;</div>
 	</div>
 	<div id="search">
-=======
-	<!-- <div id="header" align="center"><img src="img/najditaxt_logo_m.png" alt="NajdiTaxi.si" /></div> -->
-	<div class="center">
->>>>>>> 57df47952fba326ba7a74cfc3ab921f76d254308
-		<div class="ui-widget" id="ui-dropbox" style="display: none"></div>
-		<form id="searchForm" action="search.php" method="POST">
-			<input id="search-box" type="text" name="id" />
-			<input type="submit" value="Najdi!" />
-		</form> 
-		<div id="results"></div>
+		<!-- <div id="header" align="center"><img src="img/najditaxt_logo_m.png" alt="NajdiTaxi.si" /></div> -->
+			<div class="ui-widget" id="ui-dropbox" style="display: none"></div>
+			<form id="searchForm" action="search.php" method="POST">
+				<input id="search-box" type="text" name="id" />
+				<input class="find_button" type="submit" value="Najdi!" />
+			</form> 
+			<div id="results"></div>
 	</div>
 	<div id="content">
 		<div id="city">
@@ -252,5 +246,6 @@
 			</div>
 		</div>
 	</div>
+	<div id="footer"><div id="footer-font">vsa vsebina je last njenih izdelovalcev (c) 2011</div></div>
 </body>
 </html>
