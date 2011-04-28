@@ -182,70 +182,16 @@
 	<div id="header">
 		<div id="name">&nbsp;</div>
 	</div>
-	<div id="search">
-		<!-- <div id="header" align="center"><img src="img/najditaxt_logo_m.png" alt="NajdiTaxi.si" /></div> -->
-			<div class="ui-widget" id="ui-dropbox" style="display: none"></div>
-			<form id="searchForm" action="search.php" method="POST">
-				<input id="search-box" type="text" name="id" />
-				<input class="find_button" type="submit" value="Najdi!" />
-			</form> 
-			<div id="results"></div>
+	<div id="results">
+	<div id="index-ads">Tukaj pridejo oglasi</div>
+	<div id="index-search">
+		<div class="ui-widget" id="ui-dropbox" style="display: none"></div>
+		<form id="searchForm" action="search.php" method="POST">
+			<input id="search-box" type="text" name="id" />
+			<input class="find_button" type="submit" value="Najdi!" />
+		</form>
 	</div>
-	<div id="content">
-		<div id="city">
-			Celje
-		</div>
-		<div id="line">
-			&nbsp;
-		</div>
-		<div class="taxi-line">
-			<div class="name">
-			TAXI lorem
-			</div>
-			<div class="number">
-			040-123-456
-			</div>
-			<div class="stars">
-			bla
-			</div>
-		</div>
-		
-		<div class="taxi-line">
-			<div class="name">
-			TAXI lorem
-			</div>
-			<div class="number">
-			040-123-456
-			</div>
-			<div class="stars">
-			bla
-			</div>
-		</div>
-		
-		<div class="taxi-line">
-			<div class="name">
-			TAXI lorem
-			</div>
-			<div class="number">
-			040-123-456
-			</div>
-			<div class="stars">
-			bla
-			</div>
-		</div>
-		
-		<div class="taxi-line">
-			<div class="name">
-			TAXI lorem
-			</div>
-			<div class="number">
-			040-123-456
-			</div>
-			<div class="stars">
-			bla
-			</div>
-		</div>
 	</div>
-	<div id="footer"><div id="footer-font">vsa vsebina je last njenih izdelovalcev (c) 2011</div></div>
+	<div id="footer"><a href="loginpannel.php"><div id="footer-login">Prijavi se!</div></a><div id="footer-font">vsa vsebina je last njenih izdelovalcev (c) 2011</div></div>
 </body>
 </html>
