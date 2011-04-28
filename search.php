@@ -1,3 +1,6 @@
+<head>
+	<link rel="stylesheet" type="text/css" href="css/results.css">
+</head>
 <?php
 require('config.php');
 
@@ -5,7 +8,10 @@ mysql_connect('localhost',$username,$password); /* spremenil "localhost" v "'loc
 @mysql_select_db($database) or die( "Unable to select database");
 
 $town = mysql_real_escape_string($_POST["id"]);
+echo '<div class="results-ads">Tukaj bojo oglasi!</div>';
+echo '<div class="content">';
 echo '<div class="townName">' . $town . '</div>';
+echo '<div class="line">&nbsp;</div>';
 
 $result = mysql_query("SELECT id_mesto FROM mesta WHERE mesto='$town'");
 $town_id = mysql_result($result, 0);
@@ -38,8 +44,8 @@ while ($row = mysql_fetch_array($result))
 		$userCompanyRatingTotal = 1;
 
 	echo '<div class="driver">';
-	echo '<div class="driverName">' . $userName . ' ' . $userLastName . '</div>';
 	echo '<div class="companyName">' . $userCompanyName . '</div>';
+	echo '<div class="driverName">Voznik: ' . $userName . ' ' . $userLastName . '</div>';
 	echo '<div class="phoneNumber">' . $phoneNumber . '</div>';
 	echo '<div class="rating">' . ($userCompanyRating/$userCompanyRatingTotal) . '</div>';
 	echo '<div class="companyDetails">'; 
@@ -51,4 +57,5 @@ while ($row = mysql_fetch_array($result))
 	echo '<div class="companyDescription">' . $userCompanyDesctiption . '</div>';
 	echo '</div></div>';
 }
+	echo '</div>';
 ?>
