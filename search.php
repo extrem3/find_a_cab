@@ -1,14 +1,17 @@
 <head>
 	<link rel="stylesheet" type="text/css" href="css/results.css">
+	<style type="text/css">
+	.index-search {top: 150px; }
+	</style>
 </head>
 <?php
 require('config.php');
 
-mysql_connect('localhost',$username,$password); /* spremenil "localhost" v "'localhost'" */
+mysql_connect('localhost',$username,$password); /* spremenil localhost v 'localhost' */
 @mysql_select_db($database) or die( "Unable to select database");
 
 $town = mysql_real_escape_string($_POST["id"]);
-echo '<div class="results-ads">Tukaj bojo oglasi!</div>';
+/* echo '<div class="results-ads">Tukaj bojo oglasi!</div>'; */
 echo '<div class="content">';
 echo '<div class="townName">' . $town . '</div>';
 echo '<div class="line">&nbsp;</div>';

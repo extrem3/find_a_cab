@@ -180,18 +180,25 @@
 </head>
 <body>
 	<div id="header">
+		<div class="login-register">
+			<a href="loginpannel.php">Prijavi se!</a> 
+			<a href="registerpannel.php">Registriraj se!</a>
+		</div>
 		<div id="name">&nbsp;</div>
 	</div>
-	<div id="results">
-	<div id="index-ads">Tukaj pridejo oglasi</div>
-	<div id="index-search">
+	<div class="index-search">
 		<div class="ui-widget" id="ui-dropbox" style="display: none"></div>
 		<form id="searchForm" action="search.php" method="POST">
 			<input id="search-box" type="text" name="id" />
 			<input class="find_button" type="submit" value="Najdi!" />
 		</form>
 	</div>
+	<div id="results">
+	<!-- <div id="index-ads">Tukaj pridejo oglasi</div> -->
 	</div>
-	<div id="footer"><a href="loginpannel.php"><div id="footer-login">Prijavi se!</div></a><div id="footer-font">vsa vsebina je last njenih izdelovalcev (c) 2011</div></div>
+	<div id="footer">
+		<a href="loginpannel.php"><div id="footer-login">Prijavi se!</div></a>
+		<div id="footer-font">vsa vsebina je last njenih izdelovalcev (c) 2011</div>
+	</div>
 </body>
 </html>
