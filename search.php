@@ -7,7 +7,7 @@
 <?php
 require('config.php');
 
-mysql_connect('localhost',$username,$password); /* spremenil localhost v 'localhost' */
+mysql_connect($location,$username,$password); /* spremenil localhost v 'localhost' */
 @mysql_select_db($database) or die( "Unable to select database");
 
 $town = mysql_real_escape_string($_POST["id"]);

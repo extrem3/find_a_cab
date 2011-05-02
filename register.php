@@ -30,10 +30,10 @@ function checkErrors($clean)
 		return 2;
 	if(mysql_num_rows(mysql_query("SELECT * FROM uporabniki WHERE email= '" . $clean['email'] . "'"))>0) 
 		return 3;
-	if(!eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$", $_POST['companyMail']))
-		return 8;
-	if ($clean['companyOwner'] == "on")
+	if ($clean['companyOwner'] == "on" && $clean['company'] == "notAdded")
 	{
+		if(!eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$", $_POST['companyMail']))
+			return 8;
 		preg_match_all('/[0-9]+/', $_POST['phone'], $cleaned);
 		foreach($cleaned[0] as $k=>$v) {
 		   $phoneNumber .= $v;

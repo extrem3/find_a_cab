@@ -78,7 +78,7 @@
 							input.blur();
 						}
 					})
-					.addClass( "ui-widget ui-widget-content ui-corner-left" );
+					.addClass( "ui-widget ui-widget-content" )
 
 				input.data( "autocomplete" )._renderItem = function( ul, item ) {
 					return $( "<li><\/li>" )
@@ -106,7 +106,7 @@
 						text: false
 					})
 					.removeClass( "ui-corner-all" )
-					.addClass( "ui-corner-right ui-button-icon" )
+					.addClass( " ui-button-icon" )
 					.click(function() {
 						// close if already visible
 						if ( input.autocomplete( "widget" ).is( ":visible" ) ) {
@@ -129,7 +129,8 @@
 						},
 						text: true
 					})
-					.addClass( "ui-corner-right ui-button-icon" )
+					.addClass( " ui-button-icon" )
+					.removeClass( "ui-corner-all" )
 					.click(function() {
 						loadSomething(input.val())
 					});
@@ -154,8 +155,10 @@
 					   name: "combobox"})
 			)
 		$( "#combobox" ).combobox();
+		$( "ul.ui-autocomplete" ).removeClass("ui-corner-all")
 		$("#searchForm").hide();
 		$("#ui-dropbox").show();
+		$("#ui-active-menuitem").removeClass("ui-corner-all");
 		$( "#toggle" ).click(function() {
 			$( "#combobox" ).toggle();
 		});
