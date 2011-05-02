@@ -1,15 +1,28 @@
-﻿#contentMaster {
-	display: block;
-	width: 1000px;
-	/*background-image:url("logo.jpg");*/
-	background-repeat:no-repeat;
-}
-#content {
+﻿#content {
 	width: 730px;
 	margin-top: 20px;
 	margin-right: 5px;
 	margin-left: 5px;
 	padding: 0;
-	display: inline-block;
 	text-align: left;
+}
+#navigation{
+	position:relative;
+	display:block;
+}
+.usedButton {
+	color: orange;
+	display: inline-block;
+	width: 12px;
+	height: 12px;
+	background-image:url("../img/slidesButton.png");
+	background-position:0px 13px;
+}
+.unusedButton {
+	color: white;
+	display: inline-block;
+	width: 12px;
+	height: 12px;
+	background-image:url("../img/slidesButton.png");
+	background-position:0px 0px;
 }
