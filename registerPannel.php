@@ -28,6 +28,9 @@
 		$('#content_4').append('<div class="button" id="content_owner_yes">Sem lastnik podjetja</div>');
 		$('#content_4').append('<div class="button" id="content_owner_no">Moje podjetje je ze v bazi</div>');
 		$('#content').css('overflow', 'hidden');
+		$('input[type="checkbox"]').css('display', 'none');
+		$('input[type="radio"]').css('display', 'none');
+		$('.inputDescription').css('display', 'none');
 		$('.button').button();
 
 		// Wrap all .slides with #slideInner div
@@ -48,21 +51,31 @@
 			});
 
 		$('#content_driver_yes').click( function() {
+				$('#cabOwner').attr('checked', true)
+				$('#companyOwner').attr('checked', true)
 				hideButtons[0][1] = 1;
 				$("#content_owner_no").button('option', 'label', 'Moje podjetje je ze v bazi');
 				$(".button").button();
 				moveSlideHolder(currentPosition + 1, true);
 			});
 		$('#content_driver_no').click( function() {
+				$('#cabOwner').removeAttr('checked')
 				hideButtons[0][1] = 0;
 				$("#content_owner_no").button('option', 'label', 'Nisem lastnik podjetja');
 				moveSlideHolder(currentPosition + 2, true);
 			});
 		$('#content_owner_yes').click( function() {
+				$('#companyOwner').attr('checked', true)
+				$('input:radio[name=company]').filter('[value=notAdded]').attr('checked', true);
 				hideButtons[1][1] = 1;
 				moveSlideHolder(currentPosition + 1, true);
 			});
 		$('#content_owner_no').click( function() {
+				if(hideButtons[0][1] == 0)
+				{
+					$('#companyOwner').removeAttr('checked')
+				}
+				$('input:radio[name=company]').filter('[value=added]').attr('checked', true);
 				hideButtons[1][1] = 0;
 				moveSlideHolder(currentPosition + 3, true);
 			});
@@ -193,7 +206,7 @@
 		</div>
 		<div id="content_2" class="slide">
 			<h1>Ali ste voznik taksija?</h1><br>
-			<input type="checkbox" name="cabOwner">Da
+			<input type="checkbox" name="cabOwner" id="cabOwner"/><div class="inputDescription">Da</div>
 		</div>
 		<div id="content_3" class="slide">
 			Telefonska stevilka:<input type="text" name="phone"><br>
@@ -204,12 +217,12 @@
 		</div>
 		<div id="content_4" class="slide">
 			<h1>Podjetje</h1><br>
-			<input type="checkbox" name="companyOwner">Sem lastnik podjetja oziroma sem zaposlen pri:
+			<input type="checkbox" name="companyOwner" id="companyOwner"/><div class="inputDescription">Sem lastnik podjetja oziroma sem zaposlen pri:</div>
 			<br>
 			<br>
 		</div>
 		<div id="content_5" class="slide">
-			<input type="radio" name="company" value="notAdded"/>Sem lastnik podjetja<br>
+			<input type="radio" name="company" value="notAdded"/><div class="inputDescription">Sem lastnik podjetja</div>
 			Name:<input type="text" name="companyName"><br>
 			Street:<input type="text" name="companyStreet"><br>
 			Town:<input type="text" name="newCompanyTown"><br>
@@ -222,7 +235,7 @@
 		</div>
 		<div id="content_6" class="slide">
 			<div id="or">ALI</div> <br>
-			<input type="radio" name="company" value="added" checked="true"/>Podjetje je ze v bazi:
+			<input type="radio" name="company" value="added" checked="true"/><div class="inputDescription">Podjetje je ze v bazi:</div>
 			<br>
 			<select name="companySelect" id="companySelect">
 				<?php
