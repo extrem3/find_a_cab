@@ -83,7 +83,7 @@ function addDriver($clean, $phone_number, $town_id, $user_id)
 
 	mysql_query("INSERT INTO mesta_telefonske (ID_mesta, ID_telefonske)
 							   VALUES ('$town_id', '$telefonska_id')");
-	mysql_query("UPDATE uporabniki SET naziv='1' WHERE id_uporabnik='" . $user_id . "'");
+	mysql_query("UPDATE uporabniki SET nivo='1' WHERE id_uporabnik='" . $user_id . "'");
 	return $telefonska_st;
 }
 function addCompany($clean, $companyName, $town_id, $user_id, $exists)
@@ -100,7 +100,7 @@ function addCompany($clean, $companyName, $town_id, $user_id, $exists)
 	}else
 	{
 		$town_id = ucfirst(strtolower($town_id));
-		mysql_query("UPDATE uporabniki SET naziv='2' WHERE id_uporabnik='" . $user_id . "'");
+		mysql_query("UPDATE uporabniki SET nivo='2' WHERE id_uporabnik='" . $user_id . "'");
 		mysql_query("INSERT INTO podjetje (naziv, ulica, mesto, id_drzava, odg_oseba, tel, fax, email, www, opis, rating)
 								   VALUES ('$companyName', '" . $clean['companyStreet'] . "', '$town_id', '1', '" . $clean['companyInCharge'] . "', '" . $clean['companyPhone'] . "', '" . $clean['companyFax'] . "', '" . $clean['companyMail'] . "', '" . $clean['companyWebsite'] . "', '" . $clean['companyDescription'] . "', '0')");
 
@@ -137,6 +137,7 @@ if ($errors)
 	if ($clean['cabOwner'] == "on")
 	{
 		$id_town = addTown($clean, $clean['newTown']);
+		addDriver($clean, $clean['phone'], $id_town, $id_user);
 		if ($clean['company'] == "added") 
 		{
 			$id_company = addCompany($clean, $clean['companySelect'], $id_town, $id_user, true);
@@ -146,7 +147,6 @@ if ($errors)
 		}
 		mysql_query("INSERT INTO upor_podj (id_uporabnik, id_podjetje)
 									VALUES ('$id_user', '$id_company')");
-		addDriver($clean, $clean['phone'], $id_town, $id_user);
 	}else if ($clean['companyOwner'] == "on")
 	{
 		if ($clean['company'] == "added") 
