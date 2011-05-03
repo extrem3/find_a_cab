@@ -217,7 +217,7 @@
 		</div>
 		<div id="content_4" class="slide">
 			<h1>Podjetje</h1><br>
-			<input type="checkbox" name="companyOwner" id="companyOwner"/><div class="inputDescription">Sem lastnik podjetja oziroma sem zaposlen pri:</div>
+			<input type="checkbox" name="companyOwner" id="companyOwner"/><div class="inputDescription">Sem lastnik podjetja oziroma sem zaposlen pri (ce ste voznik taksija morate pripadati podjetju):</div>
 			<br>
 			<br>
 		</div>
@@ -239,7 +239,12 @@
 			<br>
 			<select name="companySelect" id="companySelect">
 				<?php
+				require('config.php');
+				mysql_connect($location,$username,$password);
+				@mysql_select_db($database) or die( "Unable to select database");
+						
 				$result = mysql_query("SELECT * FROM podjetje");
+				echo "selection";
 				while($row = mysql_fetch_array($result))
 				{
 					echo "<option value=\"" . $row['naziv'] . "\">" . $row['naziv'] . "</option>";
