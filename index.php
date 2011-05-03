@@ -167,20 +167,33 @@
 	});
 	var moved = false;
 	var speed = 600;
+	var animated = false;
+	var loaded = false;
+	var storedResults = "";
 	function loadSomething(a)
 	{
+		loaded = false;
+		animated = false;
 		if (!moved)
 		{
-			$('#results').fadeOut(speed);
 			$('.index-search').animate({
 				'top' : 100
 			}, speed);
 			moved = true;
-			$('#loadSpinner').fadeIn(speed);
+			$('#results').fadeOut(speed, function(){
+				$('#loadSpinner').fadeIn(speed, function(){
+					animated = true;
+					displayResults("empty");
+				});
+			});
 		}else
 		{
-			$('#results').fadeOut(speed)
-			$('#loadSpinner').fadeIn(speed);
+			$('#results').fadeOut(speed, function(){
+				$('#loadSpinner').fadeIn(speed, function(){
+					animated = true;
+					displayResults("empty");
+				});
+			});
 		}
 		bodyContent = $.ajax({
 			url: "search.php",
@@ -190,16 +203,29 @@
 			dataType: "html",
 			async:false,
 			success: function(msg){
+				loaded = true;
 				displayResults(msg);
 			}
 		}).responseText;
 	}
 	function displayResults(r)
 	{
-		$('#loadSpinner').fadeOut(speed, function(){
-			$("#results").html(r);
-			$('#results').fadeIn(speed);
-		});
+		if (loaded == true && animated == true)
+		{
+			$('#loadSpinner').fadeOut(speed, function(){
+				if(r == "empty")
+				{
+					$("#results").html(storedResults);
+				}else
+				{
+					$("#results").html(r);
+				}
+				$('#results').fadeIn(speed);
+			});
+		}else if(r != "empty")
+		{
+			storedResults = r;
+		}
 	}
 	</script>
 </head>
