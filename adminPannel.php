@@ -1,7 +1,7 @@
 <?php
 	require('config.php');
 	require('checkLogin.php');
-	if($_SESSION['user_level'] <= 2)
+	if($user_level <= 2)
 	{
 		header("Location: loginPannel.php");
 	}
