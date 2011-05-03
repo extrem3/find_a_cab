@@ -1,0 +1,28 @@
+﻿#content {
+	width: 730px;
+	margin-top: 20px;
+	margin-right: 5px;
+	margin-left: 5px;
+	padding: 0;
+	text-align: left;
+}
+#navigation{
+	position:relative;
+	display:block;
+}
+.usedButton {
+	color: orange;
+	display: inline-block;
+	width: 12px;
+	height: 12px;
+	background-image:url("../img/slidesButton.png");
+	background-position:0px 13px;
+}
+.unusedButton {
+	color: white;
+	display: inline-block;
+	width: 12px;
+	height: 12px;
+	background-image:url("../img/slidesButton.png");
+	background-position:0px 0px;
+}

@@ -38,7 +38,7 @@ function checkErrors($clean)
 		foreach($cleaned[0] as $k=>$v) {
 		   $phoneNumber .= $v;
 		}
-		if(strlen($phoneNumber) > 9 || strlen($phoneNumber) < 7)
+		if(strlen($phoneNumber) > 9 || strlen($phoneNumber) < 5)
 			return 9;
 	}
 	// drivers cannot have the same mobile phone number
@@ -49,7 +49,7 @@ function checkErrors($clean)
 		   $phoneNumber2 .= $v;
 		}
 		// return $phoneNumber2;
-		if(strlen($phoneNumber2) > 9 || strlen($phoneNumber2) < 7)
+		if(strlen($phoneNumber2) > 9 || strlen($phoneNumber2) < 5)
 			return 4;
 		if(mysql_num_rows(mysql_query("SELECT * FROM telefonske_st WHERE telefonske_st= '$phoneNumber'"))>0) 
 			return 5;
@@ -136,13 +136,7 @@ if ($errors)
 	$id_user = addUser($clean);
 	if ($clean['cabOwner'] == "on")
 	{
-		if ($clean['town'] == "added") 
-		{
-			$id_town = addTown($clean, $clean['townSelect']);
-		}else
-		{
-			$id_town = addTown($clean, $clean['newTown']);
-		}
+		$id_town = addTown($clean, $clean['newTown']);
 		if ($clean['company'] == "added") 
 		{
 			$id_company = addCompany($clean, $clean['companySelect'], $id_town, $id_user, true);

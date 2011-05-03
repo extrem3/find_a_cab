@@ -1,9 +1,9 @@
 <?php
 	require('config.php');
 	require('checkLogin.php');
-	if($_SESSION['userLevel'] <= 3)
+	if($user_level <= 2)
 	{
-		header("Location: index.php");
+		header("Location: loginPannel.php");
 	}
 ?>
 <html>
