@@ -136,13 +136,7 @@ if ($errors)
 	$id_user = addUser($clean);
 	if ($clean['cabOwner'] == "on")
 	{
-		if ($clean['town'] == "added") 
-		{
-			$id_town = addTown($clean, $clean['townSelect']);
-		}else
-		{
-			$id_town = addTown($clean, $clean['newTown']);
-		}
+		$id_town = addTown($clean, $clean['newTown']);
 		if ($clean['company'] == "added") 
 		{
 			$id_company = addCompany($clean, $clean['companySelect'], $id_town, $id_user, true);

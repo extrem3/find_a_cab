@@ -18,12 +18,17 @@
 	var numberOfSlides = 0;
 	var hideButtons = new Array(new Array(1, -1),
 								new Array(3, -1),
-								new Array(5, -1));
+								new Array(6, -1));
 	$(document).ready(function() {
 		var slides = $('.slide');
 		numberOfSlides = slides.length;
-		$('#navigation').html('<div class="button" id="prevSlide" ></div><div id="statusBar" /><div class="button" id="nextSlide" >Naprej</div>')
+		$('#navigation').html('<div id="prevSlide" ></div><div id="statusBar" /><div id="nextSlide" >Naprej</div>')
+		$('#content_2').append('<div class="button" id="content_driver_yes">Da</div>');
+		$('#content_2').append('<div class="button" id="content_driver_no">Ne</div>');
+		$('#content_4').append('<div class="button" id="content_owner_yes">Sem lastnik podjetja</div>');
+		$('#content_4').append('<div class="button" id="content_owner_no">Moje podjetje je ze v bazi</div>');
 		$('#content').css('overflow', 'hidden');
+		$('.button').button();
 
 		// Wrap all .slides with #slideInner div
 		slides.wrapAll('<div id="slideInner"></div>')
@@ -44,10 +49,13 @@
 
 		$('#content_driver_yes').click( function() {
 				hideButtons[0][1] = 1;
+				$("#content_owner_no").button('option', 'label', 'Moje podjetje je ze v bazi');
+				$(".button").button();
 				moveSlideHolder(currentPosition + 1, true);
 			});
 		$('#content_driver_no').click( function() {
 				hideButtons[0][1] = 0;
+				$("#content_owner_no").button('option', 'label', 'Nisem lastnik podjetja');
 				moveSlideHolder(currentPosition + 2, true);
 			});
 		$('#content_owner_yes').click( function() {
@@ -56,19 +64,84 @@
 			});
 		$('#content_owner_no').click( function() {
 				hideButtons[1][1] = 0;
-				moveSlideHolder(currentPosition + 2, true);
+				moveSlideHolder(currentPosition + 3, true);
 			});
 
 		updateStatusBar();
 	});
 	function moveSlideHolder(to, forward)
 	{
-		if(to != 0)
+		if(to >= 0 && to < numberOfSlides)
+		{
+			if(currentPosition == hideButtons[1][0] && !forward && hideButtons[0][1] == 0)
+			{
+				//if we are returning to ALI STE VOZNIK and he said he is not
+				currentPosition = hideButtons[0][0];
+			}else if(currentPosition == hideButtons[0][0] && forward && hideButtons[0][1] == 0)
+			{
+				//if we are going forward from ALI STE VOZNIK and he said he is not
+				currentPosition = hideButtons[1][0];
+			}else if(currentPosition == hideButtons[2][0] && !forward)
+			{
+				//if we are returning to DO YOU HAVE A COMPANY and he said he doesn't
+				if(hideButtons[0][1] == 1 && hideButtons[1][1] == 1)
+				{
+					//if he said he is a driver and he is the owner of a company
+					currentPosition = hideButtons[1][0] + 1;
+				}else if(hideButtons[0][1] == 1 && hideButtons[1][1] == 0)
+				{
+					//if he said he is a driver and he is not the owner of a company
+					currentPosition = hideButtons[1][0] + 2;
+				}else if(hideButtons[0][1] == 0 && hideButtons[1][1] == 0)
+				{
+					//if he said he is not a driver and he is not the owner of a company
+					currentPosition = hideButtons[1][0];
+				}else 
+				{
+					//if he said he is not a driver and he is the owner of a company
+					currentPosition = hideButtons[1][0] + 1;
+				}
+			}else if((currentPosition > hideButtons[1][0] && currentPosition < hideButtons[2][0]) && !forward)
+			{
+				currentPosition = hideButtons[1][0];
+			}else if(currentPosition == hideButtons[1][0] && forward)
+			{
+				//if we are going forward from DO YOU HAVE A COMPANY and he said he doesn't
+				if(hideButtons[0][1] == 1 && hideButtons[1][1] == 1)
+				{
+					//if he said he is a driver and he is the owner of a company
+					currentPosition = hideButtons[1][0] + 1;
+				}else if(hideButtons[0][1] == 1 && hideButtons[1][1] == 0)
+				{
+					//if he said he is a driver and he is not the owner of a company
+					currentPosition = hideButtons[1][0] + 2;
+				}else if(hideButtons[0][1] == 0 && hideButtons[1][1] == 0)
+				{
+					//if he said he is not a driver and he is not the owner of a company
+					currentPosition = hideButtons[2][0];
+				}else 
+				{
+					//if he said he is not a driver and he is the owner of a company
+					currentPosition = hideButtons[1][0] + 1;
+				}
+			}else if((currentPosition > hideButtons[1][0] && currentPosition < hideButtons[2][0]) && forward)
+			{
+				currentPosition = hideButtons[2][0];
+			}else
+			{
+				currentPosition = to
+			}
+			$('#slideInner').animate({
+				'marginLeft' : slideWidth*(-currentPosition)
+				}, slideSpeed);
+			updateStatusBar();
+		}
+		if(currentPosition != 0)
 			$('#prevSlide').html('Nazaj');
 		else
 			$('#prevSlide').html('');
 
-		if(to != numberOfSlides - 1)
+		if(currentPosition != numberOfSlides - 1)
 			$('#nextSlide').html('Naprej');
 		else
 			$('#nextSlide').html('Zakljuci');
@@ -80,42 +153,14 @@
 				$('#nextSlide').html('');
 			}
 		}
-		if(to >= 0 && to < numberOfSlides)
-		{
-			if(currentPosition == hideButtons[1][0] && !forward && hideButtons[0][1] == 0)
-			{
-				//if we are returning to ALI STE VOZNIK and he said he is not
-				currentPosition = hideButtons[0][0];
-			}else if(to == hideButtons[0][0] + 1 && forward && hideButtons[0][1] == 0)
-			{
-				//if we are going forward from ALI STE VOZNIK and he said he is not
-				currentPosition = hideButtons[1][0];
-			}else if(currentPosition == hideButtons[2][0] && !forward && hideButtons[1][1] == 0)
-			{
-				//if we are returning to DO YOU HAVE A COMPANY and he said he doesn't
-				currentPosition = hideButtons[1][0];
-			}else if(to == hideButtons[1][0] + 1 && forward && hideButtons[1][1] == 0)
-			{
-				//if we are going forward from DO YOU HAVE A COMPANY and he said he doesn't
-				currentPosition = hideButtons[2][0];
-			}else
-			{
-				currentPosition = to
-			}
-			$('#slideInner').animate({
-				'marginLeft' : slideWidth*(-currentPosition)
-				}, slideSpeed);
-			updateStatusBar();
-		}
 	}
 	function updateStatusBar()
 	{
 		$('#statusBar').html("<div class='usedButton'>&nbsp;</div>");
-		$('#statusBar').append("|");
 		var k = 0;
 		for (var i = 0; i < numberOfSlides - 1; ++i)
 		{
-			if (hideButtons[k][0] + 1 == i)
+			if (hideButtons[k][0] - 1 == i)
 			{
 				++ k;
 				$('#statusBar').append("|");
@@ -148,87 +193,51 @@
 		</div>
 		<div id="content_2" class="slide">
 			<h1>Ali ste voznik taksija?</h1><br>
-			<input type="checkbox" name="cabOwner">Taxi driver
-			<div class="button" id="content_driver_yes">Da</div>
-			<div class="button" id="content_driver_no">Ne</div>
+			<input type="checkbox" name="cabOwner">Da
 		</div>
 		<div id="content_3" class="slide">
-			<table>
-				<tr>
-					<td style="vertical-align: top; width: 200px">
-						<input type="radio" name="town" value="added" checked="true"/>town already added
-						<select name="townSelect" id="townSelect">
-							<?php
-							require('config.php');
-							mysql_connect($location,$username,$password);
-							@mysql_select_db($database) or die( "Unable to select database");
-							
-							$result = mysql_query("SELECT * FROM mesta ORDER BY mesto");
-							while($row = mysql_fetch_array($result))
-							{
-								echo "<option value=\"" . $row['mesto'] . "\">" . $row['mesto'] . "</option>";
-							}
-							?>
-						</select>
-					</td>
-					<td style="vertical-align: top; width: 50px">
-						OR
-					</td>
-					<td style="vertical-align: top; width: 500px">
-						<input type="radio" name="town" value="notAdded"/>add a town<br>
-						Town:<input type="text" name="newTown"><br>
-					</td>
-				</tr>
-			</table>
-			Phone number:<input type="text" name="phone"><br>
+			Telefonska stevilka:<input type="text" name="phone"><br>
+			Ime Mesta:<input type="text" name="newTown"><br>
 			(vec stevilk boste lahko vstavili kasneje)
 			<br>
 			<br>
 		</div>
 		<div id="content_4" class="slide">
-			<h1>Ali je vase podjetje ze v nasi bazi?</h1><br>
-			<input type="checkbox" name="companyOwner">Company owner
-			<div class="button" id="content_owner_yes">Da</div>
-			<div class="button" id="content_owner_no">Ne</div>
+			<h1>Podjetje</h1><br>
+			<input type="checkbox" name="companyOwner">Sem lastnik podjetja oziroma sem zaposlen pri:
+			<br>
+			<br>
 		</div>
 		<div id="content_5" class="slide">
-			<table>
-				<tr>
-					<td style="vertical-align: top; width: 200px">
-						<input type="radio" name="company" value="added" checked="true"/>company already added
-						<br>
-						<select name="companySelect" id="companySelect">
-							<?php
-							$result = mysql_query("SELECT * FROM podjetje");
-							while($row = mysql_fetch_array($result))
-							{
-								echo "<option value=\"" . $row['naziv'] . "\">" . $row['naziv'] . "</option>";
-							}
-							?>
-						</select>
-					</td>
-					<td style="vertical-align: top; width: 50px">
-						OR
-					</td>
-					<td style="vertical-align: top; width: 500px">
-						<input type="radio" name="company" value="notAdded"/>create new company<br>
-						Name:<input type="text" name="companyName"><br>
-						Street:<input type="text" name="companyStreet"><br>
-						Town:<input type="text" name="newCompanyTown"><br>
-						Responsible person:<input type="text" name="companyInCharge"><br>
-						Phone:<input type="text" name="companyPhone"><br>
-						Mail:<input type="text" name="companyMail"><br>
-						Website:<input type="text" name="companyWebsite"><br>
-						Desciption:<input type="text" name="companyDescription"><br>
-					</td>
-				</tr>
-			</table>
+			<input type="radio" name="company" value="notAdded"/>Sem lastnik podjetja<br>
+			Name:<input type="text" name="companyName"><br>
+			Street:<input type="text" name="companyStreet"><br>
+			Town:<input type="text" name="newCompanyTown"><br>
+			Responsible person:<input type="text" name="companyInCharge"><br>
+			Phone:<input type="text" name="companyPhone"><br>
+			Mail:<input type="text" name="companyMail"><br>
+			Website:<input type="text" name="companyWebsite"><br>
+			Desciption:<input type="text" name="companyDescription"><br>
+			<br> <br>
 		</div>
 		<div id="content_6" class="slide">
-			<div style="display:block">
+			<div id="or">ALI</div> <br>
+			<input type="radio" name="company" value="added" checked="true"/>Podjetje je ze v bazi:
+			<br>
+			<select name="companySelect" id="companySelect">
+				<?php
+				$result = mysql_query("SELECT * FROM podjetje");
+				while($row = mysql_fetch_array($result))
+				{
+					echo "<option value=\"" . $row['naziv'] . "\">" . $row['naziv'] . "</option>";
+				}
+				?>
+			</select>
+			<br> <br>
+		</div>
+		<div id="content_7" class="slide">
 			<br>
 			<input type="submit" value="Register">
-			</div>
 		</div>
 	</form>
 	</div>
