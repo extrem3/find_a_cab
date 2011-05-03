@@ -123,6 +123,7 @@
 					.attr( "title", "Show All Items" )
 					.insertAfter( this.button )
 					.css("margin-left", "5px")
+					.css('border', 'none')
 					.button({
 						icons: {
 							primary: "ui-icon-circle-zoomin"
@@ -164,20 +165,41 @@
 		});
 		$('.ui-autocomplete-input').css('width', '300px')
 	});
+	var moved = false;
+	var speed = 600;
 	function loadSomething(a)
 	{
+		if (!moved)
+		{
+			$('#results').fadeOut(speed);
+			$('.index-search').animate({
+				'top' : 100
+			}, speed);
+			moved = true;
+			$('#loadSpinner').fadeIn(speed);
+		}else
+		{
+			$('#results').fadeOut(speed)
+			$('#loadSpinner').fadeIn(speed);
+		}
 		bodyContent = $.ajax({
-			  url: "search.php",
-			  global: false,
-			  type: "POST",
-			  data: ({id:a}),
-			  dataType: "html",
-			  async:false,
-			  success: function(msg){
-				  $("#results").html(msg);
-			  }
-		   }
-		).responseText;
+			url: "search.php",
+			global: false,
+			type: "POST",
+			data: ({id:a}),
+			dataType: "html",
+			async:false,
+			success: function(msg){
+				displayResults(msg);
+			}
+		}).responseText;
+	}
+	function displayResults(r)
+	{
+		$('#loadSpinner').fadeOut(speed, function(){
+			$("#results").html(r);
+			$('#results').fadeIn(speed);
+		});
 	}
 	</script>
 </head>
@@ -196,6 +218,7 @@
 			<input class="find_button" type="submit" value="Najdi!" />
 		</form>
 	</div>
+	<div id="loadSpinner" style="display: none;"><img src="img/spinner.gif"/></div>
 	<div id="results">
 	<!-- <div id="index-ads">Tukaj pridejo oglasi</div> -->
 	</div>
