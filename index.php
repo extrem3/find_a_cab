@@ -6,11 +6,13 @@
 	<link rel="stylesheet" type="text/css" href="css/style.css" />
 	<link rel="stylesheet" type="text/css" href="css/themes/jquery.ui.all.css">
 	<script type="text/javascript" src="scr/jquery-1.5.1.js"></script>
+	<script type="text/javascript" src="scr/shadowbox.js"></script>
 	<script type="text/javascript" src="scr/ui/jquery.ui.core.js"></script>
 	<script type="text/javascript" src="scr/ui/jquery.ui.widget.js"></script>
 	<script type="text/javascript" src="scr/ui/jquery.ui.button.js"></script>
 	<script type="text/javascript" src="scr/ui/jquery.ui.position.js"></script>
 	<script type="text/javascript" src="scr/ui/jquery.ui.autocomplete.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/shadowbox.css">
 	<link rel="stylesheet" type="text/css" href="css/demos.css">
 	<style type="text/css">
 	.ui-button { margin-left: -1px; }
@@ -18,6 +20,7 @@
 	.ui-autocomplete-input { margin: 0; padding: 0.48em 0 0.47em 0.45em; }
 	</style>
 	<script type="text/javascript">
+	Shadowbox.init();
 	(function( $ ) {
 		$.widget( "ui.combobox", {
 			_create: function() {
@@ -148,6 +151,9 @@
 		// input.val($(select).find("option:selected").text())
 
 	})( jQuery );
+	// $(window).load(function(){
+
+	// })
 
 	$(function() {
 		var selectBox = $("#ui-dropbox")
@@ -232,8 +238,8 @@
 <body>
 	<div id="header">
 		<div class="login-register">
-			<a href="loginpannel.php">Prijavi se!</a> 
-			<a href="registerpannel.php">Registriraj se!</a>
+			<a rel="shadowbox;title=Prijava;height=200;width=400" href="loginPannel.php" id="loginButton">Prijavi se!</a> 
+			<a rel="shadowbox;title=Registracija;height=400;width=500" href="registerPannel.php" id="registerButton">Registriraj se!</a>
 		</div>
 		<div id="name">&nbsp;</div>
 	</div>

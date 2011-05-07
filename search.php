@@ -13,8 +13,11 @@ mysql_connect($location,$username,$password); /* spremenil localhost v 'localhos
 $town = mysql_real_escape_string($_POST["id"]);
 /* echo '<div class="results-ads">Tukaj bojo oglasi!</div>'; */
 echo '<div class="content">';
+echo '<div class="contentTitle">';
+echo '<hr>';
 echo '<div class="townName">' . $town . '</div>';
-echo '<div class="line">&nbsp;</div>';
+echo '</div>';
+echo '<div id="resultsContents">';
 
 $result = mysql_query("SELECT id_mesto FROM mesta WHERE mesto='$town'");
 $town_id = mysql_result($result, 0);
@@ -50,7 +53,15 @@ while ($row = mysql_fetch_array($result))
 	echo '<div class="companyName">' . $userCompanyName . '</div>';
 	echo '<div class="driverName">Voznik: ' . $userName . ' ' . $userLastName . '</div>';
 	echo '<div class="phoneNumber">' . $phoneNumber . '</div>';
-	echo '<div class="rating">' . ($userCompanyRating/$userCompanyRatingTotal) . '</div>';
+	// echo '<div class="rating">';
+	// for ($i = 0; $i < 5; ++ $i)
+	// {
+	// 	if($i < ($userCompanyRating/$userCompanyRatingTotal))
+	// 	{
+
+	// 	}
+	// }
+	// echo '</div>';
 	echo '<div class="companyDetails">'; 
 	echo '<div class="companyAddress">' . $userCompanyAddress . '</div>';
 	echo '<div class="companyPhone">' . $userCompanyPhone . '</div>';
@@ -60,5 +71,6 @@ while ($row = mysql_fetch_array($result))
 	echo '<div class="companyDescription">' . $userCompanyDesctiption . '</div>';
 	echo '</div></div>';
 }
-	echo '</div>';
+echo '</div>';
+echo '</div>';
 ?>
