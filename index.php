@@ -20,7 +20,9 @@
 	.ui-autocomplete-input { margin: 0; padding: 0.48em 0 0.47em 0.45em; }
 	</style>
 	<script type="text/javascript">
-	Shadowbox.init();
+	Shadowbox.init({
+		handleOversize: "resize"
+	});
 	(function( $ ) {
 		$.widget( "ui.combobox", {
 			_create: function() {
@@ -233,12 +235,16 @@
 			storedResults = r;
 		}
 	}
+	function loadLogin()
+	{
+		window.location = "userPannel.php";
+	}
 	</script>
 </head>
 <body>
 	<div id="header">
 		<div class="login-register">
-			<a rel="shadowbox;title=Prijava;height=200;width=400" href="loginPannel.php" id="loginButton">Prijavi se!</a> 
+			<a rel="shadowbox;title=Prijava;height=250;width=450" href="loginPannel.php" id="loginButton">Prijavi se!</a> 
 			<a rel="shadowbox;title=Registracija;height=400;width=500" href="registerPannel.php" id="registerButton">Registriraj se!</a>
 		</div>
 		<div id="name">&nbsp;</div>

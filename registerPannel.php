@@ -13,7 +13,7 @@
 	<script type="text/javascript">
 	var total = 0;
 	var slideSpeed = 200;
-	var slideWidth = 730;
+	var slideWidth = 480;
 	var currentPosition = 0;
 	var numberOfSlides = 0;
 	var hideButtons = new Array(new Array(1, -1),
