@@ -5,7 +5,8 @@
 	<script type="text/javascript" src="scr/jquery-1.5.1.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/themes/jquery.ui.all.css">
 	<script type="text/javascript" src="scr/jquery-1.5.1.js"></script>
-	<script type="text/javascript" src="scr/ui/jquery.ui.core.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="scr/ui/jquery.ui.core.js"></script>
 	<script type="text/javascript" src="scr/ui/jquery.ui.widget.js"></script>
 	<script type="text/javascript" src="scr/ui/jquery.ui.button.js"></script>
 	<script type="text/javascript" src="scr/ui/jquery.ui.position.js"></script>
@@ -13,15 +14,32 @@
 	<script type="text/javascript">
 	var total = 0;
 	var slideSpeed = 200;
-	var slideWidth = 730;
+	var slideWidth = 480;
 	var currentPosition = 0;
 	var numberOfSlides = 0;
 	var hideButtons = new Array(new Array(1, -1),
 								new Array(3, -1),
 								new Array(6, -1));
+	var errors = new Array(new Array(0, 1, "username"),
+						   new Array(0, 2, "email"),
+						   new Array(0, 3, "email"),
+						   new Array(2, 4, "phone"),
+						   new Array(2, 5, "phone"),
+						   new Array(0, 6, "password"),
+						   new Array(4, 7, "companyMail"),
+						   new Array(4, 8, "companyPhone"),
+						   new Array(0, 9, "username"),
+						   new Array(0, 10, "name"),
+						   new Array(0, 11, "lastName"),
+						   new Array(2, 12, "newTown"),
+						   new Array(4, 13, "companyName"),
+						   new Array(4, 14, "companyStreet"),
+						   new Array(4, 15, "companyInCharge"),
+						   new Array(4, 16, "newCompanyTown"));
 	$(document).ready(function() {
+		$('form').append(' <div id="content_8" class="slide"> <br> <div>Uspesno ste se registrirali v sistem. Sedaj se lahko prijavite.</div> <div class="button" id="closeRegistration">Zapri</div></div>');
 		var slides = $('.slide');
-		numberOfSlides = slides.length;
+		numberOfSlides = slides.length - 1;
 		$('#navigation').html('<div id="prevSlide" ></div><div id="statusBar" /><div id="nextSlide" >Naprej</div>')
 		$('#content_2').append('<div class="button" id="content_driver_yes">Da</div>');
 		$('#content_2').append('<div class="button" id="content_driver_no">Ne</div>');
@@ -41,46 +59,80 @@
 					});
 
 		// Set #slideInner width equal to total width of all slides
-		$('#slideInner').css('width', slideWidth * numberOfSlides);
+		$('#slideInner').css('width', slideWidth * (numberOfSlides + 1));
 
+		$('input').focus( function() {
+			$(this).animate({ backgroundColor: "#ffffff" }, 1000);
+		});
+		$('#closeRegistration').click( function() {
+			self.parent.Shadowbox.close();
+		});
 		$('#nextSlide').click( function() {
-				moveSlideHolder(currentPosition + 1, true);
-			});
+			moveSlideHolder(currentPosition + 1, true);
+		});
 		$('#prevSlide').click( function() {
-				moveSlideHolder(currentPosition - 1, false);
-			});
+			moveSlideHolder(currentPosition - 1, false);
+		});
 
 		$('#content_driver_yes').click( function() {
-				$('#cabOwner').attr('checked', true)
-				$('#companyOwner').attr('checked', true)
-				hideButtons[0][1] = 1;
-				$("#content_owner_no").button('option', 'label', 'Moje podjetje je ze v bazi');
-				$(".button").button();
-				moveSlideHolder(currentPosition + 1, true);
-			});
+			$('#cabOwner').attr('checked', true)
+			$('#companyOwner').attr('checked', true)
+			hideButtons[0][1] = 1;
+			$("#content_owner_no").button('option', 'label', 'Moje podjetje je ze v bazi');
+			$(".button").button();
+			moveSlideHolder(currentPosition + 1, true);
+		});
 		$('#content_driver_no').click( function() {
-				$('#cabOwner').removeAttr('checked')
-				hideButtons[0][1] = 0;
-				$("#content_owner_no").button('option', 'label', 'Nisem lastnik podjetja');
-				moveSlideHolder(currentPosition + 2, true);
-			});
+			$('#cabOwner').removeAttr('checked')
+			hideButtons[0][1] = 0;
+			$("#content_owner_no").button('option', 'label', 'Nisem lastnik podjetja');
+			moveSlideHolder(currentPosition + 2, true);
+		});
 		$('#content_owner_yes').click( function() {
-				$('#companyOwner').attr('checked', true)
-				$('input:radio[name=company]').filter('[value=notAdded]').attr('checked', true);
-				hideButtons[1][1] = 1;
-				moveSlideHolder(currentPosition + 1, true);
-			});
+			$('#companyOwner').attr('checked', true)
+			$('input:radio[name=company]').filter('[value=notAdded]').attr('checked', true);
+			hideButtons[1][1] = 1;
+			moveSlideHolder(currentPosition + 1, true);
+		});
 		$('#content_owner_no').click( function() {
-				if(hideButtons[0][1] == 0)
-				{
-					$('#companyOwner').removeAttr('checked')
-				}
-				$('input:radio[name=company]').filter('[value=added]').attr('checked', true);
-				hideButtons[1][1] = 0;
-				moveSlideHolder(currentPosition + 3, true);
-			});
+			if(hideButtons[0][1] == 0)
+			{
+				$('#companyOwner').removeAttr('checked')
+			}
+			$('input:radio[name=company]').filter('[value=added]').attr('checked', true);
+			hideButtons[1][1] = 0;
+			moveSlideHolder(currentPosition + 3, true);
+		});
 
 		updateStatusBar();
+		$('form').submit(function() {
+			var formContents = $(this).serialize();
+			bodyContent = $.ajax({
+				url: "register.php",
+				global: false,
+				type: "POST",
+				data: formContents,
+				dataType: "html",
+				async:false,
+				success: function(msg){
+					$('form#submit').hide();
+					done = msg.match(/done/g);
+					if (done.length > 0)
+					{
+						$('#slideInner').animate({
+							'marginLeft' : slideWidth*(-7)
+						}, slideSpeed);
+						$('#prevSlide').html('');
+						$('#nextSlide').html('');
+						$('#statusBar').html("");
+					}else
+					{
+						stripErrors(msg);
+					}
+				}
+			}).responseText;
+			return false;
+		});
 	});
 	function moveSlideHolder(to, forward)
 	{
@@ -157,7 +209,7 @@
 		if(currentPosition != numberOfSlides - 1)
 			$('#nextSlide').html('Naprej');
 		else
-			$('#nextSlide').html('Zakljuci');
+			$('#nextSlide').html('');
 
 		for(var j = 0; j < hideButtons.length - 1; ++j)
 		{
@@ -187,6 +239,39 @@
 				$('#statusBar').append("<div class='unusedButton'>&nbsp;</div>");
 			}
 		}
+	}
+	var tempErrors = new Array();
+	function stripErrors(e)
+	{
+		for (var i = 0; i < tempErrors.length; ++i)
+		{
+			for (var j = 0; j < errors.length; ++j)
+			{
+				if (tempErrors[i] == errors[j][1])
+				{
+					$('input[name=' + errors[j][2] + ']').css("background-color", "#ffffff")
+					break;
+				}
+			}
+		}
+		tempErrors = e.match(/\d+/g);
+		var first = 9;
+		for (var i = 0; i < tempErrors.length; ++i)
+		{
+			for (var j = 0; j < errors.length; ++j)
+			{
+				if (tempErrors[i] == errors[j][1])
+				{
+					$('input[name=' + errors[j][2] + ']').css("background-color", "#e97c34")
+					if (first > errors[j][0])
+					{
+						first = errors[j][0];
+					}
+					break;
+				}
+			}
+		}
+		moveSlideHolder(first, true);
 	}
 	</script>
 </head>
@@ -255,7 +340,7 @@
 		</div>
 		<div id="content_7" class="slide">
 			<br>
-			<input type="submit" value="Register">
+			<input type="submit" value="Zakljuci">
 		</div>
 	</form>
 	</div>

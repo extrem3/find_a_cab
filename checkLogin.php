@@ -6,6 +6,6 @@ if(isset($_SESSION['user_id']) && isset($_SESSION['user_level']))
 	$user_level = $_SESSION['user_level'];
 }else
 {
-	header("Location: loginPannel.php");
+	header("Location: loginPannel.php?failed=maybe");
 }
 ?>

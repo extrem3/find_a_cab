@@ -26,7 +26,7 @@ if(mysql_num_rows($loginQuery)>0)
 	}
 }else
 {
-	header("Location: loginPannel.php");
+	header("Location: loginPannel.php?failed=true");
 }
 
 ?>

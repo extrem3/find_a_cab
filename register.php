@@ -17,46 +17,79 @@ $id_town;
 $id_town2;
 $id_company;
 
-//error messages: 1-username, 2-email_regex, 3-email_exists, 4-phone_regex, 5-phone_exists, 6-passwords do not match or are too short, 7-empty fields somewhere, 8-company_mail_regex, 9-company_phone_regex
-
+/*error messages: 
+1-username, 
+2-email_regex, 
+3-email_exists, 
+4-phone_regex, 
+5-phone_exists, 
+6-passwords do not match or are too short, 
+7-company_mail_regex, 
+8-company_phone_regex
+9-username too short or empty
+10-firstName field empty or too short
+11-lastName field empty or too short
+12-town is empty if user is a driver
+13-companyName is missing
+14-companyStreet is missing
+15-companyInCharge is missing
+16-newCompanyTown is missing
+*/
 function checkErrors($clean)
 {
-	if(empty($clean['username']) || empty($clean['name']) || empty($clean['lastName']) || ($clean['cabOwner'] == "on" && $clean['town'] == "notAdded" && empty($clean['newTown'])) || ($clean['companyOwner'] == "on" && $clean['company'] == "notAdded" && (empty($clean['companyName']) || empty($clean['companyStreet']) || empty($clean['companyInCharge']) || empty($clean['newCompanyTown']))))
-		return 7;
+	$errors = array();
+	if (empty($clean['username']) || strlen($clean['username']) < 4)
+		array_push($errors, 9);
+	if (empty($clean['name']) || strlen($clean['name']) < 4)
+		array_push($errors, 10);
+	if (empty($clean['lastName']) || strlen($clean['lastName']) < 4)
+		array_push($errors, 11);
 	//users cannot have same username or email
 	if(mysql_num_rows(mysql_query("SELECT * FROM uporabniki WHERE username= '" . $clean['username'] . "'"))>0) 
-		return 1;
+		array_push($errors, 1);
 	if(!eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$", $_POST['email']))
-		return 2;
+		array_push($errors, 2);
 	if(mysql_num_rows(mysql_query("SELECT * FROM uporabniki WHERE email= '" . $clean['email'] . "'"))>0) 
-		return 3;
+		array_push($errors, 3);
 	if ($clean['companyOwner'] == "on" && $clean['company'] == "notAdded")
 	{
+		if(empty($clean['companyName']))
+			array_push($errors, 13);
+		if(empty($clean['companyStreet']))
+			array_push($errors, 14);
+		if(empty($clean['companyInCharge']))
+			array_push($errors, 15);
+		if(empty($clean['newCompanyTown']))
+			array_push($errors, 16);
 		if(!eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$", $_POST['companyMail']))
-			return 8;
-		preg_match_all('/[0-9]+/', $_POST['phone'], $cleaned);
+			array_push($errors, 7);
+		preg_match_all('/[0-9]+/', $clean['companyPhone'], $cleaned);
+		$phoneNumber = "";
 		foreach($cleaned[0] as $k=>$v) {
 		   $phoneNumber .= $v;
 		}
 		if(strlen($phoneNumber) > 9 || strlen($phoneNumber) < 5)
-			return 9;
+			array_push($errors, 8);
 	}
 	// drivers cannot have the same mobile phone number
 	if ($clean['cabOwner'] == "on")
 	{
-		preg_match_all('/[0-9]+/', $_POST['phone'], $cleaned);
+		$phoneNumber2 = "";
+		preg_match_all('/[0-9]+/', $clean['phone'], $cleaned);
 		foreach($cleaned[0] as $k=>$v) {
 		   $phoneNumber2 .= $v;
 		}
 		// return $phoneNumber2;
 		if(strlen($phoneNumber2) > 9 || strlen($phoneNumber2) < 5)
-			return 4;
+			array_push($errors, 4);
 		if(mysql_num_rows(mysql_query("SELECT * FROM telefonske_st WHERE telefonske_st= '$phoneNumber'"))>0) 
-			return 5;
+			array_push($errors, 5);
+		if(empty($clean['newTown'])) 
+			array_push($errors, 12);
 	}
 	if($clean['password'] !== $clean['passwordCheck'] || strlen($_POST['password']) < 4)
-		return 6;
-	return 0;
+		array_push($errors, 6);
+	return $errors;
 }
 
 function addUser($clean)
@@ -127,10 +160,13 @@ function addTown($clean, $town)
 	return mysql_result($townResult, 0, 0);
 }
 
-$errors = checkErrors($clean);
-if ($errors)
+$errorsArray = (array)checkErrors($clean);
+if (count($errorsArray) > 0)
 {
-	echo "error " . $errors;
+	for ($i = 0; $i < count($errorsArray); ++$i)
+	{
+		echo '<div class="error">' . $errorsArray[$i] . '</div>';
+	}
 }else
 {
 	$id_user = addUser($clean);
