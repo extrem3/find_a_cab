@@ -50,6 +50,7 @@
 		$('input[type="radio"]').css('display', 'none');
 		$('.inputDescription').css('display', 'none');
 		$('.button').button();
+		$('.button').removeClass('ui-corner-all');
 
 		// Wrap all .slides with #slideInner div
 		slides.wrapAll('<div id="slideInner"></div>')
@@ -60,9 +61,13 @@
 
 		// Set #slideInner width equal to total width of all slides
 		$('#slideInner').css('width', slideWidth * (numberOfSlides + 1));
+		$('input').css("background-color", "#cccccc")
 
 		$('input').focus( function() {
-			$(this).animate({ backgroundColor: "#ffffff" }, 1000);
+			$(this).animate({ backgroundColor: "#ffffff" }, 300);
+		});
+		$('input').blur( function() {
+			$(this).animate({ backgroundColor: "#cccccc" }, 300);
 		});
 		$('#closeRegistration').click( function() {
 			self.parent.Shadowbox.close();

@@ -89,7 +89,8 @@
 					return $( "<li><\/li>" )
 						.data( "item.autocomplete", item )
 						.append( "<a>" + item.label + "<\/a>" )
-						.appendTo( ul );
+						.appendTo( ul )
+						.find("a").removeClass('ui-corner-all');
 				};
 				input.id = "asdf";
 				// input.keydown(function(e){
@@ -151,7 +152,6 @@
 			}
 		});
 		// input.val($(select).find("option:selected").text())
-
 	})( jQuery );
 	// $(window).load(function(){
 
