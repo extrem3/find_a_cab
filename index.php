@@ -256,7 +256,7 @@
 			<input class="find_button" type="submit" value="Najdi!" />
 		</form>
 	</div>
-	<div id="loadSpinner" style="display: none;"><img src="img/spinner.gif"/></div>
+	<div id="loadSpinner"><img src="img/spinner.gif"/></div>
 	<div id="results">
 	<!-- <div id="index-ads">Tukaj pridejo oglasi</div> -->
 	</div>
