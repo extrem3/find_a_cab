@@ -12,9 +12,10 @@ mysql_connect($location,$username,$password); /* spremenil localhost v 'localhos
 
 $town = mysql_real_escape_string($_POST["id"]);
 /* echo '<div class="results-ads">Tukaj bojo oglasi!</div>'; */
+
 echo '<div class="content">';
 echo '<div class="contentTitle">';
-echo '<hr>';
+echo '<hr class="hr">&nbsp;</hr>';
 echo '<div class="townName">' . $town . '</div>';
 echo '</div>';
 echo '<div id="resultsContents">';

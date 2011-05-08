@@ -6,6 +6,7 @@ body {
 		font-size: 100%;
 		padding: 0px;
 		overflow:auto;
+		overflow-x: hidden;
 }
 #header {
 		background-image:url('../img/logo.png');
@@ -79,12 +80,13 @@ body {
 		font-size: 3em;		use this if you dont have logo pic
 		font-style:italic; */
 }
-.content {
+#results {
 		position: relative;
-		top: 50px;
+		top: 130px;
 		left: 15%;
 		width: 70%;
-		padding-bottom: 25px; /* if this is missing, browser cut off text when large amounts of content is inside */
+		padding-bottom: 25px;  /* if this is missing, browser cut off text when large amounts of content is inside */
+		overflow-x: hidden;
 }
 #search {
 		position: absolute;
@@ -201,4 +203,11 @@ body {
 }
 #login-button:hover {
 		background-color: #585858;
+}
+#loadSpinner {
+		position: relative;
+		left: 50%;
+		top: -90px;
+		margin-left: -16px;
+		display: none;
 }
