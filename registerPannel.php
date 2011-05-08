@@ -116,8 +116,8 @@
 				async:false,
 				success: function(msg){
 					$('form#submit').hide();
-					done = msg.match(/done/g);
-					if (done.length > 0)
+					var doneArray = msg.match(/done/g);
+					if (doneArray != null && doneArray.length > 0)
 					{
 						$('#slideInner').animate({
 							'marginLeft' : slideWidth*(-7)
