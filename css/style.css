@@ -79,12 +79,13 @@ body {
 		font-size: 3em;		use this if you dont have logo pic
 		font-style:italic; */
 }
-.content {
+#results {
 		position: relative;
 		top: 50px;
 		left: 15%;
 		width: 70%;
-		padding-bottom: 25px; /* if this is missing, browser cut off text when large amounts of content is inside */
+		padding-bottom: 25px;  /* if this is missing, browser cut off text when large amounts of content is inside */
+		overflow-x: hidden;
 }
 #search {
 		position: absolute;

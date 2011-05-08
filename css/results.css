@@ -13,7 +13,7 @@
 		float:left;
 		position:relative; 
 		left:50%;
-		top: 0px;
+		top: -10px;
 		color: #FFCC33;
 		margin-left: -5%;
 		text-align: center;
@@ -23,19 +23,22 @@
 		padding-right: 6px;
 		background-color: #1e1e1e;
 }
-.line {
+hr.hr {		/* line through city name */
 		position: relative;
-		display: inline-block;
-		border:0;
-		border-top: 1px solid rgb(183, 74, 2);
-		height: 0;
-		top: -33px;
-		width: 100%;
+		color: rgb(183, 74, 2);
+		background-color: rgb(183, 74, 2);
+		border: 0;
+		top: 18px;
+		height: 1px;
+		left: -80px;
+		margin-right: -120px;
+		z-index: -1;
 }
 .driver {				/*dont add padding-left */
 		width: 100%;
 		background-color: #707070;
 		padding-top: 1px;
+		margin-top: 17px;
 		color: #C0C0C0;
 		font-size: 1.2em;
 		border-style: solid;
