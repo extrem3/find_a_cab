@@ -1,3 +1,6 @@
+.content{
+	width: 700px;
+}
 .results-ads {	/*	trenutno tega ne rabm	*/
 		position: absolute;
 		background-color: gray;
@@ -8,20 +11,23 @@
 		margin-left: -200px; /* width of ads / 2 */
 }
 .townName {
-		margin:0 auto;
+		margin:30 auto;
+		margin-bottom: 20px;
 		z-index:1;
+		background-color: #1e1e1e;
 		float:left;
 		position:relative; 
 		left:50%;
 		top: -10px;
+		left:40%;
+		top: -20px;
 		color: #FFCC33;
-		margin-left: -5%;
 		text-align: center;
 		display: inline-block;
-		font-size: 2em;
+		font-size: 40px;
 		padding-left: 6px;
 		padding-right: 6px;
-		background-color: #1e1e1e;
+		position:absolute; 
 }
 hr.hr {		/* line through city name */
 		position: relative;
@@ -33,46 +39,52 @@ hr.hr {		/* line through city name */
 		left: -80px;
 		margin-right: -120px;
 		z-index: -1;
+#resultsContents {
+		position: relative;
+		margin-top: 30px;
 }
 .driver {				/*dont add padding-left */
+		cursor: pointer;
 		width: 100%;
 		background-color: #707070;
 		padding-top: 1px;
 		margin-top: 17px;
+		padding: 15px;
+		background-color: #111111;
 		color: #C0C0C0;
 		font-size: 1.2em;
-		border-style: solid;
-		border-width: 1px;
-		border-color: black;
+		border: 1px solid #323232;
 		margin-bottom: 10px;
+		height: 60px;
 }
 .companyName {
 		color: rgb(233, 124, 52); /* main color hue */
 		font-size: 1.3em;
-		padding-left: 15px;
 		font-weight: bold;
 }
 .driverName {
 		display: inline-block;
-		padding-left: 15px;
 		padding-right: 10px;
 }
 .phoneNumber {
 		position: relative;
-		top: -23px;
+		top: -43px;
 		width: inherit;
-		text-align: center;
-		color: blue;
+		text-align: right;
+		font-size: 30px;
+		color: #3581e1;
 		font-weight: 100;
 		font-family:Georgia, serif;
 }
 .rating {
+		display: none;
 		position: relative;
 		top: -50px;
 		left: 100%;
 		margin-left: -80px; /* if there is 5 stars */
 }
 .companyDetails {
+		display: none;
 		padding-left: 15px;
 		font-size: 0.9em;
 		margin-top: -45px;

@@ -1,6 +1,5 @@
 ﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <?php
-
 session_destroy();
 ?>
 <html>
@@ -11,16 +10,21 @@ session_destroy();
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head>
 <body>
-	<div id="header">
-		<div id="name">&nbsp;</div>
-	</div>
 		<div class="pannel">
+			<?php 
+			if($_GET['failed'] == "true")
+			{
+				echo '<div id="wrongLogin">Napacno uporabnisko ime ali geslo</div>';
+			} else if($_GET['failed'] == "maybe")
+			{
+				echo '<div id="wrongLogin">Prosimo ponovno vpisite vase uporabnisko ime in geslo</div>';
+			}
+			?>
 			<form id="login" action="login.php" method="POST" accept-charset="utf-8">
 				Uporabniško ime:<input type="text" name="username" id="username-input" /><br>
 				Geslo:<input type="password" name="password" id="pass-input" /><br>
-				<input type="submit" value="Prijava" id="login-button" />
+				<input type="submit" value="Prijava" id="login-button" onclick="self.parent.loadLogin()" />
 			</form>
 		</div>
-	<div id="footer"><div id="footer-font">vsa vsebina je last njenih izdelovalcev (c) 2011</div></div>
 </body>
 </html>

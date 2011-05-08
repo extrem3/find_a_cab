@@ -6,11 +6,13 @@
 	<link rel="stylesheet" type="text/css" href="css/style.css" />
 	<link rel="stylesheet" type="text/css" href="css/themes/jquery.ui.all.css">
 	<script type="text/javascript" src="scr/jquery-1.5.1.js"></script>
+	<script type="text/javascript" src="scr/shadowbox.js"></script>
 	<script type="text/javascript" src="scr/ui/jquery.ui.core.js"></script>
 	<script type="text/javascript" src="scr/ui/jquery.ui.widget.js"></script>
 	<script type="text/javascript" src="scr/ui/jquery.ui.button.js"></script>
 	<script type="text/javascript" src="scr/ui/jquery.ui.position.js"></script>
 	<script type="text/javascript" src="scr/ui/jquery.ui.autocomplete.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/shadowbox.css">
 	<link rel="stylesheet" type="text/css" href="css/demos.css">
 	<style type="text/css">
 	.ui-button { margin-left: -1px; }
@@ -18,6 +20,9 @@
 	.ui-autocomplete-input { margin: 0; padding: 0.48em 0 0.47em 0.45em; }
 	</style>
 	<script type="text/javascript">
+	Shadowbox.init({
+		handleOversize: "resize"
+	});
 	(function( $ ) {
 		$.widget( "ui.combobox", {
 			_create: function() {
@@ -123,6 +128,7 @@
 					.attr( "title", "Show All Items" )
 					.insertAfter( this.button )
 					.css("margin-left", "5px")
+					.css('border', 'none')
 					.button({
 						icons: {
 							primary: "ui-icon-circle-zoomin"
@@ -147,6 +153,9 @@
 		// input.val($(select).find("option:selected").text())
 
 	})( jQuery );
+	// $(window).load(function(){
+
+	// })
 
 	$(function() {
 		var selectBox = $("#ui-dropbox")
@@ -164,28 +173,79 @@
 		});
 		$('.ui-autocomplete-input').css('width', '300px')
 	});
+	var moved = false;
+	var speed = 600;
+	var animated = false;
+	var loaded = false;
+	var storedResults = "";
 	function loadSomething(a)
 	{
+		loaded = false;
+		animated = false;
+		if (!moved)
+		{
+			$('.index-search').animate({
+				'top' : 100
+			}, speed);
+			moved = true;
+			$('#results').fadeOut(speed, function(){
+				$('#loadSpinner').fadeIn(speed, function(){
+					animated = true;
+					displayResults("empty");
+				});
+			});
+		}else
+		{
+			$('#results').fadeOut(speed, function(){
+				$('#loadSpinner').fadeIn(speed, function(){
+					animated = true;
+					displayResults("empty");
+				});
+			});
+		}
 		bodyContent = $.ajax({
-			  url: "search.php",
-			  global: false,
-			  type: "POST",
-			  data: ({id:a}),
-			  dataType: "html",
-			  async:false,
-			  success: function(msg){
-				  $("#results").html(msg);
-			  }
-		   }
-		).responseText;
+			url: "search.php",
+			global: false,
+			type: "POST",
+			data: ({id:a}),
+			dataType: "html",
+			async:false,
+			success: function(msg){
+				loaded = true;
+				displayResults(msg);
+			}
+		}).responseText;
+	}
+	function displayResults(r)
+	{
+		if (loaded == true && animated == true)
+		{
+			$('#loadSpinner').fadeOut(speed, function(){
+				if(r == "empty")
+				{
+					$("#results").html(storedResults);
+				}else
+				{
+					$("#results").html(r);
+				}
+				$('#results').fadeIn(speed);
+			});
+		}else if(r != "empty")
+		{
+			storedResults = r;
+		}
+	}
+	function loadLogin()
+	{
+		window.location = "userPannel.php";
 	}
 	</script>
 </head>
 <body>
 	<div id="header">
 		<div class="login-register">
-			<a href="loginpannel.php">Prijavi se!</a> 
-			<a href="registerpannel.php">Registriraj se!</a>
+			<a rel="shadowbox;title=Prijava;height=250;width=450" href="loginPannel.php" id="loginButton">Prijavi se!</a> 
+			<a rel="shadowbox;title=Registracija;height=400;width=500" href="registerPannel.php" id="registerButton">Registriraj se!</a>
 		</div>
 		<div id="name">&nbsp;</div>
 	</div>
@@ -196,6 +256,7 @@
 			<input class="find_button" type="submit" value="Najdi!" />
 		</form>
 	</div>
+	<div id="loadSpinner" style="display: none;"><img src="img/spinner.gif"/></div>
 	<div id="results">
 	<!-- <div id="index-ads">Tukaj pridejo oglasi</div> -->
 	</div>

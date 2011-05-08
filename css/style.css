@@ -102,6 +102,14 @@ body {
 		margin-left: -235px;
 		top: 350px;
 }
+#results {
+		position: absolute;
+		left: 50%;
+		width:700px;
+		margin-left: -350px;
+		text-align:left;
+		padding:15px;
+}
 #index-ads {
 		position: relative;
 		left: 50%;
