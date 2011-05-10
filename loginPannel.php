@@ -8,9 +8,14 @@ session_destroy();
 	<script type="text/javascript" src="scr/jquery-1.5.1.js"></script> 
 	<link rel="stylesheet" type="text/css" href="css/style.css" />
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<style type="text/css">
+		body {
+			background: #333333 url(img/dark_grey_noise_bg.png) repeat-x;
+		}
+	</style>
 </head>
 <body>
-		<div class="pannel">
+		<div class="login-pannel">
 			<?php 
 			if($_GET['failed'] == "true")
 			{
