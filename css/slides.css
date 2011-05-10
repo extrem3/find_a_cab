@@ -1,10 +1,12 @@
-﻿#content {
+﻿/* this is layout for registration form */
+#content {
 	width: 480px;
 	margin-top: 20px;
 	margin-right: 5px;
 	margin-left: 5px;
 	padding: 0;
 	text-align: left;
+	overflow: hidden;
 }
 #navigation{
 	position:relative;
@@ -26,3 +28,21 @@
 	background-image:url("../img/slidesButton.png");
 	background-position:0px 0px;
 }
+h1 {
+	text-align: center;
+	color: #E0E0E0;
+}
+/* first slide(obvezni podatki) */
+/* 		a#something = name + input box together		||	#something = input box */
+	a {
+		color: #E0E0E0;
+		font-size: 1.3em;
+	}
+	td.name {
+		padding-right: 50;
+		text-align: center;
+	}
+	td#lastName {
+		text-align: center;
+	}
+/* end of first slide */

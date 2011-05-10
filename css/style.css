@@ -7,6 +7,7 @@ body {
 		padding: 0px;
 		overflow:auto;
 		overflow-x: hidden;
+		font-family: "Times New Roman",Times,serif;
 }
 #header {
 		background-image:url('../img/logo.png');
@@ -161,15 +162,15 @@ body {
 		font-weight: bold;
 		cursor: pointer;
 }
-.pannel {
+.login-pannel {
 		position: absolute;
 		top: 50%;
 		left: 50%;
 		margin-top: -50px;
-		margin-left: -165px;
+		margin-left: -178px;
 		background-color: gray;
+		padding-left: 20px;
 		width: 335px;
-		padding-left: 30px;
 		color: #181818;
 		border: 3px outset rgb(183, 74, 2);
 		font-size: 1.2em;
@@ -178,15 +179,37 @@ body {
 		padding-bottom: 5px;
 }
 #username-input {
-		background-color: #F0F0F0;
 		margin-bottom: 5px;
 		margin-left: 5px;
-		
+		background-image: url('../img/search-gradient.jpg');
+		border-style:solid;
+		border-width:1px;
+		height: 23px;
+		border-color: black;
+		width: 150px;
+		-webkit-border-radius:4px;
+		-moz-border-radius:4px;
+		border-radius:4px;
+}
+#username-input:active, #username-input:focus, #pass-input:focus {
+		border-color: orange;
+		border-style: double;
+		outline: none;
 }
 #pass-input {
-		background-color: #F0F0F0;
-		margin-left: 101px;
+		background-image: url('../img/search-gradient.jpg');
+		border-style:solid;
+		border-width:1px;
+		height: 23px;
+		border-color: black;
+		width: 150px;
+		-webkit-border-radius:4px;
+		-moz-border-radius:4px;
+		border-radius:4px;		
+		margin-left: 102px;
 		margin-bottom: 5px;
+		width: 150px;
+		width: 152px\9;	/* IE 9 fix */
 }
 #login-button {
 		position: relative;

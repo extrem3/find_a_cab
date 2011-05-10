@@ -280,12 +280,18 @@
 	<form action="register.php" method="POST" accept-charset="utf-8">
 		<div id="content_1" class="slide">
 			<h1>Obvezni podatki</h1><br>
-			Uporabnisko ime:<input type="text" name="username"><br>
-			Geslo:<input type="password" name="password"><br>
-			Ponovite geslo:<input type="password" name="passwordCheck"><br>
-			Ime:<input type="text" name="name"><br>
-			Priimek:<input type="text" name="lastName"><br>
-			Email:<input type="text" name="email"><br>
+			<table>
+				<tr><td class="name"><a>Ime:</a></td><td id="lastName"><a>Priimek:</a></td></tr>
+				<tr><td class="name"><input id="name2" type="text" name="name"></td>
+					<td><input id="surname2" type="text" name="lastName"></td></tr>
+			</table>
+			<a id="email">Email:				<input id="email2" type="text" name="email"><br></a>
+			<a id="username">Uporabnisko ime:	<input id="username2" type="text" name="username"><br></a>
+			<table>
+				<tr><td><a>Geslo:</a></td><td><a>Ponovite geslo:</a></td>
+				<tr><td><input id="pass2" type="password" name="password"></td>
+					<td><input id="pass-again2" type="password" name="passwordCheck"></td></tr>
+			</table>
 			<br>
 			<br>
 		</div>
