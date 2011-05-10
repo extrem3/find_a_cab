@@ -279,20 +279,19 @@
 	<div id="content">
 	<form action="register.php" method="POST" accept-charset="utf-8">
 		<div id="content_1" class="slide">
-			<h1>Obvezni podatki</h1><br>
+			<h1>Obvezni podatki</h1>
 			<table>
-				<tr><td class="name"><a>Ime:</a></td><td id="lastName"><a>Priimek:</a></td></tr>
+				<tr><td class="name">Ime:</td><td id="lastName">Priimek:</td></tr>
 				<tr><td class="name"><input id="name2" type="text" name="name"></td>
 					<td><input id="surname2" type="text" name="lastName"></td></tr>
-			</table>
-			<a id="email">Email:				<input id="email2" type="text" name="email"><br></a>
-			<a id="username">Uporabnisko ime:	<input id="username2" type="text" name="username"><br></a>
+			</table><hr />
+			<a>Email:</a><br>				<input id="email2" type="text" name="email"><br>
+			<a>Uporabnisko ime:</a><br>	<input id="username2" type="text" name="username"><br><hr />
 			<table>
-				<tr><td><a>Geslo:</a></td><td><a>Ponovite geslo:</a></td>
-				<tr><td><input id="pass2" type="password" name="password"></td>
-					<td><input id="pass-again2" type="password" name="passwordCheck"></td></tr>
+				<tr><td>Geslo:</td><td>Ponovite geslo:</td>
+				<tr><td id="pass"><input type="password" name="password"></td>
+					<td><input type="password" name="passwordCheck"></td></tr>
 			</table>
-			<br>
 			<br>
 		</div>
 		<div id="content_2" class="slide">
@@ -300,8 +299,9 @@
 			<input type="checkbox" name="cabOwner" id="cabOwner"/><div class="inputDescription">Da</div>
 		</div>
 		<div id="content_3" class="slide">
-			Telefonska stevilka:<input type="text" name="phone"><br>
-			Ime Mesta:<input type="text" name="newTown"><br>
+			<h1>Vpisite vaso telefonsko stevilko ter mesto v katerem vozite</h1><br>
+			<a>Telefonska stevilka:</a><br><input type="text" name="phone"><br>
+			<a>Ime Mesta:</a><br><input type="text" name="newTown"><br>
 			(vec stevilk boste lahko vstavili kasneje)
 			<br>
 			<br>
@@ -314,14 +314,14 @@
 		</div>
 		<div id="content_5" class="slide">
 			<input type="radio" name="company" value="notAdded"/><div class="inputDescription">Sem lastnik podjetja</div>
-			Name:<input type="text" name="companyName"><br>
-			Street:<input type="text" name="companyStreet"><br>
-			Town:<input type="text" name="newCompanyTown"><br>
-			Responsible person:<input type="text" name="companyInCharge"><br>
-			Phone:<input type="text" name="companyPhone"><br>
-			Mail:<input type="text" name="companyMail"><br>
-			Website:<input type="text" name="companyWebsite"><br>
-			Desciption:<input type="text" name="companyDescription"><br>
+			Naziv podjetja:<input type="text" name="companyName"><br>
+			Ulica:<input type="text" name="companyStreet"><br>
+			Mesto:<input type="text" name="newCompanyTown"><br>
+			Odgovorna oseba:<input type="text" name="companyInCharge"><br>
+			Telefon:<input type="text" name="companyPhone"><br>
+			Spletna posta:<input type="text" name="companyMail"><br>
+			Spletna stran:<input type="text" name="companyWebsite"><br>
+			Opis:<input type="text" name="companyDescription"><br>
 			<br> <br>
 		</div>
 		<div id="content_6" class="slide">

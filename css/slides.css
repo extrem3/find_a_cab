@@ -1,7 +1,7 @@
 ﻿/* this is layout for registration form */
 #content {
 	width: 480px;
-	margin-top: 20px;
+	margin-top: 0px;
 	margin-right: 5px;
 	margin-left: 5px;
 	padding: 0;
@@ -31,18 +31,35 @@
 h1 {
 	text-align: center;
 	color: #E0E0E0;
+	padding-bottom: 4px;
+	margin-bottom: 0px;
+}
+a {
+	color: #E0E0E0;
+	font-size: 1.2em;
 }
 /* first slide(obvezni podatki) */
-/* 		a#something = name + input box together		||	#something = input box */
-	a {
-		color: #E0E0E0;
-		font-size: 1.3em;
-	}
 	td.name {
-		padding-right: 50;
-		text-align: center;
+		padding-right: 60px;
+		text-align: left;
 	}
 	td#lastName {
-		text-align: center;
+		text-align: left;
 	}
-/* end of first slide */
+	td#pass {
+		padding-right: 60px;
+	}
+	td {
+		color: #E0E0E0;
+		font-size: 1.2em;
+	}
+/* second slide */
+	.inputDescription {
+		position: relative;
+		left: 50%;
+	}
+/* ------------------- */
+#content_5 {
+	color: #E0E0E0;
+	font-size: 1.2em;
+}
