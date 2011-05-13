@@ -1,8 +1,5 @@
 <?php 
-
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
-session_start(); require('data.php'); require('checkLogin.php');?>
+require('data.php'); require('checkLogin.php');?>
 <html>
 <head>
 	<title>User pannel</title>
