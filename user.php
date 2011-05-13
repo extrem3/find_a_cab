@@ -43,7 +43,7 @@ function addCompany($clean, $companyName, $town_id, $user_id, $exists)
 	}else
 	{
 		$town_id = ucfirst(strtolower($town_id));
-		mysql_query("UPDATE uporabniki SET naziv='2' WHERE id_uporabnik='" . $user_id . "'");
+		mysql_query("UPDATE uporabniki SET nivo='2' WHERE id_uporabnik='" . $user_id . "'");
 		mysql_query("INSERT INTO podjetje (naziv, ulica, mesto, id_drzava, odg_oseba, tel, fax, email, www, opis, rating)
 								   VALUES ('$companyName', '" . $clean['companyStreet'] . "', '$town_id', '1', '" . $clean['companyInCharge'] . "', '" . $clean['companyPhone'] . "', '" . $clean['companyFax'] . "', '" . $clean['companyMail'] . "', '" . $clean['companyWebsite'] . "', '" . $clean['companyDescription'] . "', '0')");
 
@@ -124,6 +124,7 @@ switch ($_GET['type']) {
 		break;
 	case 'addPhone':
 		preg_match_all('/[0-9]+/', $clean['phone'], $cleaned);
+		$phoneNumber = "";
 		foreach($cleaned[0] as $k=>$v) {
 		   $phoneNumber .= $v;
 		}
@@ -161,12 +162,13 @@ switch ($_GET['type']) {
 			echo "some important fields are empty";
 			break;
 		}
-		if(!eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$", $clean['companyMail']))
+		if(!preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/i", $clean['companyMail']))
 		{
 			echo "company mail is not cool";
 			break;
 		}
 		preg_match_all('/[0-9]+/', $clean['companyPhone'], $cleaned);
+	   $phoneNumber = "";
 		foreach($cleaned[0] as $k=>$v) {
 		   $phoneNumber .= $v;
 		}
@@ -185,43 +187,51 @@ switch ($_GET['type']) {
 		echo "company details updated";
 		break;
 	case 'addCompany':
-		echo $user_id . "<br>";
-		$company_id_query = mysql_query("SELECT * FROM upor_podj WHERE id_uporabnik='" . $user_id . "'");
-		if(mysql_num_rows($company_id_query)>0) 
-		{
-			$company_row = mysql_fetch_assoc($company_id_query);
-			$company_id = $company_row['id_podjetje'];
-		}
-		$company_id_query2 = mysql_query("SELECT * FROM upor_podj WHERE id_podjetje='" . $company_id . "'");
-		if(mysql_num_rows($company_id_query2)==1) 
-		{
-			// check if he is the only user of that company and
-			//     remove old company which id you get from upor_podj
-			mysql_query("DELETE FROM podjetje WHERE id_podjetje='" . $company_id . "'");
-		}else
-		{
-			//if there are other users in the same company
-			//     select first one and make him the owner
-			$users_id_query = mysql_query("SELECT * FROM upor_podj WHERE id_podjetje='" . $company_id . "' AND NOT id_uporabnik='" . $user_id . "'");
-			if(mysql_num_rows($users_id_query)>0) 
-			{
-				$users_row = mysql_fetch_assoc($users_id_query);
-				$users_id = $users_row['id_uporabnik'];
-				mysql_query("UPDATE uporabniki SET nivo='2' WHERE id_uporabnik='" . $users_id . "'");
-			}
-		}
+		$id_company = 0;
 		if ($clean['company'] == "added")
 		{
 			$id_company = addCompany($clean, $clean['companySelect'], $clean['companyTown'], $user_id, true);
 			mysql_query("UPDATE uporabniki SET nivo='1' WHERE id_uporabnik='" . $user_id . "'");
+			echo "moved to new company";
 		}else
 		{
 			$id_company = addCompany($clean, $clean['companyName'], $clean['companyTown'], $user_id, false);
 			mysql_query("UPDATE uporabniki SET nivo='2' WHERE id_uporabnik='" . $user_id . "'");
+			echo "added a new company";
+		}
+
+		$company_id_query = mysql_query("SELECT * FROM upor_podj WHERE id_uporabnik='" . $user_id . "'");
+		$company_id = 0;
+		if(mysql_num_rows($company_id_query)>0) 
+		{
+			$company_row = mysql_fetch_assoc($company_id_query);
+			$company_id = $company_row['id_podjetje'];
+			$company_id_query2 = mysql_query("SELECT * FROM upor_podj WHERE id_podjetje='" . $company_id . "'");
+			if(mysql_num_rows($company_id_query2)==1) 
+			{
+				// check if he is the only user of that company and
+				//     remove old company which id you get from upor_podj
+				mysql_query("DELETE FROM podjetje WHERE id_podjetje='" . $company_id . "'");
+			}else
+			{
+				//if there are other users in the same company
+				//     select first one and make him the owner
+				$users_id_query = mysql_query("SELECT * FROM upor_podj WHERE id_podjetje='" . $company_id . "' AND NOT id_uporabnik='" . $user_id . "'");
+				if(mysql_num_rows($users_id_query)>0) 
+				{
+					$users_row = mysql_fetch_assoc($users_id_query);
+					$users_id = $users_row['id_uporabnik'];
+					mysql_query("UPDATE uporabniki SET nivo='2' WHERE id_uporabnik='" . $users_id . "'");
+				}
+			}
+			mysql_query("UPDATE upor_podj SET id_podjetje='" . $id_company . "' WHERE id_uporabnik='" . $user_id . "'");
+		}else
+		{
+
+			mysql_query("INSERT INTO upor_podj (id_podjetje, id_uporabnik)
+										VALUES ('$id_company', '$user_id')");
 		}
 		echo $user_id . "<br>";
-		mysql_query("UPDATE upor_podj SET id_podjetje='" . $id_company . "' WHERE id_uporabnik='" . $user_id . "'");
-		echo "moved to new company";
 		break;
 	default:
 		echo "NO TYPE SPECIFIED";

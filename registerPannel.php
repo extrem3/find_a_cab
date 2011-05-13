@@ -324,6 +324,7 @@
 			Mesto:<input type="text" name="newCompanyTown"><br>
 			Odgovorna oseba:<input type="text" name="companyInCharge"><br>
 			Telefon:<input type="text" name="companyPhone"><br>
+			Fax:<input type="text" name="companyFax"><br>
 			Spletna posta:<input type="text" name="companyMail"><br>
 			Spletna stran:<input type="text" name="companyWebsite"><br>
 			Opis:<input type="text" name="companyDescription"><br>

@@ -37,6 +37,7 @@
 						delay: 0,
 						minLength: 0,
 						<?php
+error_reporting(E_ALL);
 							require('config.php');
 							mysql_connect($location,$username,$password);
 							@mysql_select_db($database) or die( "Unable to select database");

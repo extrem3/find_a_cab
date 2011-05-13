@@ -1,4 +1,8 @@
-<?php session_start(); require('data.php'); require('checkLogin.php');?>
+<?php 
+
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+session_start(); require('data.php'); require('checkLogin.php');?>
 <html>
 <head>
 	<title>User pannel</title>
@@ -33,6 +37,7 @@
 			<?php
 				$phoneNumbersArray = (array)getPhoneNumbers($user_id);
 				$townNamesArray = (array)getTowns();
+				$i = 0;
 				foreach($phoneNumbersArray as $values)
 				{
 					$i ++;
@@ -118,6 +123,7 @@
 						Town:<input type="text" name="companyTown"><br>
 						Responsible person:<input type="text" name="companyInCharge"><br>
 						Phone:<input type="text" name="companyPhone"><br>
+						Fax:<input type="text" name="companyFax"><br>
 						Mail:<input type="text" name="companyMail"><br>
 						website:<input type="text" name="companyWebsite"><br>
 						desciption:<input type="text" name="companyDescription"><br>
