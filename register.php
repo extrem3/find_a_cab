@@ -38,6 +38,7 @@ $id_company;
 function checkErrors($clean)
 {
 	$errors = array();
+	$phoneNumber = "";
 	if (empty($clean['username']) || strlen($clean['username']) < 4)
 		array_push($errors, 9);
 	if (empty($clean['name']) || strlen($clean['name']) < 4)
@@ -47,11 +48,11 @@ function checkErrors($clean)
 	//users cannot have same username or email
 	if(mysql_num_rows(mysql_query("SELECT * FROM uporabniki WHERE username= '" . $clean['username'] . "'"))>0) 
 		array_push($errors, 1);
-	if(!eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$", $_POST['email']))
+	if(!preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/i", $_POST['email']))
 		array_push($errors, 2);
 	if(mysql_num_rows(mysql_query("SELECT * FROM uporabniki WHERE email= '" . $clean['email'] . "'"))>0) 
 		array_push($errors, 3);
-	if ($clean['companyOwner'] == "on" && $clean['company'] == "notAdded")
+	if ((isset($clean['companyOwner']) && $clean['companyOwner'] == "on") && $clean['company'] == "notAdded")
 	{
 		if(empty($clean['companyName']))
 			array_push($errors, 13);
@@ -61,10 +62,9 @@ function checkErrors($clean)
 			array_push($errors, 15);
 		if(empty($clean['newCompanyTown']))
 			array_push($errors, 16);
-		if(!eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$", $_POST['companyMail']))
+		if(!preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/i", $_POST['companyMail']))
 			array_push($errors, 7);
 		preg_match_all('/[0-9]+/', $clean['companyPhone'], $cleaned);
-		$phoneNumber = "";
 		foreach($cleaned[0] as $k=>$v) {
 		   $phoneNumber .= $v;
 		}
@@ -72,7 +72,7 @@ function checkErrors($clean)
 			array_push($errors, 8);
 	}
 	// drivers cannot have the same mobile phone number
-	if ($clean['cabOwner'] == "on")
+	if (isset($clean['cabOwner']) && $clean['cabOwner'] == "on")
 	{
 		$phoneNumber2 = "";
 		preg_match_all('/[0-9]+/', $clean['phone'], $cleaned);
@@ -103,6 +103,7 @@ function addUser($clean)
 }
 function addDriver($clean, $phone_number, $town_id, $user_id)
 {
+   $phoneNumber = "";
 	preg_match_all('/[0-9]+/', $phone_number, $cleaned);
 	foreach($cleaned[0] as $k=>$v) {
 	   $phoneNumber .= $v;
@@ -117,7 +118,7 @@ function addDriver($clean, $phone_number, $town_id, $user_id)
 	mysql_query("INSERT INTO mesta_telefonske (ID_mesta, ID_telefonske)
 							   VALUES ('$town_id', '$telefonska_id')");
 	mysql_query("UPDATE uporabniki SET nivo='1' WHERE id_uporabnik='" . $user_id . "'");
-	return $telefonska_st;
+	return $telefonska_id;
 }
 function addCompany($clean, $companyName, $town_id, $user_id, $exists)
 {
@@ -170,7 +171,7 @@ if (count($errorsArray) > 0)
 }else
 {
 	$id_user = addUser($clean);
-	if ($clean['cabOwner'] == "on")
+	if (isset($clean['cabOwner']) && $clean['cabOwner'] == "on")
 	{
 		$id_town = addTown($clean, $clean['newTown']);
 		addDriver($clean, $clean['phone'], $id_town, $id_user);
@@ -183,11 +184,11 @@ if (count($errorsArray) > 0)
 		}
 		mysql_query("INSERT INTO upor_podj (id_uporabnik, id_podjetje)
 									VALUES ('$id_user', '$id_company')");
-	}else if ($clean['companyOwner'] == "on")
+	}else if (isset($clean['companyOwner']) && $clean['companyOwner'] == "on")
 	{
 		if ($clean['company'] == "added") 
 		{
-			$id_company = addCompany($clean, $clean['companySelect'], $id_town, $id_user, true);
+			$id_company = addCompany($clean, $clean['companySelect'], 0, $id_user, true);
 		}else
 		{
 			$id_company = addCompany($clean, $clean['companyName'], $clean['newCompanyTown'], $id_user, false);

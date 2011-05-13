@@ -66,7 +66,7 @@ switch ($_GET['type']) {
 		echo "name changed";
 		break;
 	case 'email':
-		if(!eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$", $clean['email']))
+		if(!preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/i", $clean['email']))
 		{
 			echo "faulty email";
 			break;
