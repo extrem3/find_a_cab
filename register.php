@@ -47,7 +47,7 @@ function checkErrors($clean)
 	//users cannot have same username or email
 	if(mysql_num_rows(mysql_query("SELECT * FROM uporabniki WHERE username= '" . $clean['username'] . "'"))>0) 
 		array_push($errors, 1);
-	if(!eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$", $_POST['email']))
+	if(!preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/i", $_POST['email']))
 		array_push($errors, 2);
 	if(mysql_num_rows(mysql_query("SELECT * FROM uporabniki WHERE email= '" . $clean['email'] . "'"))>0) 
 		array_push($errors, 3);
@@ -61,7 +61,7 @@ function checkErrors($clean)
 			array_push($errors, 15);
 		if(empty($clean['newCompanyTown']))
 			array_push($errors, 16);
-		if(!eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$", $_POST['companyMail']))
+		if(!preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/i", $_POST['companyMail']))
 			array_push($errors, 7);
 		preg_match_all('/[0-9]+/', $clean['companyPhone'], $cleaned);
 		$phoneNumber = "";
