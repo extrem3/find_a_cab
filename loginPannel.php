@@ -3,6 +3,12 @@
 <head>
 	<title>Login</title>
 	<script type="text/javascript" src="scr/jquery-1.5.1.js"></script> 
+	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/themes/jquery.ui.all.css">
+	<script type="text/javascript" src="scr/jquery-1.5.1.js"></script>
+    <script type="text/javascript" src="scr/ui/jquery.ui.core.js"></script>
+	<script type="text/javascript" src="scr/ui/jquery.ui.widget.js"></script>
+	<script type="text/javascript" src="scr/ui/jquery.ui.button.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/style.css" />
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<style type="text/css">
@@ -10,12 +16,36 @@
 			background: #333333 url(img/dark_grey_noise_bg.png) repeat-x;
 		}
 	</style>
+	<script type="text/javascript">
+	$(document).ready(function() {
+		
+		$('#login').append('<div class="button" id="loginButton">Prijava</div>');
+		$('#wrongLogin').html('Ste ze prijavljeni v sistem! <div class="button" id="logoutButton">Odjava</div>');
+		$('#login-button').hide();
+		$('#loginButton').button().click(function() {
+			var formContents = $('#login').serialize();
+			bodyContent = $.ajax({
+				url: "login.php",
+				global: false,
+				type: "POST",
+				data: formContents,
+				dataType: "html",
+				async:false,
+				success: function(msg){
+					$('form#submit').hide();
+					self.parent.window.location = "userPannel.php";
+				}
+			}).responseText;
+		});
+		$('#logoutButton').button().click(function() {
+			self.parent.window.location = "login.php?logout=true";
+		});
+		$('.button').removeClass('ui-corner-all');
+	});
+	</script>
 </head>
 <body>
 	<?php
-	ini_set('display_errors', 1);
-	error_reporting(E_ALL);
-
 	session_start();
 	if(isset($_SESSION['user_id']) && isset($_SESSION['user_level']))
 	{

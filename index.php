@@ -236,10 +236,6 @@ error_reporting(E_ALL);
 			storedResults = r;
 		}
 	}
-	function loadLogin()
-	{
-		window.location = "userPannel.php";
-	}
 	</script>
 </head>
 <body>
