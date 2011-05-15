@@ -7,6 +7,9 @@ require('data.php'); require('checkLogin.php');?>
 	<script type="text/javascript" src="scr/jquery-1.5.1.js"></script>
 </head>
 <body>
+	<div id="header">
+		<div id="najdiTaxi">&nbsp;</div>
+	</div>
 	<div class="content">
 		<div class="pannel">
 			<form id="username" action="user.php?type=username" method="POST" accept-charset="utf-8">
