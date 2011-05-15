@@ -164,52 +164,37 @@ body {
 }
 .login-pannel {
 		position: absolute;
-		top: 50%;
+		top: 60px;
 		left: 50%;
-		margin-top: -50px;
 		margin-left: -178px;
 		background-color: gray;
 		padding-left: 20px;
 		width: 335px;
 		color: #181818;
-		border: 3px outset rgb(183, 74, 2);
 		font-size: 1.2em;
 		font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
 		padding-top: 5px;
 		padding-bottom: 5px;
 }
 #username-input {
-		margin-bottom: 5px;
+		margin-bottom: 10px;
 		margin-left: 5px;
-		background-image: url('../img/search-gradient.jpg');
-		border-style:solid;
-		border-width:1px;
-		height: 23px;
-		border-color: black;
 		width: 150px;
-		-webkit-border-radius:4px;
-		-moz-border-radius:4px;
-		border-radius:4px;
+		height: 23px;
+		background-color: #CCC;
 }
 #username-input:active, #username-input:focus, #pass-input:focus {
-		border-color: orange;
-		border-style: double;
-		outline: none;
+		/* outline: none;		if u don't want browser outline */
+		background-color: white;
 }
 #pass-input {
-		background-image: url('../img/search-gradient.jpg');
-		border-style:solid;
-		border-width:1px;
 		height: 23px;
-		border-color: black;
-		width: 150px;
-		-webkit-border-radius:4px;
-		-moz-border-radius:4px;
-		border-radius:4px;		
+		width: 150px;	
 		margin-left: 102px;
 		margin-bottom: 5px;
 		width: 150px;
 		width: 152px\9;	/* IE 9 fix */
+		background-color: #CCC;
 }
 #login-button {
 		position: relative;
