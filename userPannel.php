@@ -1,34 +1,35 @@
-<?php 
+﻿<?php 
 require('data.php'); require('checkLogin.php');?>
 <html>
 <head>
 	<title>User pannel</title>
+	<link rel="stylesheet" type="text/css" href="css/userPannel.css">
 	<script type="text/javascript" src="scr/jquery-1.5.1.js"></script>
 </head>
 <body>
 	<div class="content">
 		<div class="pannel">
 			<form id="username" action="user.php?type=username" method="POST" accept-charset="utf-8">
-				username:<input type="text" name="username" value="<?php echo getUsername($user_id); ?>" />
-				<input type="submit" value="change" />
+				Uporabniško ime:<input type="text" name="username" value="<?php echo getUsername($user_id); ?>" />
+				<input type="submit" value="Spremeni" />
 			</form>
 			<hr>
 			<form id="name" action="user.php?type=name" method="POST" accept-charset="utf-8">
-				name:<input type="text" name="name" value="<?php $nameArray = (array)getName($user_id); echo $nameArray[0]; ?>" /><br>
-				last name:<input type="text" name="lastName" value="<?php echo $nameArray[1]; ?>" />
-				<input type="submit" value="change" />
+				Ime:<input type="text" name="name" value="<?php $nameArray = (array)getName($user_id); echo $nameArray[0]; ?>" /><br>
+				Priimek:<input type="text" name="lastName" value="<?php echo $nameArray[1]; ?>" />
+				<input type="submit" value="Spremeni" />
 			</form>
 			<hr>
 			<form id="email" action="user.php?type=email" method="POST" accept-charset="utf-8">
-				email:<input type="text" name="email" value="<?php echo getEmail($user_id); ?>" />
-				<input type="submit" value="change" />
+				Spletna pošta:<input type="text" name="email" value="<?php echo getEmail($user_id); ?>" />
+				<input type="submit" value="Spremeni" />
 			</form>
 			<hr>
 			<form id="password" action="user.php?type=password" method="POST" accept-charset="utf-8">
-				old password:<input type="password" name="oldPassword"/><br>
-				new password:<input type="password" name="password"/><br>
-				repeat new password:<input type="password" name="passwordCheck"/><br>
-				<input type="submit" value="change" />
+				Staro geslo:<input type="password" name="oldPassword"/><br>
+				Novo geslo:<input type="password" name="password"/><br>
+				Ponovite geslo:<input type="password" name="passwordCheck"/><br>
+				<input type="submit" value="Spremeni" />
 			</form>
 			<hr>
 			<?php
@@ -41,7 +42,7 @@ require('data.php'); require('checkLogin.php');?>
 					echo '<form id="phone' . $i . '" action="user.php?type=phone" method="POST" accept-charset="utf-8">';
 					echo $values[0] . ' [' . $values[1] . ']';
 					echo '<input type="hidden" name="phone" value="' . $values[0] . '">';
-					echo '<input type="submit" value="remove">';
+					echo '<input type="submit" value="Odstrani">';
 					echo '</form>';
 				}
 			?>
@@ -50,7 +51,7 @@ require('data.php'); require('checkLogin.php');?>
 				<table>
 					<tr>
 						<td style="vertical-align: top; width: 200px">
-							<input type="radio" name="town" value="added" checked="true"/>town already added
+							<input type="radio" name="town" value="added" checked="true"/>Mesto je že ponujeno
 							<select name="townSelect" id="townSelect">
 								<?php
 									$townNamesArray = (array)getTowns();
@@ -62,16 +63,16 @@ require('data.php'); require('checkLogin.php');?>
 							</select>
 						</td>
 						<td style="vertical-align: top; width: 50px">
-							OR
+							ALI
 						</td>
 						<td style="vertical-align: top; width: 500px">
-							<input type="radio" name="town" value="notAdded"/>add a town<br>
-							Town:<input type="text" name="newTown"><br>
+							<input type="radio" name="town" value="notAdded"/>Dodaj mesto<br>
+							Mesto:<input type="text" name="newTown"><br>
 						</td>
 					</tr>
 				</table>
-				phone:<input type="text" name="phone" value="1112223" />
-				<input type="submit" value="add" />
+				Telefon:<input type="text" name="phone" value="1112223" />
+				<input type="submit" value="Dodaj" />
 			</form>
 			<?php
 				$companyArray = (array)getCompany($user_id);
@@ -94,11 +95,11 @@ require('data.php'); require('checkLogin.php');?>
 			?>
 			<hr>
 			<form id="addCompany" action="user.php?type=addCompany" method="POST" accept-charset="utf-8">
-			I changed my company, so please move me to:
+			Spremenil sem podjetje, prosim prestavite me:
 			<table>
 				<tr>
 					<td style="vertical-align: top; width: 200px">
-						<input type="radio" name="company" value="added" checked="true"/>company already added
+						<input type="radio" name="company" value="added" checked="true"/>Podjetje je že med ponujenimi
 						<br>
 						<select name="companySelect" id="companySelect">
 							<?php
@@ -111,20 +112,20 @@ require('data.php'); require('checkLogin.php');?>
 						</select>
 					</td>
 					<td style="vertical-align: top; width: 50px">
-						OR
+						ALI
 					</td>
 					<td style="vertical-align: top; width: 500px">
-						<input type="radio" name="company" value="notAdded"/>create new company<br>
-						Name:<input type="text" name="companyName"><br>
-						Street:<input type="text" name="companyStreet"><br>
-						Town:<input type="text" name="companyTown"><br>
-						Responsible person:<input type="text" name="companyInCharge"><br>
-						Phone:<input type="text" name="companyPhone"><br>
+						<input type="radio" name="company" value="notAdded"/>Vpišite novo podjetje<br>
+						Naziv podjetja:<input type="text" name="companyName"><br>
+						Ulica:<input type="text" name="companyStreet"><br>
+						Mesto:<input type="text" name="companyTown"><br>
+						Odgovorna oseba:<input type="text" name="companyInCharge"><br>
+						Telefon:<input type="text" name="companyPhone"><br>
 						Fax:<input type="text" name="companyFax"><br>
-						Mail:<input type="text" name="companyMail"><br>
-						website:<input type="text" name="companyWebsite"><br>
-						desciption:<input type="text" name="companyDescription"><br>
-						<input type="submit" value="change" />
+						Spletna pošta:<input type="text" name="companyMail"><br>
+						Spletna stran:<input type="text" name="companyWebsite"><br>
+						Opis:<input type="text" name="companyDescription"><br>
+						<input type="submit" value="Spremeni" />
 					</td>
 				</tr>
 			</table>
