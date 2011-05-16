@@ -40,7 +40,7 @@ body {
 		border:0px;
 		border-bottom:0px;
 }
-#footer {
+#footer {		/* if u change it, do the same in userPannel.css */
 		background-image: url('../img/najditaxt_v2_09.png');
 		position: fixed;
 		bottom: 0;
