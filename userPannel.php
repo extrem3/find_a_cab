@@ -1,4 +1,5 @@
-﻿<?php 
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<?php 
 require('data.php'); require('checkLogin.php');?>
 <html>
 <head>
@@ -9,6 +10,10 @@ require('data.php'); require('checkLogin.php');?>
 <body>
 	<div id="header">
 		<div id="najdiTaxi">&nbsp;</div>
+	</div>
+	<div id="topRow">
+		<div id="welcomeInformation">Dobrodošli, <i><?php echo getUsername($user_id); ?></i>. Nahajate se na administrativni strani, kjer lahko urejate svoje podatke.</div>
+		<div id="topLogout">Odjava</div> <!-- we need some php support here :) -->
 	</div>
 	<div class="content">
 		<div class="pannel">

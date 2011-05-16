@@ -1,10 +1,10 @@
 body {
-		margin: 0px;
+		margin: 0;
 		background-color: #1e1e1e;
 		background-image:url('../img/gradient.jpg');
 		background-repeat: repeat-x;
 		font-size: 100%;
-		padding: 0px;
+		padding: 0;
 		overflow:auto;
 		font-family: "Times New Roman",Times,serif;
 		color: white;
@@ -15,6 +15,41 @@ body {
 		width: 100%;
 		height: 156px;
 		width: 100%;
+}
+#topRow {	/* top-information row (username + logout button) */
+		position: fixed;
+		top: 0;
+		left: 0; /* if missing IE 7 fails */
+		margin: 0;
+		width: 100%;
+		height: 20px;
+		border-top: 1px solid rgb(183, 74, 2);
+}
+#welcomeInformation {
+		position: relative;
+		background-color: rgb(183, 74, 2);
+		display: inline-block;
+		width: 600px;
+		height: 19px;
+		top: -2px;
+		left: 50%;
+		padding-top: 4px;
+		padding-left: 3px;
+		margin-left: -300px;
+		margin-right: 3px;
+		float: left;
+		font-size: 0.875em;
+}
+#topLogout {
+		position: relative;
+		height: 20px;
+		padding-top: 1px;
+		width: 55px;
+		text-align: center;
+		background-color: rgb(183, 74, 2);
+		display: inline-block;
+		font-size: 1em;
+		left: 50%;
 }
 #najdiTaxi { /* logo */
 		background-image: url('../img/najditaxt_logo_m.png');
