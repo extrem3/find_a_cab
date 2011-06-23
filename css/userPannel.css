@@ -115,7 +115,7 @@ body {
 
 #footer {
 		background-color: #414141;
-		border-top: 5px ridge rgb(183, 74, 2);
+		border-top: 3px solid rgb(183, 74, 2);
 		position: fixed;
 		bottom: 0;
 		width: 100%;
@@ -127,6 +127,7 @@ body {
 		font-style: italic;
 		color: white;
 		font-size: small;
+		z-index: 1;
 }
 #footer-font {		
 		padding-top: 2px;
