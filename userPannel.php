@@ -25,17 +25,20 @@ require('data.php'); require('checkLogin.php');?>
 						<input type="submit" value="Spremeni" />
 					</form>
 					<hr>
+					Osebni podatki
 					<form id="name" action="user.php?type=name" method="POST" accept-charset="utf-8">
 						Ime:<input type="text" name="name" value="<?php $nameArray = (array)getName($user_id); echo $nameArray[0]; ?>" /><br>
 						Priimek:<input type="text" name="lastName" value="<?php echo $nameArray[1]; ?>" />
 						<input type="submit" value="Spremeni" />
 					</form>
 					<hr>
+					Spletna pošta
 					<form id="email" action="user.php?type=email" method="POST" accept-charset="utf-8">
-						Spletna pošta:<input type="text" name="email" value="<?php echo getEmail($user_id); ?>" />
+						Nov naslov spletne pošte:<input type="text" name="email" value="<?php echo getEmail($user_id); ?>" />
 						<input type="submit" value="Spremeni" />
 					</form>
 					<hr>
+					Sprememba gesla
 					<form id="password" action="user.php?type=password" method="POST" accept-charset="utf-8">
 						Staro geslo:<input type="password" name="oldPassword"/><br>
 						Novo geslo:<input type="password" name="password"/><br>
@@ -102,9 +105,10 @@ require('data.php'); require('checkLogin.php');?>
 				<div class="emptyRow">&nbsp;</div>
 				<div class="detailInformations">
 					<div class="boxName">Statistika</div>
-					Št. prikazoc vaših kontaktov:<br />
+					Št. prikazov vaših kontaktov:<br />
 					Ocena uporabnikov:
 				</div>
+				<div class="bottom">&nbsp;</div>
 			</div>
 			<div id="centerCross">&nbsp;</div>
 			<div id="rightColumn">
@@ -162,6 +166,7 @@ require('data.php'); require('checkLogin.php');?>
 					Predlogi za spremembe, dopolnitve..<br />
 					Imate vprašanje? Kontaktirajte skrbnika spletnega portala!<br />
 				</div>
+				<div class="bottom">&nbsp;</div>
 			</div>	
 		</div>
 	</div>
