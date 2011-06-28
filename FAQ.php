@@ -12,7 +12,7 @@
 		<div id="welcomeInformation">Dobrodošli! Nahajate se na strani z odgovori najpogosteje zastavljenih vprašanj.</div>
 	</div>
 	<div id="content">
-		<div id="boxName">Odgovori na pogosta vprašanja</div>
+		<div id="boxName">Odgovori na pogosta vprašanja<a href="#" id="backLink" onclick="history.go(-1);return false;">Nazaj</a></div>
 		<div class="FAQ">Vprašanje 1</div>
 		<div class="answer">Odgovor 1</div>
 		<div class="FAQ">Vprašanje 2</div>

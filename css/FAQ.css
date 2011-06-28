@@ -66,6 +66,12 @@ body {
 	margin-right: -3px;
 	padding-left: 3px;
 }
+#backLink {
+	display: inline;
+	position: absolute;
+	right: 10%;
+	color: white;
+}
 .FAQ {
 	color: rgb(183, 74, 2);
 	font-size: 1.2em;
