@@ -1,5 +1,5 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en">
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<title>jQuery UI Autocomplete - Combobox</title>
@@ -258,7 +258,7 @@ error_reporting(E_ALL);
 	<!-- <div id="index-ads">Tukaj pridejo oglasi</div> -->
 	</div>
 	<div id="footer">
-		<a href="loginpannel.php"><div id="footer-login">Prijavi se!</div></a>
+		<a href="FAQ.php"><div id="footer-FAQ">Odgovori na pogosto zastavljena vprašanja.</div></a>
 		<div id="footer-font">vsa vsebina je last njenih izdelovalcev (c) 2011</div>
 	</div>
 </body>
