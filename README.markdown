@@ -5,17 +5,14 @@ info
 --------
 * javascripted registerPannel
 * minor bug fixes for admin and users
-* almost finished with everything, maybe ready for alpha on my end?
+* almost finished with everything, maybe ready for alpha?
 
 
 todo
 -----------
 * add capcha to register pannel 
-* apply style to search.php, index.php
-* apply style to loginPannel.php
-* apply style to userPannel.php
+* improve userPannel.php
 * apply style to adminPannel.php
-* apply style to registerPannel.php
 
 to use
 -----------
