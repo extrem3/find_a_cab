@@ -51,15 +51,15 @@ require('data.php'); require('checkLogin.php');?>
 						{
 							echo '<hr>';
 							echo '<form id="company" action="user.php?type=company" method="POST" accept-charset="utf-8">';
-							echo 'Name:<input type="text" name="companyName" value="' . $companyArray[0] . '"><br>';
-							echo 'Street:<input type="text" name="companyStreet" value="' . $companyArray[1] . '"><br>';
-							echo 'Town:<input type="text" name="companyTown" value="' . $companyArray[2] . '"><br>';
-							echo 'Responsible person:<input type="text" name="companyInCharge" value="' . $companyArray[3] . '"><br>';
-							echo 'Phone:<input type="text" name="companyPhone" value="' . $companyArray[4] . '"><br>';
+							echo 'Naziv podjetja:<input type="text" name="companyName" value="' . $companyArray[0] . '"><br>';
+							echo 'Ulica:<input type="text" name="companyStreet" value="' . $companyArray[1] . '"><br>';
+							echo 'Mesto:<input type="text" name="companyTown" value="' . $companyArray[2] . '"><br>';
+							echo 'Odgovorna oseba:<input type="text" name="companyInCharge" value="' . $companyArray[3] . '"><br>';
+							echo 'Telefon:<input type="text" name="companyPhone" value="' . $companyArray[4] . '"><br>';
 							echo 'Fax:<input type="text" name="companyFax" value="' . $companyArray[5] . '"><br>';
 							echo 'Mail:<input type="text" name="companyMail" value="' . $companyArray[6] . '"><br>';
-							echo 'website:<input type="text" name="companyWebsite" value="' . $companyArray[7] . '"><br>';
-							echo 'desciption:<input type="text" name="companyDescription" value="' . $companyArray[8] . '"><br>';
+							echo 'Spletna stran:<input type="text" name="companyWebsite" value="' . $companyArray[7] . '"><br>';
+							echo 'Opis:<input type="text" name="companyDescription" value="' . $companyArray[8] . '"><br>';
 							echo '<input type="submit" value="change" />';
 							echo '</form>';
 						}
@@ -161,7 +161,7 @@ require('data.php'); require('checkLogin.php');?>
 				<div class="detailInformations">
 					<div class="boxName">Splošne informacije</div>
 					Obvestila uporabnikom spletnega portala najdiTAXI.si<br />
-					Pogosto zastavljena vprašanja<br />
+					<a href="FAQ.php">Pogosto zastavljena vprašanja</a><br />
 					Pogoji uporabe spletnega portala najdiTAXI.si<br />
 					Predlogi za spremembe, dopolnitve..<br />
 					Imate vprašanje? Kontaktirajte skrbnika spletnega portala!<br />
