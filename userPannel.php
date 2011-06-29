@@ -55,10 +55,6 @@ require('data.php'); require('checkLogin.php');?>
 					
 					Podatki Vašega NajdiTaxi računa
 					<table id="personalInformation">
-					<form id="username" action="user.php?type=username" method="POST" accept-charset="utf-8">
-						<tr><td>Uporabniško ime:</td><td><input id="username" type="text" name="username" value="<?php echo getUsername($user_id); ?>" /></td></tr>
-						<!-- <input type="submit" value="Spremeni" /> -->
-					</form>
 					<form id="password" action="user.php?type=password" method="POST" accept-charset="utf-8">
 						<tr><td>Staro geslo:</td><td><input type="password" name="oldPassword"/></td></tr>
 						<tr><td>Novo geslo:</td><td><input type="password" name="password"/></td></tr>
