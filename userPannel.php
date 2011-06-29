@@ -80,8 +80,15 @@ require('data.php'); require('checkLogin.php');?>
 				<div class="emptyRow">&nbsp;</div>
 				<div class="detailInformations">
 					<div class="boxName">Statistika</div>
+					<div id="statistic">
 					Št. prikazov vaših kontaktov:<br />
 					Ocena uporabnikov:
+					</div>
+					<div id="statisticNumbers">
+					<!-- need some support here -->
+					100<br />
+					5
+					</div>
 				</div>
 				<div class="bottom">&nbsp;</div>
 			</div>

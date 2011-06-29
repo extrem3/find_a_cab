@@ -9,6 +9,9 @@ body {
 	font-family: "Times New Roman",Times,serif;
 	color: white;
 }
+hr {
+	border-color: gray;
+}
 #header {
 	background-image:url('../img/logo.png');
 	background-repeat: no-repeat;
@@ -93,6 +96,13 @@ body {
 	margin-left: 19px;
 	height: 600px;
 	width: 40%;
+}
+#statistic {
+	display: inline-block;
+	padding-right: 50px;
+}
+#statisticNumbers {
+	display: inline-block;
 }
 .boxName {
 	background-color:rgb(183, 74, 2);
