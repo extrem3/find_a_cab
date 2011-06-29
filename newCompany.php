@@ -3,7 +3,7 @@
 require('data.php'); require('checkLogin.php');?>
 <html>
 <head>
-	<title>Pogosto zastavljena sprašanja</title>
+	<title>Sprememba podjetja</title>
 	<link rel="stylesheet" type="text/css" href="css/newCompany.css">
 </head>
 <body>
