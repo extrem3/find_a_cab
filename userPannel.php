@@ -69,42 +69,8 @@ require('data.php'); require('checkLogin.php');?>
 						}
 					?>
 					<hr>
-					<form id="addCompany" action="user.php?type=addCompany" method="POST" accept-charset="utf-8">
-					Ustvarili ste novo podjetje ali pa se želite pridružiti že obstoječemu podjetju
-					<table>
-						<tr>
-							<td style="vertical-align: top; width: 200px">
-								<input type="radio" name="company" value="added" checked="true"/>Podjetje je že med ponujenimi
-								<br>
-								<select name="companySelect" id="companySelect">
-									<?php
-									$result = mysql_query("SELECT * FROM podjetje");
-									while($row = mysql_fetch_array($result))
-									{
-										echo "<option value=\"" . $row['naziv'] . "\">" . $row['naziv'] . "</option>";
-									}
-									?>
-								</select>
-							</td>
-							<td style="vertical-align: top; width: 50px">
-								ALI
-							</td>
-							<td style="vertical-align: top; width: 500px">
-								<input type="radio" name="company" value="notAdded"/>Vpišite novo podjetje<br>
-								Naziv podjetja:<input type="text" name="companyName"><br>
-								Ulica:<input type="text" name="companyStreet"><br>
-								Mesto:<input type="text" name="companyTown"><br>
-								Odgovorna oseba:<input type="text" name="companyInCharge"><br>
-								Telefon:<input type="text" name="companyPhone"><br>
-								Fax:<input type="text" name="companyFax"><br>
-								Spletna pošta:<input type="text" name="companyMail"><br>
-								Spletna stran:<input type="text" name="companyWebsite"><br>
-								Opis:<input type="text" name="companyDescription"><br>
-								<input type="submit" value="Spremeni" />
-							</td>
-						</tr>
-					</table>
-					</form>
+					Če ste ustvarili novo podjetje ali pa se želite pridružiti že obstoječemu podjetju kliknite <a href="newCompany.php" id="newCompany">TUKAJ</a>.(če želite spremeniti podatke Vašega podjetja pa to storite zgoraj).
+					<!-- here was newCompany.php code -->
 					<div id="editSettings">
 						<!-- we need some backend support here -->
 						<a href="#" class="edit">Uredi</a>
