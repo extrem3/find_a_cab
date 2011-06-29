@@ -51,7 +51,7 @@ require('data.php'); require('checkLogin.php');?>
 					
 					Podatki Vašega NajdiTaxi računa
 					<table id="personalInformation">
-						<tr><td>Uporabniško ime:</td><td><input id="username" type="text" name="username" value="<?php echo getUsername($user_id); ?>" /></td></tr>
+						<tr><td>Uporabniško ime:</td><td><?php echo getUsername($user_id); ?></td></tr>
 					</form>
 						<tr><td>Staro geslo:</td><td><input type="password" name="oldPassword"/></td></tr>
 						<tr><td>Novo geslo:</td><td><input type="password" name="password"/></td></tr>
@@ -95,7 +95,11 @@ require('data.php'); require('checkLogin.php');?>
 					</div>
 					<div id="statisticNumbers">
 					<!-- need some support here -->
-					100<br />
+					<?php 
+						$resultUserShown = mysql_query("SELECT prikazov FROM uporabniki WHERE id_uporabnik='$user_id'"); 
+						echo mysql_result($resultUserShown, 0);
+					?>
+					<br />
 					5
 					</div>
 				</div>

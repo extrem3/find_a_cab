@@ -10,7 +10,8 @@
 		$(".answer").hide();
 		$(".FAQ").click(function() {
 			$(".answer").slideUp("fast");
-			$(this).next().slideToggle("fast");
+			if ($(this).next().css("display") != "block")
+				$(this).next().slideToggle("fast");
 		})
 	})
 	</script>
