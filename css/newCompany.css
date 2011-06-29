@@ -53,9 +53,9 @@ body {
 }
 #content {
 	position: relative;
-	margin-left: -400px;
+	margin-left: -200px;
 	left: 50%;
-	width: 800px;
+	width: 400px;
 	border: 1px solid rgb(183, 74, 2);
 	padding-left: 3px;
 	background-color: #414141;
@@ -72,26 +72,21 @@ body {
 	display: inline;
 	position: relative;
 	color: white;
-	left: 585px;
+	left: 185px;
 }
 #table {
-	border-spacing: 0px;
+	margin-left: 40px;
 }
-#inDatabase {
-	width: 374px;
-	vertical-align: top;
+input {
+	width: 180px;
+	background-color: #E0E0E0;
 }
-#or {
-	vertical-align: top;
-	width: 50px;
-	text-align: center;
-	font-size: 1.05em;
-	border-left: 1px solid gray;
-	border-right: 1px solid gray;
-}
-#new {
-	vertical-align: top;
-	width: 374px;
+input#submit {
+	width: 100px;
+	position: relative;
+	left: 50%;
+	margin-left: -50px;
+	cursor: pointer;
 }
 /* footer */
 #bottom { /* purpose of this div is to extend content height so footer doesn't cover it */
