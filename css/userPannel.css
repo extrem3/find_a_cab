@@ -219,6 +219,7 @@ a.edit {
 	font-size: 1.08em;
 	background-color: #808080;
 	text-align: center;
+	cursor:pointer;
 }
 #showAddNumber { /* for javascript */
 	visibility:hidden;
