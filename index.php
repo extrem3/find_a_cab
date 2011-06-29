@@ -2,7 +2,8 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<title>jQuery UI Autocomplete - Combobox</title>
+	<meta name="description" content="Poiščite Vam najbižji taxi!" />
+	<title>NajdiTaxi.si</title>
 	<link rel="stylesheet" type="text/css" href="css/style.css" />
 	<link rel="stylesheet" type="text/css" href="css/themes/jquery.ui.all.css">
 	<script type="text/javascript" src="scr/jquery-1.5.1.js"></script>

@@ -3,7 +3,7 @@
 require('data.php'); require('checkLogin.php');?>
 <html>
 <head>
-	<title>User pannel</title>
+	<title>Uporabniški račun</title>
 	<link rel="stylesheet" type="text/css" href="css/userPannel.css">
 	<script type="text/javascript" src="scr/jquery-1.5.1.js"></script>
 </head>
@@ -20,53 +20,57 @@ require('data.php'); require('checkLogin.php');?>
 			<div id="leftColumn">
 				<div class="detailInformations">
 					<div class="boxName">Vaši podatki</div>
-					<form id="username" action="user.php?type=username" method="POST" accept-charset="utf-8">
-						Uporabniško ime:<input type="text" name="username" value="<?php echo getUsername($user_id); ?>" />
-						<input type="submit" value="Spremeni" />
-					</form>
-					<hr>
+					
 					Osebni podatki
+					<table id="personalInformation">
 					<form id="name" action="user.php?type=name" method="POST" accept-charset="utf-8">
-						Ime:<input type="text" name="name" value="<?php $nameArray = (array)getName($user_id); echo $nameArray[0]; ?>" /><br>
-						Priimek:<input type="text" name="lastName" value="<?php echo $nameArray[1]; ?>" />
-						<input type="submit" value="Spremeni" />
+						<tr><td>Ime:</td><td><input type="text" name="name" value="<?php $nameArray = (array)getName($user_id); echo $nameArray[0]; ?>" /></td></tr>
+						<tr><td>Priimek:</td><td><input type="text" name="lastName" value="<?php echo $nameArray[1]; ?>" /></td></tr>
+						<!-- <input type="submit" value="Spremeni" /> -->
 					</form>
-					<hr>
-					Spletna pošta
 					<form id="email" action="user.php?type=email" method="POST" accept-charset="utf-8">
-						Nov naslov spletne pošte:<input type="text" name="email" value="<?php echo getEmail($user_id); ?>" />
-						<input type="submit" value="Spremeni" />
+						<tr><td>Naslov spletne pošte:</td><td><input type="text" name="email" value="<?php echo getEmail($user_id); ?>" /></td></tr>
+						<!-- <input type="submit" value="Spremeni" /> -->
 					</form>
+					</table>
 					<hr>
-					Sprememba gesla
-					<form id="password" action="user.php?type=password" method="POST" accept-charset="utf-8">
-						Staro geslo:<input type="password" name="oldPassword"/><br>
-						Novo geslo:<input type="password" name="password"/><br>
-						Ponovite geslo:<input type="password" name="passwordCheck"/><br>
-						<input type="submit" value="Spremeni" />
+					
+					Podatki Vašega NajdiTaxi računa
+					<table id="personalInformation">
+					<form id="username" action="user.php?type=username" method="POST" accept-charset="utf-8">
+						<tr><td>Uporabniško ime:</td><td><input type="text" name="username" value="<?php echo getUsername($user_id); ?>" /></td></tr>
+						<!-- <input type="submit" value="Spremeni" /> -->
 					</form>
+					<form id="password" action="user.php?type=password" method="POST" accept-charset="utf-8">
+						<tr><td>Staro geslo:</td><td><input type="password" name="oldPassword"/></td></tr>
+						<tr><td>Novo geslo:</td><td><input type="password" name="password"/></td></tr>
+						<tr><td>Ponovite geslo:</td><td><input type="password" name="passwordCheck"/></td></tr>
+						<!-- <input type="submit" value="Spremeni" /> -->
+					</form>
+					</table>
+					
 					<?php
 						$companyArray = (array)getCompany($user_id);
 						if(count($companyArray) > 1)
 						{
-							echo '<hr>';
+							echo '<hr>Podatki Vašega podjetja<table id="personalInformation">';
 							echo '<form id="company" action="user.php?type=company" method="POST" accept-charset="utf-8">';
-							echo 'Naziv podjetja:<input type="text" name="companyName" value="' . $companyArray[0] . '"><br>';
-							echo 'Ulica:<input type="text" name="companyStreet" value="' . $companyArray[1] . '"><br>';
-							echo 'Mesto:<input type="text" name="companyTown" value="' . $companyArray[2] . '"><br>';
-							echo 'Odgovorna oseba:<input type="text" name="companyInCharge" value="' . $companyArray[3] . '"><br>';
-							echo 'Telefon:<input type="text" name="companyPhone" value="' . $companyArray[4] . '"><br>';
-							echo 'Fax:<input type="text" name="companyFax" value="' . $companyArray[5] . '"><br>';
-							echo 'Mail:<input type="text" name="companyMail" value="' . $companyArray[6] . '"><br>';
-							echo 'Spletna stran:<input type="text" name="companyWebsite" value="' . $companyArray[7] . '"><br>';
-							echo 'Opis:<input type="text" name="companyDescription" value="' . $companyArray[8] . '"><br>';
-							echo '<input type="submit" value="change" />';
-							echo '</form>';
+							echo '<tr><td>Naziv podjetja:</td><td><input type="text" name="companyName" value="' . $companyArray[0] . '"></td></tr>';
+							echo '<tr><td>Ulica:</td><td><input type="text" name="companyStreet" value="' . $companyArray[1] . '"></td></tr>';
+							echo '<tr><td>Mesto:</td><td><input type="text" name="companyTown" value="' . $companyArray[2] . '"></td></tr>';
+							echo '<tr><td>Odgovorna oseba:</td><td><input type="text" name="companyInCharge" value="' . $companyArray[3] . '"></td></tr>';
+							echo '<tr><td>Telefon:</td><td><input type="text" name="companyPhone" value="' . $companyArray[4] . '"></td></tr>';
+							echo '<tr><td>Fax:</td><td><input type="text" name="companyFax" value="' . $companyArray[5] . '"></td></tr>';
+							echo '<tr><td>Mail:</td><td><input type="text" name="companyMail" value="' . $companyArray[6] . '"></td></tr>';
+							echo '<tr><td>Spletna stran:</td><td><input type="text" name="companyWebsite" value="' . $companyArray[7] . '"></td></tr>';
+							echo '<tr><td>Opis:</td><td><input type="text" name="companyDescription" value="' . $companyArray[8] . '"></td></tr>';
+							echo '<!-- <input type="submit" value="change" /> -->';
+							echo '</form></table>';
 						}
 					?>
 					<hr>
 					<form id="addCompany" action="user.php?type=addCompany" method="POST" accept-charset="utf-8">
-					Spremenil sem podjetje, prosim prestavite me:
+					Ustvarili ste novo podjetje ali pa se želite pridružiti že obstoječemu podjetju
 					<table>
 						<tr>
 							<td style="vertical-align: top; width: 200px">
@@ -101,6 +105,10 @@ require('data.php'); require('checkLogin.php');?>
 						</tr>
 					</table>
 					</form>
+					<div id="editSettings">
+						<a href="#" id="edit">Uredi</a>
+						<a href="#" id="save">Shrani</a>
+					</div>
 				</div>
 				<div class="emptyRow">&nbsp;</div>
 				<div class="detailInformations">
@@ -161,7 +169,7 @@ require('data.php'); require('checkLogin.php');?>
 				<div class="detailInformations">
 					<div class="boxName">Splošne informacije</div>
 					Obvestila uporabnikom spletnega portala najdiTAXI.si<br />
-					<a href="FAQ.php">Pogosto zastavljena vprašanja</a><br />
+					<a href="FAQ.php" id="FAQ">Pogosto zastavljena vprašanja</a><br />
 					Pogoji uporabe spletnega portala najdiTAXI.si<br />
 					Predlogi za spremembe, dopolnitve..<br />
 					Imate vprašanje? Kontaktirajte skrbnika spletnega portala!<br />
