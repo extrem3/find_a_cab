@@ -39,7 +39,7 @@ require('data.php'); require('checkLogin.php');?>
 				<div class="detailInformations">
 					<div class="boxName">Vaši podatki</div>
 					
-					<form id="name" action="user.php?type=all" method="POST" accept-charset="utf-8">
+					<form id="name" action="user.php?type=all<?php if (getCompany($user_id) != "") {echo '&companyOwner=true';} ?>" method="POST" accept-charset="utf-8">
 					Osebni podatki
 					<table id="personalInformation">
 						<tr><td>Ime:</td><td><input type="text" name="name" value="<?php $nameArray = (array)getName($user_id); echo $nameArray[0]; ?>" /></td></tr>
@@ -52,7 +52,6 @@ require('data.php'); require('checkLogin.php');?>
 					Podatki Vašega NajdiTaxi računa
 					<table id="personalInformation">
 						<tr><td>Uporabniško ime:</td><td><?php echo getUsername($user_id); ?></td></tr>
-					</form>
 						<tr><td>Staro geslo:</td><td><input type="password" name="oldPassword"/></td></tr>
 						<tr><td>Novo geslo:</td><td><input type="password" name="password"/></td></tr>
 						<tr><td>Ponovite geslo:</td><td><input type="password" name="passwordCheck"/></td></tr>

@@ -81,13 +81,11 @@ switch ($_GET['type']) {
 		mysql_query("UPDATE uporabniki SET ime='" . $clean['name'] . "',priimek='" . $clean['lastName'] . "' WHERE id_uporabnik='" . $user_id . "'");
 		echo "name changed<br>";
 		//email
-		if(!preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/i", $clean['email']))
+		if(preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/i", $clean['email']))
 		{
-			echo "bad email<br>";
-			break;
+			mysql_query("UPDATE uporabniki SET email='" . $clean['email'] . "' WHERE id_uporabnik='" . $user_id . "'");
+			echo "email changed<br>";
 		}
-		mysql_query("UPDATE uporabniki SET email='" . $clean['email'] . "' WHERE id_uporabnik='" . $user_id . "'");
-		echo "email changed<br>";
 		//password
 		$oldPassword_query = mysql_query("SELECT * FROM uporabniki WHERE id_uporabnik='" . $user_id . "'");
 		if(mysql_num_rows($oldPassword_query)>0) 
@@ -95,18 +93,51 @@ switch ($_GET['type']) {
 			$password_row= mysql_fetch_assoc($oldPassword_query);
 			$oldPassword = $password_row['geslo'];
 		}
-		if($oldPassword != $clean['oldPassword'])
+		if($oldPassword == $clean['oldPassword'] && $clean['password'] == $clean['passwordCheck'] && strlen($clean['password']) > 4)
 		{
-			echo "old passwords do not match<br>";
-			break;
+			mysql_query("UPDATE uporabniki SET geslo='" . $clean['password'] . "' WHERE id_uporabnik='" . $user_id . "'");
+			echo "password changed<br>";
 		}
-		if($clean['password'] !== $clean['passwordCheck'] || strlen($clean['password']) < 4)
+		if(isset($_GET['companyOwner']))
 		{
-			echo "new passwords do not match or are too short (< 4 characters)<br>";
-			break;
+			$company_id_query = mysql_query("SELECT * FROM upor_podj WHERE id_uporabnik='" . $user_id . "'");
+			if(mysql_num_rows($company_id_query)>0) 
+			{
+				$company_row = mysql_fetch_assoc($company_id_query);
+				$company_id = $company_row['id_podjetje'];
+			}
+			if (!empty($clean['companyName']))
+			{
+				mysql_query("UPDATE podjetje SET naziv='" . $clean['companyName'] . "' WHERE id_podjetje='" . $company_id . "'");
+			}
+			if (!empty($clean['companyTown']))
+			{
+				mysql_query("UPDATE podjetje SET mesto='" . $clean['companyTown'] . "' WHERE id_podjetje='" . $company_id . "'");
+			}
+			if (!empty($clean['companyInCharge']))
+			{
+				mysql_query("UPDATE podjetje SET odg_oseba='" . $clean['companyInCharge'] . "' WHERE id_podjetje='" . $company_id . "'");
+			}
+			if (!empty($clean['companyStreet']))
+			{
+				mysql_query("UPDATE podjetje SET ulica='" . $clean['companyStreet'] . "' WHERE id_podjetje='" . $company_id . "'");
+			}
+			if(preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/i", $clean['companyMail']))
+			{
+				mysql_query("UPDATE podjetje SET email='" . $clean['companyMail'] . "' WHERE id_podjetje='" . $company_id . "'");
+			}
+			preg_match_all('/[0-9]+/', $clean['companyPhone'], $cleaned);
+			$phoneNumber = "";
+			foreach($cleaned[0] as $k=>$v) {
+			   $phoneNumber .= $v;
+			}
+			if(!(strlen($phoneNumber) > 9 || strlen($phoneNumber) < 7))
+			{
+				mysql_query("UPDATE podjetje SET tel='" . $clean['companyPhone'] . "' WHERE id_podjetje='" . $company_id . "'");
+			}
+			mysql_query("UPDATE podjetje SET fax='" . $clean['companyFax'] . "',www='" . $clean['companyWebsite'] . "',opis='" . $clean['companyDescription'] . "' WHERE id_podjetje='" . $company_id . "'");
+			echo "company details updated";
 		}
-		mysql_query("UPDATE uporabniki SET geslo='" . $clean['password'] . "' WHERE id_uporabnik='" . $user_id . "'");
-		echo "password changed<br>";
 		break;
 	case 'phone':
 		$phoneId_query = mysql_query("SELECT * FROM telefonske_st WHERE ID_user='" . $user_id . "' AND telefonske_st='" . $clean['phone'] . "'");
