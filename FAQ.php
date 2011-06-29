@@ -3,6 +3,17 @@
 <head>
 	<title>Pogosto zastavljena sprašanja</title>
 	<link rel="stylesheet" type="text/css" href="css/FAQ.css">
+	<script type="text/javascript" src="scr/jquery-1.5.1.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+	<script type="text/javascript">
+	$(function() {
+		$(".answer").hide();
+		$(".FAQ").click(function() {
+			$(".answer").slideUp("fast");
+			$(this).next().slideToggle("fast");
+		})
+	})
+	</script>
 </head>
 <body>
 	<div id="header">
@@ -13,6 +24,7 @@
 	</div>
 	<div id="content">
 		<div id="boxName">Odgovori na pogosta vprašanja<a href="#" id="backLink" onclick="history.go(-1);return false;">Nazaj</a></div>
+
 		<div class="FAQ">Vprašanje 1</div>
 		<div class="answer">Odgovor 1</div>
 		<div class="FAQ">Vprašanje 2</div>

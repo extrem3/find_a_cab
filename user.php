@@ -53,28 +53,42 @@ function addCompany($clean, $companyName, $town_id, $user_id, $exists)
 	return 0;
 }
 
+function checkUsernames($uname)
+{
+
+	$unameQuery = mysql_query("SELECT * FROM uporabniki WHERE username='" . $uname . "'");
+	if(mysql_num_rows($unameQuery)>0) 
+	{
+		return 0;
+	}
+	return 1;
+}
+
 
 switch ($_GET['type']) {
-	case 'username':
-		//delete him from 'uporabniki'
-		mysql_query("UPDATE uporabniki SET username='" . $clean['username'] . "' WHERE id_uporabnik='" . $user_id . "'");
-		echo "username changed";
-		break;
-	case 'name':
-		//delete him from 'uporabniki'
+	case 'all':
+		//username
+		// if (checkUsernames == 1)
+		// {
+		// 	mysql_query("UPDATE uporabniki SET username='" . $clean['username'] . "' WHERE id_uporabnik='" . $user_id . "'");
+		// 	echo "username changed";
+		// }else
+		// {
+		// 	echo "username already exists";
+		// 	break;
+		// }
+		//name
 		mysql_query("UPDATE uporabniki SET ime='" . $clean['name'] . "',priimek='" . $clean['lastName'] . "' WHERE id_uporabnik='" . $user_id . "'");
-		echo "name changed";
-		break;
-	case 'email':
+		echo "name changed<br>";
+		//email
 		if(!preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/i", $clean['email']))
 		{
-			echo "faulty email";
+			echo "bad email<br>";
 			break;
 		}
 		mysql_query("UPDATE uporabniki SET email='" . $clean['email'] . "' WHERE id_uporabnik='" . $user_id . "'");
-		echo "email changed";
-		break;
-	case 'password':
+		echo "email changed<br>";
+		//password
 		$oldPassword_query = mysql_query("SELECT * FROM uporabniki WHERE id_uporabnik='" . $user_id . "'");
 		if(mysql_num_rows($oldPassword_query)>0) 
 		{
@@ -83,16 +97,16 @@ switch ($_GET['type']) {
 		}
 		if($oldPassword != $clean['oldPassword'])
 		{
-			echo "old passwords do not match";
+			echo "old passwords do not match<br>";
 			break;
 		}
 		if($clean['password'] !== $clean['passwordCheck'] || strlen($clean['password']) < 4)
 		{
-			echo "new passwords do not match";
+			echo "new passwords do not match or are too short (< 4 characters)<br>";
 			break;
 		}
 		mysql_query("UPDATE uporabniki SET geslo='" . $clean['password'] . "' WHERE id_uporabnik='" . $user_id . "'");
-		echo "password changed";
+		echo "password changed<br>";
 		break;
 	case 'phone':
 		$phoneId_query = mysql_query("SELECT * FROM telefonske_st WHERE ID_user='" . $user_id . "' AND telefonske_st='" . $clean['phone'] . "'");

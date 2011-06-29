@@ -39,32 +39,23 @@ require('data.php'); require('checkLogin.php');?>
 				<div class="detailInformations">
 					<div class="boxName">Vaši podatki</div>
 					
+					<form id="name" action="user.php?type=all" method="POST" accept-charset="utf-8">
 					Osebni podatki
 					<table id="personalInformation">
-					<form id="name" action="user.php?type=name" method="POST" accept-charset="utf-8">
 						<tr><td>Ime:</td><td><input type="text" name="name" value="<?php $nameArray = (array)getName($user_id); echo $nameArray[0]; ?>" /></td></tr>
 						<tr><td>Priimek:</td><td><input type="text" name="lastName" value="<?php echo $nameArray[1]; ?>" /></td></tr>
 						<!-- <input type="submit" value="Spremeni" /> -->
-					</form>
-					<form id="email" action="user.php?type=email" method="POST" accept-charset="utf-8">
 						<tr><td>Naslov spletne pošte:</td><td><input type="text" name="email" value="<?php echo getEmail($user_id); ?>" /></td></tr>
-						<!-- <input type="submit" value="Spremeni" /> -->
-					</form>
 					</table>
 					<hr>
 					
 					Podatki Vašega NajdiTaxi računa
 					<table id="personalInformation">
-					<form id="username" action="user.php?type=username" method="POST" accept-charset="utf-8">
 						<tr><td>Uporabniško ime:</td><td><input id="username" type="text" name="username" value="<?php echo getUsername($user_id); ?>" /></td></tr>
-						<!-- <input type="submit" value="Spremeni" /> -->
 					</form>
-					<form id="password" action="user.php?type=password" method="POST" accept-charset="utf-8">
 						<tr><td>Staro geslo:</td><td><input type="password" name="oldPassword"/></td></tr>
 						<tr><td>Novo geslo:</td><td><input type="password" name="password"/></td></tr>
 						<tr><td>Ponovite geslo:</td><td><input type="password" name="passwordCheck"/></td></tr>
-						<!-- <input type="submit" value="Spremeni" /> -->
-					</form>
 					</table>
 					
 					<?php
@@ -91,9 +82,9 @@ require('data.php'); require('checkLogin.php');?>
 					<!-- here was newCompany.php code -->
 					<div id="editSettings">
 						<!-- we need some backend support here -->
-						<a href="#" class="edit">Uredi</a>
-						<a href="#" class="edit">Shrani</a>
+						<input type="submit" value="Shrani" />
 					</div>
+					</form>
 				</div>
 				<div class="emptyRow">&nbsp;</div>
 				<div class="detailInformations">
