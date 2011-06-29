@@ -227,9 +227,9 @@ switch ($_GET['type']) {
 		break;
 	case 'addCompany':
 		$id_company = 0;
-		if ($clean['company'] == "added")
+		if (isset($_GET['exists']))
 		{
-			$id_company = addCompany($clean, $clean['companySelect'], $clean['companyTown'], $user_id, true);
+			$id_company = addCompany($clean, $clean['companySelect'], 0, $user_id, true);
 			mysql_query("UPDATE uporabniki SET nivo='1' WHERE id_uporabnik='" . $user_id . "'");
 			echo "moved to new company";
 		}else

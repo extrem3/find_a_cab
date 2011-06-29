@@ -39,7 +39,7 @@ require('data.php'); require('checkLogin.php');?>
 			<div class="detailInformations">
 				<div class="boxName">Pridružite se podjetju, ki je že zapisano v bazi<a href="#" id="backLink2" onclick="history.go(-1);return false;">Nazaj</a></div>
 				
-				<form id="addCompany" action="user.php?type=addCompany" method="POST" accept-charset="utf-8">
+				<form id="addCompany" action="user.php?type=addCompany&exists=true" method="POST" accept-charset="utf-8">
 					<select name="companySelect" id="companySelect">
 						<?php
 						$result = mysql_query("SELECT * FROM podjetje");
