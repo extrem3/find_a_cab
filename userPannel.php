@@ -6,6 +6,11 @@ require('data.php'); require('checkLogin.php');?>
 	<title>Uporabniški račun</title>
 	<link rel="stylesheet" type="text/css" href="css/userPannel.css">
 	<script type="text/javascript" src="scr/jquery-1.5.1.js"></script>
+	<script type="text/javascript">
+		function showAddNumber(boxid){
+		document.getElementById(boxid).style.visibility="visible";
+		}
+	</script>
 </head>
 <body>
 	<div id="header">
@@ -121,10 +126,13 @@ require('data.php'); require('checkLogin.php');?>
 					</div>
 					<hr>
 					<form id="addPhone" action="user.php?type=addPhone" method="POST" accept-charset="utf-8">
-						<table>
+					<!-- change javascript bellow, so it opens nicely, and is without blank space when is not clicked -->
+					Če želite dodati številko kliknite <a href="#" onclick="showAddNumber('showAddNumber');">TUKAJ</a>.
+						<div id="showAddNumber">
+						<table id="newNumber">
 							<tr>
-								<td style="vertical-align: top; width: 200px">
-									<input type="radio" name="town" value="added" checked="true"/>Mesto je že ponujeno
+								<td class="town">
+									<input type="radio" name="town" value="added" checked="true"/>Mesto je že ponujeno<br />
 									<select name="townSelect" id="townSelect">
 										<?php
 											$townNamesArray = (array)getTowns();
@@ -135,17 +143,18 @@ require('data.php'); require('checkLogin.php');?>
 										?>
 									</select>
 								</td>
-								<td style="vertical-align: top; width: 50px">
+								<td id="or">
 									ALI
 								</td>
-								<td style="vertical-align: top; width: 500px">
-									<input type="radio" name="town" value="notAdded"/>Dodaj mesto<br>
+								<td class="town">
+									<input type="radio" name="town" value="notAdded"/>Dodaj mesto<br />
 									Mesto:<input type="text" name="newTown"><br>
 								</td>
 							</tr>
 						</table>
-						Telefon:<input type="text" name="phone" value="1112223" />
+						Telefon:<input type="text" name="phone" value="123456789" />
 						<input type="submit" value="Dodaj" />
+						</div>
 					</form>
 				</div>
 				<div class="emptyRow">&nbsp;</div>

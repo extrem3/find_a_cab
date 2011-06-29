@@ -220,6 +220,30 @@ a.edit {
 	background-color: #808080;
 	text-align: center;
 }
+#showAddNumber { /* for javascript */
+	visibility:hidden;
+}
+#addPhone a {
+	color: white;
+}
+td.town {
+	vertical-align: top;
+	width: 300px;
+	padding-left: 5px;
+}
+#newNumber td#or {
+	text-align: center;
+	width: 70px;
+	border-left: 1px solid gray;
+	border-right: 1px solid gray;
+}
+select#townSelect {
+	width: 150px;
+	margin-left: 8px;
+}
+input#notAdded {
+	
+}
 /* below you can see the way it is supposed to look when "uredi" button is clicked  */
 #leftColumn input {
 	width: 150px;
