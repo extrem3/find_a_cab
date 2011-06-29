@@ -106,8 +106,9 @@ require('data.php'); require('checkLogin.php');?>
 					</table>
 					</form>
 					<div id="editSettings">
-						<a href="#" id="edit">Uredi</a>
-						<a href="#" id="save">Shrani</a>
+						<!-- we need some backend support here -->
+						<a href="#" class="edit">Uredi</a>
+						<a href="#" class="edit">Shrani</a>
 					</div>
 				</div>
 				<div class="emptyRow">&nbsp;</div>
@@ -122,20 +123,29 @@ require('data.php'); require('checkLogin.php');?>
 			<div id="rightColumn">
 				<div class="detailInformations">
 					<div class="boxName">Vpišite / uredite telefonske številke</div>
-					<?php
-						$phoneNumbersArray = (array)getPhoneNumbers($user_id);
-						$townNamesArray = (array)getTowns();
-						$i = 0;
-						foreach($phoneNumbersArray as $values)
-						{
-							$i ++;
-							echo '<form id="phone' . $i . '" action="user.php?type=phone" method="POST" accept-charset="utf-8">';
-							echo $values[0] . ' [' . $values[1] . ']';
-							echo '<input type="hidden" name="phone" value="' . $values[0] . '">';
-							echo '<input type="submit" value="Odstrani">';
-							echo '</form>';
-						}
-					?>
+					<div id="phoneNumbers">
+						<table id="phoneTable">
+						<tr>
+							<th id="telephoneNumber">Telefonska številka:</th>
+							<th id="city">Mesto:</th>
+							<th>Zbriši:</th>
+						</tr>
+						<?php
+							$phoneNumbersArray = (array)getPhoneNumbers($user_id);
+							$townNamesArray = (array)getTowns();
+							$i = 0;
+							foreach($phoneNumbersArray as $values)
+							{
+								$i ++;
+								echo '<form id="phone' . $i . '" action="user.php?type=phone" method="POST" accept-charset="utf-8">';
+								echo '<tr class="values"><td>' . $values[0] . '</td>' . ' <td>' . $values[1] . '</td>';
+								echo '<input type="hidden" name="phone" value="' . $values[0] . '">';
+								echo '<td><input type="submit" value="X" class="delete"></td></tr>';
+								echo '</form>';
+							}
+						?>
+						</table>
+					</div>
 					<hr>
 					<form id="addPhone" action="user.php?type=addPhone" method="POST" accept-charset="utf-8">
 						<table>

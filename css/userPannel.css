@@ -148,13 +148,56 @@ body {
 #editSettings {
 	position: relative;
 	left: 50%;
-	margin-left: -50px;
-	width: 100px;
-	background-color: white;
-	font-size: 1.1em;
+	margin-left: -69px;
+	width: 139px;
+	height: 19px;
 }
-#edit {
-	width: 50px;
+a.edit {
+	text-align: center;
 	background-color: rgb(183, 74, 2);
-	
+	color: white;
+	text-decoration: none;
+	font-size: 1.05em;
+	padding-left: 13px;
+	padding-right: 13px;
+	margin: 0px;
+}
+/* phone numbers design */
+#phoneNumbers {
+	width: 100%;
+}
+#phoneTable {
+	border-spacing: 0px;
+	margin-top: 7px;
+	padding-left: 5px;
+	padding-right: 5px;
+	width: 100%;
+}
+#phoneTable tr.values{
+	background-color: #646464; /* #646464 */
+}
+#telephoneNumber {
+	padding-right: 20px;
+}
+#phoneNumbers #city {
+	padding-right: 40px;
+}
+#phoneTable tr {
+	background-color: #484848;
+	height:	30px;
+}
+#phoneNumbers th {
+	color: rgb(183, 74, 2);
+	font-size: 1em;
+	text-decoration: none;
+	font-style: none;
+	font-weight: normal;
+	text-align: left;
+}
+.delete {
+	color: rgb(183, 74, 2);
+	border: 0px;
+	font-size: 1.08em;
+	background-color: #808080;
+	text-align: center;
 }
