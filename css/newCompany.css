@@ -70,12 +70,12 @@ body {
 }
 #backLink {
 	display: inline;
-	position: absolute;
-	right: 10%;
+	position: relative;
 	color: white;
+	left: 585px;
 }
 #table {
-	width: 100%;
+	border-spacing: 0px;
 }
 #inDatabase {
 	width: 374px;
