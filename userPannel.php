@@ -38,7 +38,7 @@ require('data.php'); require('checkLogin.php');?>
 					Podatki Vašega NajdiTaxi računa
 					<table id="personalInformation">
 					<form id="username" action="user.php?type=username" method="POST" accept-charset="utf-8">
-						<tr><td>Uporabniško ime:</td><td><input type="text" name="username" value="<?php echo getUsername($user_id); ?>" /></td></tr>
+						<tr><td>Uporabniško ime:</td><td><input id="username" type="text" name="username" value="<?php echo getUsername($user_id); ?>" /></td></tr>
 						<!-- <input type="submit" value="Spremeni" /> -->
 					</form>
 					<form id="password" action="user.php?type=password" method="POST" accept-charset="utf-8">
@@ -69,7 +69,7 @@ require('data.php'); require('checkLogin.php');?>
 						}
 					?>
 					<hr>
-					Če ste ustvarili novo podjetje ali pa se želite pridružiti že obstoječemu podjetju kliknite <a href="newCompany.php" id="newCompany">TUKAJ</a>.(če želite spremeniti podatke Vašega podjetja pa to storite zgoraj).
+					Če ste ustvarili novo podjetje ali pa se želite pridružiti že obstoječemu podjetju kliknite <a href="newCompany.php" id="newCompany">TUKAJ</a>.<i>(če želite spremeniti podatke Vašega podjetja pa to storite zgoraj).</i>
 					<!-- here was newCompany.php code -->
 					<div id="editSettings">
 						<!-- we need some backend support here -->

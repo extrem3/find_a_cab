@@ -148,8 +148,12 @@ hr {
 	right: 0px;
 }
 /* vaši podatki design */
-#personalInformation {
+table#personalInformation {
 	margin-left: 15px;
+	border-spacing: 1px;
+}
+table#personalInformation td {
+	width: 200px;
 }
 #newCompany {
 	text-decoration: none;
@@ -182,14 +186,14 @@ a.edit {
 	width: 100%;
 }
 #phoneTable {
-	border-spacing: 0px;
+	border-spacing: 0px 1px;
 	margin-top: 7px;
 	padding-left: 5px;
 	padding-right: 5px;
 	width: 100%;
 }
 #phoneTable tr.values{
-	background-color: #646464; /* #646464 */
+	background-color: #646464;
 }
 #telephoneNumber {
 	padding-right: 20px;
@@ -216,3 +220,23 @@ a.edit {
 	background-color: #808080;
 	text-align: center;
 }
+/* below you can see the way it is supposed to look when "uredi" button is clicked  */
+#leftColumn input {
+	width: 150px;
+	padding: 1px 0px;
+	border: 1px solid rgb(183, 74, 2);
+	border-bottom: 1px solid rgb(203, 94, 22);
+	border-right:  1px solid rgb(203, 94, 22);
+	background-color: #414141;
+	color: white;
+	font-size: 0.85em;
+	height: 18px;
+}
+#leftColumn input:focus, #leftcolumn input:active {
+	outline-color: #f7931e;
+	outline-width: 2px;
+	outline-style: solid;
+	border: 1px solid #414141;
+	background-color: #484848;
+}
+/* ---------------------------- */
