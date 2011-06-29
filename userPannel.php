@@ -9,12 +9,14 @@ require('data.php'); require('checkLogin.php');?>
 	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
 	<script type="text/javascript">
 	$(function() {
-		$('input').css("backgroundColor", "#cccccc" );
-		$('input').focus( function() {
+		$('#leftColumn input').css("backgroundColor", "#616161" );
+		$('#leftColumn input').css("border", "none" );
+		$('#leftColumn input').focus( function() {
 			$(this).animate({ backgroundColor: "#ffffff" }, 300);
+			$(this).css("color", "#ff0000");
 		});
-		$('input').blur( function() {
-			$(this).animate({ backgroundColor: "#cccccc" }, 300);
+		$('#leftColumn input').blur( function() {
+			$(this).animate({ backgroundColor: "#616161" }, 300);
 		});
 		$(".expandingBody").hide();
 		$(".expandingHeader").click(function() {
