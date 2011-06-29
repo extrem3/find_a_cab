@@ -114,29 +114,7 @@ require('data.php'); require('checkLogin.php');?>
 					</div>
 					<hr>
 					<form id="addPhone" action="user.php?type=addPhone" method="POST" accept-charset="utf-8">
-						<table>
-							<tr>
-								<td style="vertical-align: top; width: 200px">
-									<input type="radio" name="town" value="added" checked="true"/>Mesto je že ponujeno
-									<select name="townSelect" id="townSelect">
-										<?php
-											$townNamesArray = (array)getTowns();
-											foreach($townNamesArray as $values)
-											{
-												echo '<option value="' . $values . '">' . $values . '</option>';
-											}
-										?>
-									</select>
-								</td>
-								<td style="vertical-align: top; width: 50px">
-									ALI
-								</td>
-								<td style="vertical-align: top; width: 500px">
-									<input type="radio" name="town" value="notAdded"/>Dodaj mesto<br>
-									Mesto:<input type="text" name="newTown"><br>
-								</td>
-							</tr>
-						</table>
+						Mesto:<input type="text" name="newTown"><br>
 						Telefon:<input type="text" name="phone" value="1112223" />
 						<input type="submit" value="Dodaj" />
 					</form>
