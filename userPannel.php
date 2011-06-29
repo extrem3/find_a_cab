@@ -78,7 +78,6 @@ require('data.php'); require('checkLogin.php');?>
 					<!-- here was newCompany.php code -->
 					<div id="editSettings">
 						<!-- we need some backend support here -->
-						<a href="#" class="edit">Uredi</a>
 						<a href="#" class="edit">Shrani</a>
 					</div>
 				</div>
