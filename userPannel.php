@@ -13,7 +13,7 @@ require('data.php'); require('checkLogin.php');?>
 	</div>
 	<div id="topRow">
 		<div id="welcomeInformation">Dobrodošli, <i><?php echo getUsername($user_id); ?></i>. Nahajate se na administrativni strani, kjer lahko urejate svoje podatke.</div>
-		<div id="topLogout">Odjava</div> <!-- we need some php support here :) -->
+		<div id="topLogout"><a href="login.php?logout=true">Odjava</a></div> <!-- we need some php support here :) -->
 	</div>
 	<div class="content">
 		<div class="pannel"> <!-- i don't need div.pannel, if it's not necessary you can remove this line and the mathing one at the end of the file -->
