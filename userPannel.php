@@ -6,8 +6,16 @@ require('data.php'); require('checkLogin.php');?>
 	<title>Uporabniški račun</title>
 	<link rel="stylesheet" type="text/css" href="css/userPannel.css">
 	<script type="text/javascript" src="scr/jquery-1.5.1.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
 	<script type="text/javascript">
 	$(function() {
+		$('input').css("backgroundColor", "#cccccc" );
+		$('input').focus( function() {
+			$(this).animate({ backgroundColor: "#ffffff" }, 300);
+		});
+		$('input').blur( function() {
+			$(this).animate({ backgroundColor: "#cccccc" }, 300);
+		});
 		$(".expandingBody").hide();
 		$(".expandingHeader").click(function() {
 			$(this).next().slideToggle("fast");
