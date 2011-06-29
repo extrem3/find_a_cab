@@ -6,10 +6,23 @@ require('data.php'); require('checkLogin.php');?>
 	<title>Uporabniški račun</title>
 	<link rel="stylesheet" type="text/css" href="css/userPannel.css">
 	<script type="text/javascript" src="scr/jquery-1.5.1.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
 	<script type="text/javascript">
-		function showAddNumber(boxid){
-		document.getElementById(boxid).style.visibility="visible";
-		}
+	$(function() {
+		$('#leftColumn input').css("backgroundColor", "#616161" );
+		$('#leftColumn input').css("border", "none" );
+		$('#leftColumn input').focus( function() {
+			$(this).animate({ backgroundColor: "#ffffff" }, 300);
+			$(this).css("color", "#ff0000");
+		});
+		$('#leftColumn input').blur( function() {
+			$(this).animate({ backgroundColor: "#616161" }, 300);
+		});
+		$(".expandingBody").hide();
+		$(".expandingHeader").click(function() {
+			$(this).next().slideToggle("fast");
+		})
+	})
 	</script>
 </head>
 <body>
@@ -18,7 +31,7 @@ require('data.php'); require('checkLogin.php');?>
 	</div>
 	<div id="topRow">
 		<div id="welcomeInformation">Dobrodošli, <i><?php echo getUsername($user_id); ?></i>. Nahajate se na administrativni strani, kjer lahko urejate svoje podatke.</div>
-		<div id="topLogout">Odjava</div> <!-- we need some php support here :) -->
+		<div id="topLogout"><a href="login.php?logout=true">Odjava</a></div> <!-- we need some php support here :) -->
 	</div>
 	<div class="content">
 		<div class="pannel"> <!-- i don't need div.pannel, if it's not necessary you can remove this line and the mathing one at the end of the file -->
@@ -124,46 +137,31 @@ require('data.php'); require('checkLogin.php');?>
 						</table>
 					</div>
 					<hr>
-					<form id="addPhone" action="user.php?type=addPhone" method="POST" accept-charset="utf-8">
-					<!-- change javascript bellow, so it opens nicely, and is without blank space when is not clicked -->
-					Če želite dodati številko kliknite <a href="#" onclick="showAddNumber('showAddNumber');">TUKAJ</a>.
-						<div id="showAddNumber">
-						<table id="newNumber">
-							<tr>
-								<td class="town">
-									<input type="radio" name="town" value="added" checked="true"/>Mesto je že ponujeno<br />
-									<select name="townSelect" id="townSelect">
-										<?php
-											$townNamesArray = (array)getTowns();
-											foreach($townNamesArray as $values)
-											{
-												echo '<option value="' . $values . '">' . $values . '</option>';
-											}
-										?>
-									</select>
-								</td>
-								<td id="or">
-									ALI
-								</td>
-								<td class="town">
-									<input type="radio" name="town" value="notAdded"/>Dodaj mesto<br />
-									Mesto:<input type="text" name="newTown"><br>
-								</td>
-							</tr>
-						</table>
-						Telefon:<input type="text" name="phone" value="123456789" />
-						<input type="submit" value="Dodaj" />
+					<div class="expandingText">
+						<div class="expandingHeader">Če želite dodati številko kliknite TUKAJ</div>
+						<div class="expandingBody">
+							<form id="addPhone" action="user.php?type=addPhone" method="POST" accept-charset="utf-8">
+								Mesto:<input type="text" name="newTown"><br>
+								Telefon:<input type="text" name="phone" value="1112223" />
+								<input type="submit" value="Dodaj" />
+							</form>
 						</div>
-					</form>
+					</div>
 				</div>
 				<div class="emptyRow">&nbsp;</div>
 				<div class="detailInformations">
 					<div class="boxName">Splošne informacije</div>
-					Obvestila uporabnikom spletnega portala najdiTAXI.si<br />
-					<a href="FAQ.php" id="FAQ">Pogosto zastavljena vprašanja</a><br />
-					Pogoji uporabe spletnega portala najdiTAXI.si<br />
-					Predlogi za spremembe, dopolnitve..<br />
-					Imate vprašanje? Kontaktirajte skrbnika spletnega portala!<br />
+					<div class="expandingText">
+						<div class="expandingHeader">Obvestila uporabnikom spletnega portala najdiTAXI.si</div>
+						<div class="expandingBody">some text bla bla bla</div>
+					</div>
+					<a href="FAQ.php" id="FAQ">Pogosto zastavljena vprašanja</a><br>
+					<div class="expandingText">
+						<div class="expandingHeader"> Pogoji uporabe spletnega portala najdiTAXI.si</div>
+						<div class="expandingBody">some text bla bla bla</div>
+					</div>
+					Predlogi za spremembe, dopolnitve..<br>
+					Imate vprašanje? Kontaktirajte skrbnika spletnega portala!<br>
 				</div>
 				<div class="bottom">&nbsp;</div>
 			</div>	

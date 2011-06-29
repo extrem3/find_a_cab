@@ -144,13 +144,7 @@ switch ($_GET['type']) {
 
 		$result = mysql_query("SELECT max(ID_telefonske_st) FROM telefonske_st");
 		$telefonska_id = mysql_result($result, 0, 0);
-		if ($clean['town'] == "added") 
-		{
-			$town_id = addTown($clean['townSelect']);
-		}else
-		{
-			$town_id = addTown($clean['newTown']);
-		}
+		$town_id = addTown($clean['newTown']);
 
 		mysql_query("INSERT INTO mesta_telefonske (ID_mesta, ID_telefonske)
 								   VALUES ('$town_id', '$telefonska_id')");
