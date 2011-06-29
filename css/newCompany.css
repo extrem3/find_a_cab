@@ -51,47 +51,61 @@ body {
 	font-size: 3em;		use this if you dont have logo pic
 	font-style:italic; */
 }
-#content {
-	position: relative;
-	margin-left: -400px;
+.content {
+	position: absolute;
 	left: 50%;
-	width: 800px;
-	border: 1px solid rgb(183, 74, 2);
-	padding-left: 3px;
-	background-color: #414141;
-	padding: 3px;
+	margin-left: -450px;
+	width: 900px;
 }
-#boxName {
+#leftColumn {
+	display: inline;
+	position: absolute;
+	width: 400px;
+}
+#rightColumn {
+	display: inline;
+	position: absolute;
+	left: 50%;
+	width: 400px;
+}
+.boxName {
 	background-color:rgb(183, 74, 2);
 	margin-left: -3px;
 	margin-top: -3px;
 	margin-right: -3px;
 	padding-left: 3px;
 }
+.detailInformations {
+	border: 1px solid rgb(183, 74, 2);
+	padding-left: 3px;
+	background-color: #414141;
+	padding: 3px;
+}
 #backLink {
 	display: inline;
 	position: relative;
 	color: white;
-	left: 585px;
+	left: 205px;
+}
+#backLink2 {
+	display: inline;
+	position: relative;
+	color: white;
+	left: 75px;
 }
 #table {
-	border-spacing: 0px;
+	margin-left: 30px;
 }
-#inDatabase {
-	width: 374px;
-	vertical-align: top;
+#table input {
+	width: 180px;
+	background-color: #E0E0E0;
 }
-#or {
-	vertical-align: top;
-	width: 50px;
-	text-align: center;
-	font-size: 1.05em;
-	border-left: 1px solid gray;
-	border-right: 1px solid gray;
-}
-#new {
-	vertical-align: top;
-	width: 374px;
+input#submit {
+	width: 100px;
+	position: relative;
+	left: 50%;
+	margin-left: -50px;
+	cursor: pointer;
 }
 /* footer */
 #bottom { /* purpose of this div is to extend content height so footer doesn't cover it */
