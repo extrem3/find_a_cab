@@ -17,22 +17,20 @@ require('data.php'); require('checkLogin.php');?>
 		<div id="boxName">Popolna sprememba podjetja<a href="#" id="backLink" onclick="history.go(-1);return false;">Nazaj</a></div>
 		<!-- this code was previously in userPannel.php -->
 		<form id="addCompany" action="user.php?type=addCompany" method="POST" accept-charset="utf-8">
-			Napišite novo podjetje:
+			Podjetje je že zapisano v bazi:
 			<table id="table">
 				<tr>
-					<td id="new">
-						<table>
-						<tr><td>Naziv podjetja:</td><td><input type="text" name="companyName"></td></tr>
-						<tr><td>Ulica:</td><td><input type="text" name="companyStreet"></td></tr>
-						<tr><td>Mesto:</td><td><input type="text" name="companyTown"></td></tr>
-						<tr><td>Odgovorna oseba:</td><td><input type="text" name="companyInCharge"></td></tr>
-						<tr><td>Telefon:</td><td><input type="text" name="companyPhone"></td></tr>
-						<tr><td>Fax:</td><td><input type="text" name="companyFax"></td></tr>
-						<tr><td>Spletna pošta:</td><td><input type="text" name="companyMail"></td></tr>
-						<tr><td>Spletna stran:</td><td><input type="text" name="companyWebsite"></td></tr>
-						<tr><td>Opis:</td><td><input type="text" name="companyDescription"></td></tr>
+					<td id="inDatabase">
+						<select name="companySelect" id="companySelect">
+							<?php
+							$result = mysql_query("SELECT * FROM podjetje");
+							while($row = mysql_fetch_array($result))
+							{
+								echo "<option value=\"" . $row['naziv'] . "\">" . $row['naziv'] . "</option>";
+							}
+							?>
+						</select>
 						<tr><td>&nbsp;</td><td><input type="submit" value="Spremeni" /></td></tr>
-						</table>
 					</td>
 				</tr>
 			</table>
