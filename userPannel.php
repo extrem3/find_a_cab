@@ -6,6 +6,14 @@ require('data.php'); require('checkLogin.php');?>
 	<title>Uporabniški račun</title>
 	<link rel="stylesheet" type="text/css" href="css/userPannel.css">
 	<script type="text/javascript" src="scr/jquery-1.5.1.js"></script>
+	<script type="text/javascript">
+	$(function() {
+		$(".expandingBody").hide();
+		$(".expandingHeader").click(function() {
+			$(this).next().slideToggle("fast");
+		})
+	})
+	</script>
 </head>
 <body>
 	<div id="header">
@@ -122,11 +130,17 @@ require('data.php'); require('checkLogin.php');?>
 				<div class="emptyRow">&nbsp;</div>
 				<div class="detailInformations">
 					<div class="boxName">Splošne informacije</div>
-					Obvestila uporabnikom spletnega portala najdiTAXI.si<br />
-					<a href="FAQ.php" id="FAQ">Pogosto zastavljena vprašanja</a><br />
-					Pogoji uporabe spletnega portala najdiTAXI.si<br />
-					Predlogi za spremembe, dopolnitve..<br />
-					Imate vprašanje? Kontaktirajte skrbnika spletnega portala!<br />
+					<div class="expandingText">
+						<div class="expandingHeader">Obvestila uporabnikom spletnega portala najdiTAXI.si</div>
+						<div class="expandingBody">some text bla bla bla</div>
+					</div>
+					<a href="FAQ.php" id="FAQ">Pogosto zastavljena vprašanja</a><br>
+					<div class="expandingText">
+						<div class="expandingHeader"> Pogoji uporabe spletnega portala najdiTAXI.si</div>
+						<div class="expandingBody">some text bla bla bla</div>
+					</div>
+					Predlogi za spremembe, dopolnitve..<br>
+					Imate vprašanje? Kontaktirajte skrbnika spletnega portala!<br>
 				</div>
 				<div class="bottom">&nbsp;</div>
 			</div>	
