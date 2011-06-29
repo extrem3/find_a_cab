@@ -56,7 +56,7 @@ require('data.php'); require('checkLogin.php');?>
 					Podatki Vašega NajdiTaxi računa
 					<table id="personalInformation">
 					<form id="username" action="user.php?type=username" method="POST" accept-charset="utf-8">
-						<tr><td>Uporabniško ime:</td><td><input type="text" name="username" value="<?php echo getUsername($user_id); ?>" /></td></tr>
+						<tr><td>Uporabniško ime:</td><td><input id="username" type="text" name="username" value="<?php echo getUsername($user_id); ?>" /></td></tr>
 						<!-- <input type="submit" value="Spremeni" /> -->
 					</form>
 					<form id="password" action="user.php?type=password" method="POST" accept-charset="utf-8">
@@ -87,7 +87,7 @@ require('data.php'); require('checkLogin.php');?>
 						}
 					?>
 					<hr>
-					Če ste ustvarili novo podjetje ali pa se želite pridružiti že obstoječemu podjetju kliknite <a href="newCompany.php" id="newCompany">TUKAJ</a>.(če želite spremeniti podatke Vašega podjetja pa to storite zgoraj).
+					Če ste ustvarili novo podjetje ali pa se želite pridružiti že obstoječemu podjetju kliknite <a href="newCompany.php" id="newCompany">TUKAJ</a>.<i>(če želite spremeniti podatke Vašega podjetja pa to storite zgoraj).</i>
 					<!-- here was newCompany.php code -->
 					<div id="editSettings">
 						<!-- we need some backend support here -->
@@ -98,8 +98,15 @@ require('data.php'); require('checkLogin.php');?>
 				<div class="emptyRow">&nbsp;</div>
 				<div class="detailInformations">
 					<div class="boxName">Statistika</div>
+					<div id="statistic">
 					Št. prikazov vaših kontaktov:<br />
 					Ocena uporabnikov:
+					</div>
+					<div id="statisticNumbers">
+					<!-- need some support here -->
+					100<br />
+					5
+					</div>
 				</div>
 				<div class="bottom">&nbsp;</div>
 			</div>
@@ -131,11 +138,16 @@ require('data.php'); require('checkLogin.php');?>
 						</table>
 					</div>
 					<hr>
-					<form id="addPhone" action="user.php?type=addPhone" method="POST" accept-charset="utf-8">
-						Mesto:<input type="text" name="newTown"><br>
-						Telefon:<input type="text" name="phone" value="1112223" />
-						<input type="submit" value="Dodaj" />
-					</form>
+					<div class="expandingText">
+						<div class="expandingHeader">Če želite dodati številko kliknite TUKAJ</div>
+						<div class="expandingBody">
+							<form id="addPhone" action="user.php?type=addPhone" method="POST" accept-charset="utf-8">
+								Mesto:<input type="text" name="newTown"><br>
+								Telefon:<input type="text" name="phone" value="1112223" />
+								<input type="submit" value="Dodaj" />
+							</form>
+						</div>
+					</div>
 				</div>
 				<div class="emptyRow">&nbsp;</div>
 				<div class="detailInformations">
