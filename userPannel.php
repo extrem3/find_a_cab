@@ -27,6 +27,18 @@ require('data.php'); require('checkLogin.php');?>
                  new Array(4, 16, "newCompanyTown"));
 		$('#leftColumn input').css("backgroundColor", "#616161" );
 		$('#leftColumn input').css("border", "none" );
+		$(".expandingBody").hide();
+		$(".expandingBody").hide();
+    if($("#values_phone1").length == 0)
+    {
+      $("#addNumber").removeClass("expandingHeader");
+      $("#addNumber").html("Dodajte novo številko");
+      $("#addNumber").next().show();
+    }else
+    {
+      $("#addNumber").html("Če želite dodati številko kliknite TUKAJ");
+    }
+		$('.expandingHeader').css("cursor", "pointer" );
 		$('#leftColumn input').focus( function() {
 			$(this).animate({ backgroundColor: "#ffffff" }, 300);
 			$(this).css("color", "#ff0000");
@@ -34,7 +46,6 @@ require('data.php'); require('checkLogin.php');?>
 		$('#leftColumn input').blur( function() {
 			$(this).animate({ backgroundColor: "#616161" }, 300);
 		});
-		$(".expandingBody").hide();
 		$(".expandingHeader").click(function() {
 			$(this).next().slideToggle("fast");
 		})
@@ -54,7 +65,9 @@ require('data.php'); require('checkLogin.php');?>
 					if (doneArray != null && doneArray.length > 0)
 					{
             console.log(clickedOn);
-            $('#values_' + clickedOn).hide();
+            $('#values_' + clickedOn).fadeOut('fast', function (){
+              $('#values_' + clickedOn).remove();
+            });
 					}
 				}
 			}).responseText;
@@ -148,35 +161,39 @@ require('data.php'); require('checkLogin.php');?>
 				<div class="detailInformations">
 					<div class="boxName">Vpišite / uredite telefonske številke</div>
 					<div id="phoneNumbers">
-						<table id="phoneTable">
-						<tr>
-							<th id="telephoneNumber">Telefonska številka:</th>
-							<th id="city">Mesto:</th>
-							<th>Zbriši:</th>
-						</tr>
 						<?php
 							$phoneNumbersArray = (array)getPhoneNumbers($user_id);
 							$townNamesArray = (array)getTowns();
 							$i = 0;
-							foreach($phoneNumbersArray as $values)
-							{
-								$i ++;
-								echo '<tr class="values" id="values_phone' . $i . '">';
-                echo '<td>' . $values[0] . '</td>' . ' <td>' . $values[1] . '</td>';
-								echo '<td>';
-								echo '<form id="phone' . $i . '" action="user.php?type=phone" method="POST" accept-charset="utf-8">';
-								echo '<input type="hidden" name="phone" value="' . $values[0] . '">';
-                echo '<input type="submit" value="X" class="delete">'; 
-								echo '</form>';
-                echo '</td>';
+              if(count($phoneNumbersArray) > 0)
+              {
+                echo '<table id="phoneTable">';
+                echo '<tr>';
+                echo '<th id="telephoneNumber">Telefonska številka:</th>';
+                echo '<th id="city">Mesto:</th>';
+                echo '<th>Zbriši:</th>';
                 echo '</tr>';
-							}
+                foreach($phoneNumbersArray as $values)
+                {
+                  $i ++;
+                  echo '<tr class="values" id="values_phone' . $i . '">';
+                  echo '<td>' . $values[0] . '</td>' . ' <td>' . $values[1] . '</td>';
+                  echo '<td>';
+                  echo '<form id="phone' . $i . '" action="user.php?type=phone" method="POST" accept-charset="utf-8">';
+                  echo '<input type="hidden" name="phone" value="' . $values[0] . '">';
+                  echo '<input type="submit" value="X" class="delete">'; 
+                  echo '</form>';
+                  echo '</td>';
+                  echo '</tr>';
+                }
+                echo '</table>';
+                echo '<hr>';
+              }
 						?>
 						</table>
 					</div>
-					<hr>
 					<div class="expandingText">
-						<div class="expandingHeader">Če želite dodati številko kliknite TUKAJ</div>
+						<div class="expandingHeader" id="addNumber"></div>
 						<div class="expandingBody">
 							<form id="addPhone" action="user.php?type=addPhone" method="POST" accept-charset="utf-8">
 								Mesto:<input type="text" name="newTown"><br>
