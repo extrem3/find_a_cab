@@ -9,6 +9,22 @@ require('data.php'); require('checkLogin.php');?>
 	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
 	<script type="text/javascript">
 	$(function() {
+    var errors = new Array(new Array(0, 1, "username"),
+                 new Array(0, 2, "email"),
+                 new Array(0, 3, "email"),
+                 new Array(2, 4, "phone"),
+                 new Array(2, 5, "phone"),
+                 new Array(0, 6, "password"),
+                 new Array(4, 7, "companyMail"),
+                 new Array(4, 8, "companyPhone"),
+                 new Array(0, 9, "username"),
+                 new Array(0, 10, "name"),
+                 new Array(0, 11, "lastName"),
+                 new Array(2, 12, "newTown"),
+                 new Array(4, 13, "companyName"),
+                 new Array(4, 14, "companyStreet"),
+                 new Array(4, 15, "companyInCharge"),
+                 new Array(4, 16, "newCompanyTown"));
 		$('#leftColumn input').css("backgroundColor", "#616161" );
 		$('#leftColumn input').css("border", "none" );
 		$('#leftColumn input').focus( function() {
@@ -22,7 +38,30 @@ require('data.php'); require('checkLogin.php');?>
 		$(".expandingHeader").click(function() {
 			$(this).next().slideToggle("fast");
 		})
-	})
+		$('#phoneNumbers form').submit(function(event) {
+			var formContents = $(this).serialize();
+      var clickedOn = event.currentTarget.id;
+      console.log(clickedOn);
+			bodyContent = $.ajax({
+				url: "user.php?type=phone",
+				global: false,
+				type: "POST",
+				data: formContents,
+				dataType: "html",
+				async:false,
+				success: function(msg){
+					var doneArray = msg.match(/done/g);
+					if (doneArray != null && doneArray.length > 0)
+					{
+            console.log(clickedOn);
+            $('#values_' + clickedOn).hide();
+					}
+				}
+			}).responseText;
+			return false;
+		});
+
+	});
 	</script>
 </head>
 <body>
@@ -122,11 +161,15 @@ require('data.php'); require('checkLogin.php');?>
 							foreach($phoneNumbersArray as $values)
 							{
 								$i ++;
+								echo '<tr class="values" id="values_phone' . $i . '">';
+                echo '<td>' . $values[0] . '</td>' . ' <td>' . $values[1] . '</td>';
+								echo '<td>';
 								echo '<form id="phone' . $i . '" action="user.php?type=phone" method="POST" accept-charset="utf-8">';
-								echo '<tr class="values"><td>' . $values[0] . '</td>' . ' <td>' . $values[1] . '</td>';
 								echo '<input type="hidden" name="phone" value="' . $values[0] . '">';
-								echo '<td><input type="submit" value="X" class="delete"></td></tr>';
+                echo '<input type="submit" value="X" class="delete">'; 
 								echo '</form>';
+                echo '</td>';
+                echo '</tr>';
 							}
 						?>
 						</table>
