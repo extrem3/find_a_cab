@@ -17,6 +17,22 @@ $id_town;
 $id_town2;
 $id_company;
 
+$errorsDescriptions = array('Uporabniško ime je že v uporabi.',
+                            'email_regex',
+                            'email_exists',
+                            'phone_regex',
+                            'phone_exists',
+                            'passwords do not match or are too short, ',
+                            'company_mail_regex, ',
+                            'company_phone_regex',
+                            'username too short or empty',
+                            'firstName field empty or too short',
+                            'lastName field empty or too short',
+                            'town is empty if user is a driver',
+                            'companyName is missing',
+                            'companyStreet is missing',
+                            'companyInCharge is missing',
+                            'newCompanyTown is missing');
 /*error messages: 
 1-username, 
 2-email_regex, 
@@ -166,7 +182,7 @@ if (count($errorsArray) > 0)
 {
 	for ($i = 0; $i < count($errorsArray); ++$i)
 	{
-		echo '<div class="error">' . $errorsArray[$i] . '</div>';
+		echo '<div class="error">' . $errorsArray[$i] . '</div><div class="description">' . $errorsDescriptions[$errorsArray[$i] - 1] . '</div>';
 	}
 }else
 {

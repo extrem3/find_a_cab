@@ -146,16 +146,12 @@ switch ($_GET['type']) {
 			$phone_row= mysql_fetch_assoc($phoneId_query);
 			$phoneId = $phone_row['ID_telefonske_st'];
 		}
-		echo "userId= " . $user_id. "<br>";
-		echo "phoneNumber= " . $clean['phone']. "<br>";
-		echo "phoneId = " . $phoneId . "<br>";
 		$mesto_id_query = mysql_query("SELECT * FROM mesta_telefonske WHERE ID_telefonske='" . $phoneId . "'");
 		if(mysql_num_rows($mesto_id_query)>0) 
 		{
 			$mesto_row = mysql_fetch_assoc($mesto_id_query);
 			$mesto_id = $mesto_row['ID_mesta'];
 		}
-		echo "mestoId= " . $mesto_id . "<br>";
 
 		$mesto_id_query = mysql_query("SELECT * FROM mesta_telefonske WHERE ID_mesta='" . $mesto_id . "'");
 		if(mysql_num_rows($mesto_id_query)==1) 
@@ -164,7 +160,7 @@ switch ($_GET['type']) {
 		}
 		mysql_query("DELETE FROM telefonske_st WHERE ID_user='" . $user_id . "' AND telefonske_st='" . $clean['phone'] . "'");
 		mysql_query("DELETE FROM mesta_telefonske WHERE ID_telefonske='" . $phoneId . "'");
-		echo "phone deleted";
+		echo "done";
 
 		break;
 	case 'addPhone':

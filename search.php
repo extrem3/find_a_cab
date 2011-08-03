@@ -4,11 +4,14 @@
 	.index-search {top: 150px; }
 	</style>
 </head>
+<body>
 <?php
 require('config.php');
 
 mysql_connect($location,$username,$password); /* spremenil localhost v 'localhost' */
 @mysql_select_db($database) or die( "Unable to select database");
+
+$dataArray = array();
 
 $town = mysql_real_escape_string($_POST["id"]);
 /* echo '<div class="results-ads">Tukaj bojo oglasi!</div>'; */
@@ -57,19 +60,13 @@ if(mysql_num_rows($result)>0)
 		if($userCompanyRatingTotal == 0)
 			$userCompanyRatingTotal = 1;
 
+		$dataArrayTemp = array($phoneNumber, $userCompanyName, $userName, $userLastName, $userCompanyAddress, $userCompanyPhone, $userCompanyFax, $userCompanyMail, $userCompanyWebsite, $userCompanyDesctiption);
+		array_push($dataArray, $dataArrayTemp);
+
 		echo '<div class="driver">';
 		echo '<div class="companyName">' . $userCompanyName . '</div>';
 		echo '<div class="driverName">Voznik: ' . $userName . ' ' . $userLastName . '</div>';
 		echo '<div class="phoneNumber">' . $phoneNumber . '</div>';
-		// echo '<div class="rating">';
-		// for ($i = 0; $i < 5; ++ $i)
-		// {
-		// 	if($i < ($userCompanyRating/$userCompanyRatingTotal))
-		// 	{
-
-		// 	}
-		// }
-		// echo '</div>';
 		echo '<div class="companyDetails">'; 
 		echo '<div class="companyAddress">' . $userCompanyAddress . '</div>';
 		echo '<div class="companyPhone">' . $userCompanyPhone . '</div>';
@@ -83,3 +80,4 @@ if(mysql_num_rows($result)>0)
 echo '</div>';
 echo '</div>';
 ?>
+</body>
