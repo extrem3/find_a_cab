@@ -248,8 +248,9 @@ error_reporting(E_ALL);
     <?php
     if(isset($_SESSION['user_id']) && isset($_SESSION['user_level']))
     {
-      echo 'Prijavljeni ste kot ' . getUsername($_SESSION['user_id']); 
-      echo '<a href="login.php?logout=true">Odjava</a>';
+      echo 'Prijavljeni ste kot ' . getUsername($_SESSION['user_id']) . '<br>'; 
+      echo '<a href="login.php?logout=true">Odjava</a><br>';
+      echo '<a href="userPannel.php">Administrativna stran</a>';
     } else
     {
 			echo '<a rel="shadowbox;title=Prijava;height=250;width=450" href="loginPannel.php" id="loginButton">Prijavi se!</a> ';
