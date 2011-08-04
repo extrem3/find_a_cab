@@ -1,4 +1,7 @@
 ﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<?php 
+	session_start();
+require('data.php');?>
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -242,8 +245,17 @@ error_reporting(E_ALL);
 <body>
 	<div id="header">
 		<div class="login-register">
-			<a rel="shadowbox;title=Prijava;height=250;width=450" href="loginPannel.php" id="loginButton">Prijavi se!</a> 
-			<a rel="shadowbox;title=Registracija;height=400;width=500" href="registerPannel.php" id="registerButton">Registriraj se!</a>
+    <?php
+    if(isset($_SESSION['user_id']) && isset($_SESSION['user_level']))
+    {
+      echo 'Prijavljeni ste kot ' . getUsername($_SESSION['user_id']); 
+      echo '<a href="login.php?logout=true">Odjava</a>';
+    } else
+    {
+			echo '<a rel="shadowbox;title=Prijava;height=250;width=450" href="loginPannel.php" id="loginButton">Prijavi se!</a> ';
+			echo '<a rel="shadowbox;title=Registracija;height=400;width=500" href="registerPannel.php" id="registerButton">Registriraj se!</a>';
+    }
+    ?>
 		</div>
 		<div id="name">&nbsp;</div>
 	</div>

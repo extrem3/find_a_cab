@@ -10,21 +10,21 @@ require('data.php'); require('checkLogin.php');?>
 	<script type="text/javascript">
 	$(function() {
     var errors = new Array(new Array(0, 1, "username"),
-                 new Array(0, 2, "email"),
-                 new Array(0, 3, "email"),
-                 new Array(2, 4, "phone"),
-                 new Array(2, 5, "phone"),
-                 new Array(0, 6, "password"),
-                 new Array(4, 7, "companyMail"),
-                 new Array(4, 8, "companyPhone"),
-                 new Array(0, 9, "username"),
-                 new Array(0, 10, "name"),
-                 new Array(0, 11, "lastName"),
-                 new Array(2, 12, "newTown"),
-                 new Array(4, 13, "companyName"),
-                 new Array(4, 14, "companyStreet"),
-                 new Array(4, 15, "companyInCharge"),
-                 new Array(4, 16, "newCompanyTown"));
+                           new Array(0, 2, "email"),
+                           new Array(0, 3, "email"),
+                           new Array(2, 4, "phone"),
+                           new Array(2, 5, "phone"),
+                           new Array(0, 6, "password"),
+                           new Array(4, 7, "companyMail"),
+                           new Array(4, 8, "companyPhone"),
+                           new Array(0, 9, "username"),
+                           new Array(0, 10, "name"),
+                           new Array(0, 11, "lastName"),
+                           new Array(2, 12, "newTown"),
+                           new Array(4, 13, "companyName"),
+                           new Array(4, 14, "companyStreet"),
+                           new Array(4, 15, "companyInCharge"),
+                           new Array(4, 16, "newCompanyTown"));
 		$('#leftColumn input').css("backgroundColor", "#616161" );
 		$('#leftColumn input').css("border", "none" );
 		$(".expandingBody").hide();
