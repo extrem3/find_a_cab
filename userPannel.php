@@ -100,6 +100,10 @@ require('data.php'); require('checkLogin.php');?>
                 "</td>" + 
                 "</tr>")
             $('#phoneNumbers form').submit(onSubmitDeletePhone);
+            $("#addPhoneError").html("");
+          } else
+          {
+            $("#addPhoneError").html(msg);
           }
 				}
 			}).responseText;
@@ -231,6 +235,7 @@ require('data.php'); require('checkLogin.php');?>
 							<form id="addPhone" action="user.php?type=addPhone" method="POST" accept-charset="utf-8">
 								Mesto:<input type="text" name="newTown"><br>
 								Telefon:<input type="text" name="phone" />
+                <div id="addPhoneError"></div>
 								<input type="submit" value="Dodaj" />
 							</form>
 						</div>
