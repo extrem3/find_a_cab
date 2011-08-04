@@ -5,6 +5,87 @@ require('data.php'); require('checkLogin.php');?>
 <head>
 	<title>Sprememba podjetja</title>
 	<link rel="stylesheet" type="text/css" href="css/newCompany.css">
+	<script type="text/javascript" src="scr/jquery-1.5.1.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+	<script type="text/javascript">
+	var errors = new Array(new Array(0, 1, "username"),
+						   new Array(0, 2, "email"),
+						   new Array(0, 3, "email"),
+						   new Array(2, 4, "phone"),
+						   new Array(2, 5, "phone"),
+						   new Array(0, 6, "password"),
+						   new Array(4, 7, "companyMail"),
+						   new Array(4, 8, "companyPhone"),
+						   new Array(0, 9, "username"),
+						   new Array(0, 10, "name"),
+						   new Array(0, 11, "lastName"),
+						   new Array(2, 12, "newTown"),
+						   new Array(4, 13, "companyName"),
+						   new Array(4, 14, "companyStreet"),
+						   new Array(4, 15, "companyInCharge"),
+						   new Array(4, 16, "companyTown"));
+	$(document).ready(function() {
+		$('input').css("background-color", "#cccccc")
+
+		$('input').focus( function() {
+			$(this).animate({ backgroundColor: "#ffffff" }, 300);
+		});
+		$('input').blur( function() {
+			$(this).animate({ backgroundColor: "#cccccc" }, 300);
+		});
+		$('form').submit(function() {
+			var formContents = $(this).serialize();
+			bodyContent = $.ajax({
+				url: "user.php?type=addCompany",
+				global: false,
+				type: "POST",
+				data: formContents,
+				dataType: "html",
+				async:false,
+				success: function(msg){
+					$('form#submit').hide();
+					var doneArray = msg.match(/done/g);
+					if (doneArray != null && doneArray.length > 0)
+					{
+            alert("done");
+					}else
+					{
+						stripErrors(msg);
+					}
+				}
+			}).responseText;
+			return false;
+		});
+    var tempErrors = new Array();
+    function stripErrors(e)
+    {
+      for (var i = 0; i < tempErrors.length; ++i)
+      {
+        for (var j = 0; j < errors.length; ++j)
+        {
+          if (tempErrors[i] == errors[j][1])
+          {
+            $('input[name=' + errors[j][2] + ']').animate({ backgroundColor: "#ffffff" }, 300);
+            break;
+          }
+        }
+      }
+      tempErrors = e.match(/\d+/g);
+      var first = 9;
+      for (var i = 0; i < tempErrors.length; ++i)
+      {
+        for (var j = 0; j < errors.length; ++j)
+        {
+          if (tempErrors[i] == errors[j][1])
+          {
+            $('input[name=' + errors[j][2] + ']').animate({ backgroundColor: "#e97c34" }, 300);
+            break;
+          }
+        }
+      }
+    }
+  });
+  </script>
 </head>
 <body>
 	<div id="header">

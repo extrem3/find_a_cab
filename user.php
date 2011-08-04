@@ -12,6 +12,23 @@ foreach(array_keys($_POST) as $key)
   $clean[$key] = mysql_real_escape_string($_POST[$key]);
 }
 
+$errorsDescriptions = array('Uporabniško ime je že v uporabi.',
+                            'email_regex',
+                            'email_exists',
+                            'phone_regex',
+                            'phone_exists',
+                            'passwords do not match or are too short, ',
+                            'company_mail_regex, ',
+                            'company_phone_regex',
+                            'username too short or empty',
+                            'firstName field empty or too short',
+                            'lastName field empty or too short',
+                            'town is empty if user is a driver',
+                            'companyName is missing',
+                            'companyStreet is missing',
+                            'companyInCharge is missing',
+                            'newCompanyTown is missing');
+
 function addTown($town)
 {
 	// we dont care if the town already exists or not, so we can return the id of existing one or make a new entry
@@ -67,17 +84,7 @@ function checkUsernames($uname)
 
 switch ($_GET['type']) {
 	case 'all':
-		//username
-		// if (checkUsernames == 1)
-		// {
-		// 	mysql_query("UPDATE uporabniki SET username='" . $clean['username'] . "' WHERE id_uporabnik='" . $user_id . "'");
-		// 	echo "username changed";
-		// }else
-		// {
-		// 	echo "username already exists";
-		// 	break;
-		// }
-		//name
+    $errors = array();
 		mysql_query("UPDATE uporabniki SET ime='" . $clean['name'] . "',priimek='" . $clean['lastName'] . "' WHERE id_uporabnik='" . $user_id . "'");
 		echo "name changed<br>";
 		//email
@@ -230,17 +237,41 @@ switch ($_GET['type']) {
 		echo "company details updated";
 		break;
 	case 'addCompany':
-		$id_company = 0;
+    $errors = array();
+		if(empty($clean['companyName']))
+			array_push($errors, 13);
+		if(empty($clean['companyStreet']))
+			array_push($errors, 14);
+		if(empty($clean['companyInCharge']))
+			array_push($errors, 15);
+		if(empty($clean['companyTown']))
+			array_push($errors, 16);
+		if(!preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/i", $_POST['companyMail']))
+			array_push($errors, 7);
+		preg_match_all('/[0-9]+/', $clean['companyPhone'], $cleaned);
+   $phoneNumber = '';
+		foreach($cleaned[0] as $k=>$v) {
+		   $phoneNumber .= $v;
+		}
+		if(strlen($phoneNumber) > 9 || strlen($phoneNumber) < 5)
+			array_push($errors, 8);
+    if (count($errors) > 0)
+    {
+      for ($i = 0; $i < count($errors); ++$i)
+      {
+        echo '<div class="error">' . $errors[$i] . '</div><div class="description">' . $errorsDescriptions[$errors[$i] - 1] . '</div>';
+      }
+      break;
+    }
+    $id_company = 0;
 		if (isset($_GET['exists']))
 		{
 			$id_company = addCompany($clean, $clean['companySelect'], 0, $user_id, true);
 			mysql_query("UPDATE uporabniki SET nivo='1' WHERE id_uporabnik='" . $user_id . "'");
-			echo "moved to new company";
 		}else
 		{
 			$id_company = addCompany($clean, $clean['companyName'], $clean['companyTown'], $user_id, false);
 			mysql_query("UPDATE uporabniki SET nivo='2' WHERE id_uporabnik='" . $user_id . "'");
-			echo "added a new company";
 		}
 
 		$company_id_query = mysql_query("SELECT * FROM upor_podj WHERE id_uporabnik='" . $user_id . "'");
@@ -274,7 +305,7 @@ switch ($_GET['type']) {
 			mysql_query("INSERT INTO upor_podj (id_podjetje, id_uporabnik)
 										VALUES ('$id_company', '$user_id')");
 		}
-		echo $user_id . "<br>";
+    echo 'done';
 		break;
 	default:
 		echo "NO TYPE SPECIFIED";
