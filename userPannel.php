@@ -24,7 +24,8 @@ require('data.php'); require('checkLogin.php');?>
                            new Array(4, 13, "companyName"),
                            new Array(4, 14, "companyStreet"),
                            new Array(4, 15, "companyInCharge"),
-                           new Array(4, 16, "newCompanyTown"));
+                           new Array(4, 16, "companyTown"),
+                           new Array(4, 17, "oldPassword"));
 		$('#leftColumn input').css("backgroundColor", "#616161" );
 		$('#leftColumn input').css("border", "none" );
 		$(".expandingBody").hide();
@@ -112,6 +113,56 @@ require('data.php'); require('checkLogin.php');?>
 			}).responseText;
 			return false;
 		});
+		$('#name').submit(function() {
+			var formContents = $(this).serialize();
+			bodyContent = $.ajax({
+				url: "user.php?type=all<?php if (getCompany($user_id) != "") {echo '&companyOwner=true';} ?>",
+				global: false,
+				type: "POST",
+				data: formContents,
+				dataType: "html",
+				async:false,
+				success: function(msg){
+					var doneArray = msg.match(/done/g);
+					if (doneArray != null && doneArray.length > 0)
+					{
+            alert("done");
+					}else
+					{
+						stripErrors(msg);
+					}
+				}
+			}).responseText;
+			return false;
+		});
+    var tempErrors = new Array();
+    function stripErrors(e)
+    {
+      for (var i = 0; i < tempErrors.length; ++i)
+      {
+        for (var j = 0; j < errors.length; ++j)
+        {
+          if (tempErrors[i] == errors[j][1])
+          {
+            $('input[name=' + errors[j][2] + ']').animate({ backgroundColor: "#ffffff" }, 300);
+            break;
+          }
+        }
+      }
+      tempErrors = e.match(/\d+/g);
+      var first = 9;
+      for (var i = 0; i < tempErrors.length; ++i)
+      {
+        for (var j = 0; j < errors.length; ++j)
+        {
+          if (tempErrors[i] == errors[j][1])
+          {
+            $('input[name=' + errors[j][2] + ']').animate({ backgroundColor: "#e97c34" }, 300);
+            break;
+          }
+        }
+      }
+    }
 	});
 	</script>
 </head>
