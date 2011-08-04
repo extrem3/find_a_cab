@@ -182,6 +182,11 @@ switch ($_GET['type']) {
 			echo "phone number already in register";
 			break;
 		}
+		if(strlen($clean['newTown']) <= 1)
+    {
+			echo "Town name too short";
+			break;
+    }
 		
 		mysql_query("INSERT INTO telefonske_st (ID_user, telefonske_st)
 								   VALUES ('$user_id', '$phoneNumber')");

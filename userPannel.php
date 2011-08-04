@@ -87,7 +87,7 @@ require('data.php'); require('checkLogin.php');?>
 					if (doneArray != null && doneArray.length > 0)
 					{
             console.log($('input[name$="phone"]').val());
-            var phoneId = 3;
+            var phoneId = parseInt($('#phoneTable tr:last').attr("id").substring(12)) + 1;
             var phoneNumberVal = $('#addPhone input[name$="phone"]').val();
             var townVal = $('#addPhone input[name$="newTown"]').val();
             $("#phoneTable").find("tbody").append("<tr id='values_phone" + phoneId + "' class='values'>" + 
@@ -99,6 +99,9 @@ require('data.php'); require('checkLogin.php');?>
                 "<input type='submit' class='delete' value='X'></form>" + 
                 "</td>" + 
                 "</tr>")
+            $("#values_phone" + phoneId).hide();
+            $("#values_phone" + phoneId).slideDown("fast");
+            $("#values_phone" + phoneId).fadeIn("fast");
             $('#phoneNumbers form').submit(onSubmitDeletePhone);
             $("#addPhoneError").html("");
           } else
@@ -109,8 +112,6 @@ require('data.php'); require('checkLogin.php');?>
 			}).responseText;
 			return false;
 		});
-    
-
 	});
 	</script>
 </head>
