@@ -1,8 +1,18 @@
 <head>
+	<script type="text/javascript" src="scr/jquery-1.5.1.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/results.css">
 	<style type="text/css">
 	.index-search {top: 150px; }
 	</style>
+	<script type="text/javascript">
+	(function( $ ) {
+		$(".companyDetails").hide();
+		$(".driver").click(function() {
+				$(this).next().slideToggle("fast");
+		})
+  });
+
+  </script>
 </head>
 <body>
 <?php

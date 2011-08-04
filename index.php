@@ -1,6 +1,6 @@
 ﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <?php 
-	session_start();
+session_start();
 require('data.php');?>
 <html>
 <head>
@@ -233,6 +233,11 @@ error_reporting(E_ALL);
 				{
 					$("#results").html(r);
 				}
+        $(".companyDetails").hide();
+        $(".driver").css("cursor", "pointer");
+        $(".driver").click(function() {
+            $(this).find(".companyDetails").slideToggle("fast");
+        })
 				$('#results').fadeIn(speed);
 			});
 		}else if(r != "empty")

@@ -49,10 +49,11 @@ require('data.php'); require('checkLogin.php');?>
 		$(".expandingHeader").click(function() {
 			$(this).next().slideToggle("fast");
 		})
-		$('#phoneNumbers form').submit(function(event) {
+		$('#phoneNumbers form').submit(onSubmitDeletePhone);
+    function onSubmitDeletePhone(event)
+    {
 			var formContents = $(this).serialize();
       var clickedOn = event.currentTarget.id;
-      console.log(clickedOn);
 			bodyContent = $.ajax({
 				url: "user.php?type=phone",
 				global: false,
@@ -64,7 +65,6 @@ require('data.php'); require('checkLogin.php');?>
 					var doneArray = msg.match(/done/g);
 					if (doneArray != null && doneArray.length > 0)
 					{
-            console.log(clickedOn);
             $('#values_' + clickedOn).fadeOut('fast', function (){
               $('#values_' + clickedOn).remove();
             });
@@ -72,7 +72,40 @@ require('data.php'); require('checkLogin.php');?>
 				}
 			}).responseText;
 			return false;
+    }
+		$('#addPhone').submit(function(event) {
+			var formContents = $(this).serialize();
+			bodyContent = $.ajax({
+				url: "user.php?type=addPhone",
+				global: false,
+				type: "POST",
+				data: formContents,
+				dataType: "html",
+				async:false,
+				success: function(msg){
+					var doneArray = msg.match(/done/g);
+					if (doneArray != null && doneArray.length > 0)
+					{
+            console.log($('input[name$="phone"]').val());
+            var phoneId = 3;
+            var phoneNumberVal = $('#addPhone input[name$="phone"]').val();
+            var townVal = $('#addPhone input[name$="newTown"]').val();
+            $("#phoneTable").find("tbody").append("<tr id='values_phone" + phoneId + "' class='values'>" + 
+                "<td>" + phoneNumberVal + "</td>" + 
+                "<td>" + townVal + "</td>" + 
+                "<td>" + 
+                "<form id='phone" + phoneId + "' accept-charset='utf-8' method='POST' action='user.php?type=phone'>" + 
+                "<input type='hidden' value='" + phoneNumberVal + "' name='phone'>" + 
+                "<input type='submit' class='delete' value='X'></form>" + 
+                "</td>" + 
+                "</tr>")
+            $('#phoneNumbers form').submit(onSubmitDeletePhone);
+          }
+				}
+			}).responseText;
+			return false;
 		});
+    
 
 	});
 	</script>
@@ -197,7 +230,7 @@ require('data.php'); require('checkLogin.php');?>
 						<div class="expandingBody">
 							<form id="addPhone" action="user.php?type=addPhone" method="POST" accept-charset="utf-8">
 								Mesto:<input type="text" name="newTown"><br>
-								Telefon:<input type="text" name="phone" value="1112223" />
+								Telefon:<input type="text" name="phone" />
 								<input type="submit" value="Dodaj" />
 							</form>
 						</div>

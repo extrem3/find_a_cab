@@ -145,22 +145,25 @@ switch ($_GET['type']) {
 		{
 			$phone_row= mysql_fetch_assoc($phoneId_query);
 			$phoneId = $phone_row['ID_telefonske_st'];
-		}
-		$mesto_id_query = mysql_query("SELECT * FROM mesta_telefonske WHERE ID_telefonske='" . $phoneId . "'");
-		if(mysql_num_rows($mesto_id_query)>0) 
-		{
-			$mesto_row = mysql_fetch_assoc($mesto_id_query);
-			$mesto_id = $mesto_row['ID_mesta'];
-		}
+      $mesto_id_query = mysql_query("SELECT * FROM mesta_telefonske WHERE ID_telefonske='" . $phoneId . "'");
+      if(mysql_num_rows($mesto_id_query)>0) 
+      {
+        $mesto_row = mysql_fetch_assoc($mesto_id_query);
+        $mesto_id = $mesto_row['ID_mesta'];
+      }
 
-		$mesto_id_query = mysql_query("SELECT * FROM mesta_telefonske WHERE ID_mesta='" . $mesto_id . "'");
-		if(mysql_num_rows($mesto_id_query)==1) 
-		{
-			mysql_query("DELETE FROM mesta WHERE id_mesto='" . $mesto_id . "'");
-		}
-		mysql_query("DELETE FROM telefonske_st WHERE ID_user='" . $user_id . "' AND telefonske_st='" . $clean['phone'] . "'");
-		mysql_query("DELETE FROM mesta_telefonske WHERE ID_telefonske='" . $phoneId . "'");
-		echo "done";
+      $mesto_id_query = mysql_query("SELECT * FROM mesta_telefonske WHERE ID_mesta='" . $mesto_id . "'");
+      if(mysql_num_rows($mesto_id_query)==1) 
+      {
+        mysql_query("DELETE FROM mesta WHERE id_mesto='" . $mesto_id . "'");
+      }
+      mysql_query("DELETE FROM telefonske_st WHERE ID_user='" . $user_id . "' AND telefonske_st='" . $clean['phone'] . "'");
+      mysql_query("DELETE FROM mesta_telefonske WHERE ID_telefonske='" . $phoneId . "'");
+      echo "done";
+		} else
+    {
+      echo "WOW HAXX0RZ";
+    }
 
 		break;
 	case 'addPhone':
@@ -189,7 +192,7 @@ switch ($_GET['type']) {
 
 		mysql_query("INSERT INTO mesta_telefonske (ID_mesta, ID_telefonske)
 								   VALUES ('$town_id', '$telefonska_id')");
-		echo "phone number added";
+		echo "done";
 		break;
 	case 'company':
 		if(empty($clean['companyName']) || empty($clean['companyStreet']) || empty($clean['companyInCharge']) || empty($clean['companyTown']))
